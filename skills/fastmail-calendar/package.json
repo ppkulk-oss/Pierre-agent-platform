@@ -1,0 +1,10 @@
+{
+  "name": "fastmail-calendar",
+  "version": "1.0.0",
+  "description": "Fastmail JMAP Calendar",
+  "main": "index.js",
+  "scripts": {
+    "add": "node index.js"
+  },
+  "dependencies": {}
+}

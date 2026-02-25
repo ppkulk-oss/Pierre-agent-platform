@@ -1,0 +1,146 @@
+{
+  "lastUpdated": "2026-02-18",
+  "description": "Prashant's dynamic wine hunting list - edit anytime",
+  "wines": [
+    {
+      "id": "gonon-saint-joseph",
+      "name": "Pierre Gonon Saint-Joseph Rouge",
+      "vintages": ["2022", "2023", "2021"],
+      "maxPrice": 180,
+      "priority": "high",
+      "notes": "Secret handshake wine, granite farming",
+      "sources": ["kermit-lynch", "rare-wine-co", "crush-wine", "local-nj"],
+      "status": "hunting"
+    },
+    {
+      "id": "allemand-reynard",
+      "name": "Thierry Allemand Cornas Reynard",
+      "vintages": ["2015", "2016", "2017", "2018", "2019"],
+      "maxPrice": 400,
+      "priority": "high",
+      "notes": "The Holy Grail - Granite King",
+      "sources": ["any"],
+      "status": "hunting"
+    },
+    {
+      "id": "clape-cornas",
+      "name": "Auguste Clape Cornas",
+      "vintages": ["any-mature"],
+      "maxPrice": 300,
+      "priority": "high",
+      "notes": "Desert island producer, 100% whole cluster",
+      "sources": ["any"],
+      "status": "hunting"
+    },
+    {
+      "id": "dugat-py-coeur",
+      "name": "Dugat-Py Gevrey-Chambertin Cœur de Roy",
+      "vintages": ["2018", "2019", "2020"],
+      "maxPrice": 350,
+      "priority": "medium",
+      "notes": "Pinot that acts like granite",
+      "sources": ["any"],
+      "status": "hunting"
+    },
+    {
+      "id": "dugat-py-levriere",
+      "name": "Dugat-Py Pommard La Petite Levrière",
+      "vintages": ["any"],
+      "maxPrice": 300,
+      "priority": "high",
+      "notes": "Pommard powerhouse, already in collection",
+      "sources": ["any"],
+      "status": "hunting"
+    },
+    {
+      "id": "paris-geynale",
+      "name": "Vincent Paris Cornas La Geynale",
+      "vintages": ["2019", "2020", "2021", "2022"],
+      "maxPrice": 200,
+      "priority": "medium",
+      "notes": "1910 vines, twin to Dumien",
+      "sources": ["any"],
+      "status": "hunting"
+    },
+    {
+      "id": "levet-chavaroche",
+      "name": "Bernard Levet Côte-Rôtie Chavaroche",
+      "vintages": ["2022"],
+      "maxPrice": 140,
+      "priority": "medium",
+      "notes": "Cornas of Côte-Rôtie, feral/smoke",
+      "sources": ["any"],
+      "status": "hunting"
+    },
+    {
+      "id": "tunnel-vin-noir",
+      "name": "Domaine du Tunnel Cornas Vin Noir",
+      "vintages": ["any"],
+      "maxPrice": 200,
+      "priority": "medium",
+      "notes": "100+ year vines, pitch black",
+      "sources": ["any"],
+      "status": "hunting"
+    },
+    {
+      "id": "voge-fontaines",
+      "name": "Alain Voge Cornas Les Vieilles Fontaines",
+      "vintages": ["any"],
+      "maxPrice": 200,
+      "priority": "low",
+      "notes": "Bloody meat profile",
+      "sources": ["any"],
+      "status": "hunting"
+    },
+    {
+      "id": "voguede-bonnes-mares",
+      "name": "Comte Georges de Vogüé Bonnes-Mares",
+      "vintages": ["any"],
+      "maxPrice": 500,
+      "priority": "medium",
+      "notes": "Red clay parcels, 60% ownership",
+      "sources": ["any"],
+      "status": "hunting"
+    },
+    {
+      "id": "roumier-bonnes-mares",
+      "name": "Domaine Roumier Bonnes-Mares",
+      "vintages": ["any"],
+      "maxPrice": 600,
+      "priority": "low",
+      "notes": "Legendary, red clay side",
+      "sources": ["any"],
+      "status": "hunting"
+    },
+    {
+      "id": "courcel-rugiens",
+      "name": "Domaine de Courcel Pommard Les Rugiens",
+      "vintages": ["2018", "2019", "2020"],
+      "maxPrice": 250,
+      "priority": "medium",
+      "notes": "The Red Ones = iron, rust/smoke",
+      "sources": ["any"],
+      "status": "hunting"
+    },
+    {
+      "id": "chave-hermitage",
+      "name": "Jean-Louis Chave Hermitage",
+      "vintages": ["2015", "2016", "2017", "2018", "2019"],
+      "maxPrice": 400,
+      "priority": "high",
+      "notes": "The King of Hermitage - see God",
+      "sources": ["any"],
+      "status": "hunting"
+    }
+  ],
+  "settings": {
+    "searchRadiusMiles": 50,
+    "zipCode": "07733",
+    "preferredSources": ["kermit-lynch", "rare-wine-co", "crush-wine", "sommpicks", "klwines"],
+    "notifications": {
+      "inStock": true,
+      "priceDrop": true,
+      "newVintage": true
+    }
+  }
+}

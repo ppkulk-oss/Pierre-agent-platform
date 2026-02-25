@@ -1,0 +1,12 @@
+{
+  "name": "fastmail-drafts",
+  "version": "1.0.0",
+  "description": "Create email drafts via IMAP APPEND",
+  "main": "index.js",
+  "scripts": {
+    "draft": "node index.js"
+  },
+  "dependencies": {
+    "imap": "^0.8.19"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "gmail-reader",
+  "version": "1.0.0",
+  "description": "Gmail IMAP reader skill",
+  "main": "index.js",
+  "scripts": {
+    "read": "node index.js"
+  },
+  "dependencies": {
+    "imap": "^0.8.19",
+    "mailparser": "^3.6.5"
+  }
+}

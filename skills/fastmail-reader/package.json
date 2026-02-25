@@ -1,0 +1,16 @@
+{
+  "name": "fastmail-reader",
+  "version": "1.0.0",
+  "description": "Fastmail IMAP reader",
+  "main": "index.js",
+  "scripts": {
+    "read": "node index.js"
+  },
+  "dependencies": {
+    "imap": "^0.8.19",
+    "mailparser": "^3.6.5",
+    "pdf-parse": "^2.4.5",
+    "webdav": "^5.9.0",
+    "xlsx": "^0.18.5"
+  }
+}

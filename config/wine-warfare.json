@@ -1,0 +1,239 @@
+{
+  "description": "Wine Allocation Warfare System - Prashant's Comprehensive Wine Hunt",
+  "version": "2.0",
+  "lastUpdated": "2026-02-25",
+  "targetWines": {
+    "highPriority": [
+      {
+        "id": "allemand-reynard",
+        "name": "Thierry Allemand Cornas Reynard",
+        "aliases": ["allemand reynard", "thierry allemand", "cornas reynard"],
+        "vintages": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+        "maxPrice": 400,
+        "targetPrice": 350,
+        "priority": "HIGH",
+        "notes": "The Holy Grail - Granite King. Most sought-after Cornas.",
+        "sources": ["any"],
+        "status": "hunting",
+        "allocationOnly": true,
+        "rarity": "unicorn"
+      },
+      {
+        "id": "allemand-chaillot",
+        "name": "Thierry Allemand Cornas Chaillot",
+        "aliases": ["allemand chaillot", "cornas chaillot"],
+        "vintages": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+        "maxPrice": 350,
+        "targetPrice": 300,
+        "priority": "HIGH",
+        "notes": "Second wine, still incredible. More accessible than Reynard.",
+        "sources": ["any"],
+        "status": "hunting",
+        "allocationOnly": true,
+        "rarity": "rare"
+      },
+      {
+        "id": "clape-cornas",
+        "name": "Auguste Clape Cornas",
+        "aliases": ["clape", "auguste clape", "domaine clape"],
+        "vintages": ["any-mature", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+        "maxPrice": 300,
+        "targetPrice": 250,
+        "priority": "HIGH",
+        "notes": "Desert island producer. 100% whole cluster, traditional.",
+        "sources": ["any"],
+        "status": "hunting",
+        "allocationOnly": false,
+        "rarity": "rare"
+      },
+      {
+        "id": "gonon-saint-joseph",
+        "name": "Pierre Gonon Saint-Joseph Rouge",
+        "aliases": ["gonon", "pierre gonon", "saint-joseph gonon"],
+        "vintages": ["2021", "2022", "2023", "2024"],
+        "maxPrice": 180,
+        "targetPrice": 150,
+        "priority": "HIGH",
+        "notes": "Secret handshake wine. Granite farming, traditional methods.",
+        "sources": ["kermit-lynch", "rare-wine-co", "crush-wine", "local-nj"],
+        "status": "hunting",
+        "allocationOnly": false,
+        "rarity": "limited"
+      }
+    ],
+    "mediumPriority": [
+      {
+        "id": "gonon-blanc",
+        "name": "Pierre Gonon Saint-Joseph Blanc Les Oliviers",
+        "aliases": ["gonon blanc", "gonon oliviers", "les oliviers"],
+        "vintages": ["2021", "2022", "2023", "2024"],
+        "maxPrice": 160,
+        "targetPrice": 140,
+        "priority": "MEDIUM",
+        "notes": "Marsanne/Roussanne. Rare white from Gonon.",
+        "sources": ["any"],
+        "status": "hunting",
+        "rarity": "limited"
+      },
+      {
+        "id": "chave-hermitage",
+        "name": "Jean-Louis Chave Hermitage Rouge",
+        "aliases": ["chave", "jean-louis chave", "j-l chave", "hermitage chave"],
+        "vintages": ["2015", "2016", "2017", "2018", "2019", "2020", "2021"],
+        "maxPrice": 400,
+        "targetPrice": 350,
+        "priority": "MEDIUM",
+        "notes": "The King of Hermitage. Ultimate Syrah.",
+        "sources": ["any"],
+        "status": "hunting",
+        "rarity": "rare"
+      },
+      {
+        "id": "rostaing-cote",
+        "name": "René Rostaing Côte-Rôtie",
+        "aliases": ["rostaing", "rene rostaing", "cote-rotie rostaing"],
+        "vintages": ["2018", "2019", "2020", "2021", "2022"],
+        "maxPrice": 200,
+        "targetPrice": 170,
+        "priority": "MEDIUM",
+        "notes": "Classic Côte-Rôtie. Côte Blonde & Brune blend.",
+        "sources": ["any"],
+        "status": "hunting",
+        "rarity": "limited"
+      },
+      {
+        "id": "ogier-hermitage",
+        "name": "Stéphane Ogier Hermitage",
+        "aliases": ["ogier", "stephane ogier", "hermitage ogier"],
+        "vintages": ["2019", "2020", "2021", "2022"],
+        "maxPrice": 250,
+        "targetPrice": 200,
+        "priority": "MEDIUM",
+        "notes": "Modern classic. Rising star.",
+        "sources": ["any"],
+        "status": "hunting",
+        "rarity": "limited"
+      }
+    ],
+    "opportunistic": [
+      {
+        "id": "paris-geynale",
+        "name": "Vincent Paris Cornas La Geynale",
+        "priority": "LOW",
+        "notes": "1910 vines. Excellent value Cornas.",
+        "status": "monitoring"
+      },
+      {
+        "id": "levet-chavaroche",
+        "name": "Bernard Levet Côte-Rôtie Chavaroche",
+        "priority": "LOW",
+        "notes": "Cornas of Côte-Rôtie. Feral/smoke.",
+        "status": "monitoring"
+      }
+    ]
+  },
+  "retailers": {
+    "tier1": [
+      {
+        "name": "Kermit Lynch",
+        "email": "info@kermitlynch.com",
+        "domain": "kermitlynch.com",
+        "specialties": ["gonon", "clape"],
+        "frequency": "check-daily",
+        "notes": "Primary source for Gonon. Newsletters announce allocations."
+      },
+      {
+        "name": "Crush Wine & Spirits",
+        "email": "info@crushwineco.com",
+        "domain": "crushwineco.com",
+        "specialties": ["allemand", "clape", "chave"],
+        "frequency": "check-daily",
+        "notes": "NYC-based. Excellent Rhône selection."
+      },
+      {
+        "name": "The Rare Wine Co",
+        "email": "sales@rarewineco.com",
+        "domain": "rarewineco.com",
+        "specialties": ["gonon", "clape", "allemand"],
+        "frequency": "check-daily",
+        "notes": "Historic back-vintages. Waitlists common."
+      },
+      {
+        "name": "SommPicks",
+        "email": "info@sommpicks.com",
+        "domain": "sommpicks.com",
+        "specialties": ["allemand", "rostaing", "ogier"],
+        "frequency": "check-daily",
+        "notes": "Sommelier-curated. Smaller allocations."
+      }
+    ],
+    "tier2": [
+      {
+        "name": "K&L Wine Merchants",
+        "email": "wine@klwines.com",
+        "domain": "klwines.com",
+        "specialties": ["chave", "rostaing"],
+        "frequency": "check-daily"
+      },
+      {
+        "name": " Saratoga Wine Exchange",
+        "email": "sales@saratogawine.com",
+        "domain": "saratogawine.com",
+        "specialties": ["gonon"],
+        "frequency": "check-2x-week"
+      },
+      {
+        "name": "JJ Buckley",
+        "email": "orders@jjbuckley.com",
+        "domain": "jjbuckley.com",
+        "specialties": ["allemand", "chave"],
+        "frequency": "check-weekly"
+      },
+      {
+        "name": "Flatiron Wines",
+        "email": "orders@flatiron-wines.com",
+        "domain": "flatiron-wines.com",
+        "specialties": ["clape", "rostaing"],
+        "frequency": "check-weekly"
+      },
+      {
+        "name": "Chambers Street Wines",
+        "email": "info@chambersstwines.com",
+        "domain": "chambersstwines.com",
+        "specialties": ["gonon", "allemand"],
+        "frequency": "check-weekly"
+      }
+    ],
+    "auction": [
+      {
+        "name": "WineBid",
+        "domain": "winebid.com",
+        "specialties": ["back-vintages"],
+        "frequency": "check-weekly"
+      },
+      {
+        "name": "KLWM Auction",
+        "domain": "auction.klwines.com",
+        "specialties": ["allemand", "chave"],
+        "frequency": "check-weekly"
+      }
+    ]
+  },
+  "settings": {
+    "searchRadiusMiles": 50,
+    "zipCode": "07733",
+    "location": "Holmdel, NJ",
+    "notifications": {
+      "inStock": true,
+      "priceDrop": true,
+      "newVintage": true,
+      "allocationAnnouncement": true
+    },
+    "alertChannels": ["memory-file", "telegram"],
+    "huntSchedule": {
+      "fastmailScan": "every-4-hours",
+      "webScrape": "daily-5am",
+      "priceCheck": "weekly-sunday"
+    }
+  }
+}

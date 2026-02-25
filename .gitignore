@@ -1,0 +1,46 @@
+# Credentials and sensitive files
+credentials/
+.env
+.env.local
+*.key
+*.pem
+
+# Node modules
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Large files
+*.jpg
+*.png
+*.gif
+*.mp4
+*.pdf
+
+# But keep structure
+!memory/.gitkeep
+!logs/.gitkeep

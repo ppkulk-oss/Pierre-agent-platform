@@ -1,0 +1,12 @@
+{
+  "name": "fastmail-sender",
+  "version": "1.0.0",
+  "description": "Fastmail SMTP sender",
+  "main": "index.js",
+  "scripts": {
+    "send": "node index.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.7"
+  }
+}

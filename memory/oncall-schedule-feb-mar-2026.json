@@ -1,0 +1,23 @@
+{
+  "generated": "2026-02-20T18:38:54.947Z",
+  "period": "Feb 16 - Mar 17, 2026",
+  "shifts": [
+    {
+      "dateStr": "February 6, 2026",
+      "month": 2,
+      "day": 6,
+      "ob": "Ades",
+      "r1": "Bruce",
+      "r2": "Haber",
+      "b1": "Kulkarni",
+      "b2": "Meltzer",
+      "assignments": [
+        "B1 Kulkarni"
+      ],
+      "kulkarniRoles": [
+        "B1"
+      ],
+      "hasShift": true
+    }
+  ]
+}

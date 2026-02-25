@@ -1,0 +1,13 @@
+{
+  "name": "google-calendar",
+  "version": "1.0.0",
+  "description": "Google Calendar management skill",
+  "main": "index.js",
+  "scripts": {
+    "list": "node index.js list",
+    "create": "node index.js create"
+  },
+  "dependencies": {
+    "googleapis": "^128.0.0"
+  }
+}
