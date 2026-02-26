@@ -1,375 +1,447 @@
 #!/usr/bin/env python3
 """
-🇯🇵 Japan Family Trip Dashboard
+🇯🇵 Japan Family Trip Dashboard - POLISHED EDITION
 For: Prashant, Tejal, Riya & Lara | April 1-10, 2026
 
-═══════════════════════════════════════════════════════════════════════════════
-🚀 DEPLOYMENT OPTIONS
-═══════════════════════════════════════════════════════════════════════════════
+A modern, professional dashboard with dark/light theme, animations,
+card-based layouts, and mobile-optimized design.
 
-OPTION 1: Streamlit Cloud (FREE - RECOMMENDED) ⭐
-─────────────────────────────────────────────────
-1. Push this file to a GitHub repo
-2. Go to https://share.streamlit.io
-3. Connect your GitHub repo
-4. App will be live at: https://your-app-name.streamlit.app
-5. Share URL with family - they can bookmark it!
-6. Optional: Add secrets.toml for password protection
-
-OPTION 2: Run Locally
-─────────────────────
-1. Install: pip install streamlit plotly pandas
-2. Run: streamlit run scripts/japan-dashboard.py
-3. Opens at http://localhost:8501
-
-OPTION 3: Railway (Custom Domain)
-──────────────────────────────────
-1. Push to GitHub with requirements.txt:
-   streamlit
-   plotly
-   pandas
-2. Connect Railway to GitHub repo
-3. Deploy and get custom domain
-
-═══════════════════════════════════════════════════════════════════════════════
+Run: streamlit run scripts/japan-dashboard-polished.py
 """
 
 import streamlit as st
 import plotly.graph_objects as go
-import pandas as pd
-from datetime import datetime, date
+from datetime import date
 
-# Page config
+# ═══════════════════════════════════════════════════════════════════════════════
+# PAGE CONFIGURATION
+# ═══════════════════════════════════════════════════════════════════════════════
 st.set_page_config(
-    page_title="🇯🇵 Japan Trip 2026",
+    page_title="Japan Trip 2026 | Family Adventure",
     page_icon="🌸",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS for mobile-friendly styling
-st.markdown("""
+# ═══════════════════════════════════════════════════════════════════════════════
+# THEME MANAGEMENT
+# ═══════════════════════════════════════════════════════════════════════════════
+if "theme" not in st.session_state:
+    st.session_state.theme = "dark"
+
+def toggle_theme():
+    st.session_state.theme = "light" if st.session_state.theme == "dark" else "dark"
+
+def get_colors():
+    if st.session_state.theme == "dark":
+        return {
+            "bg": "#0f172a", "card": "#1e293b", "text": "#f8fafc",
+            "muted": "#94a3b8", "border": "#334155",
+            "pink": "#f472b6", "coral": "#fb7185", "purple": "#a78bfa",
+            "blue": "#60a5fa", "green": "#34d399", "yellow": "#fbbf24"
+        }
+    else:
+        return {
+            "bg": "#f8fafc", "card": "#ffffff", "text": "#0f172a",
+            "muted": "#64748b", "border": "#e2e8f0",
+            "pink": "#db2777", "coral": "#e11d48", "purple": "#7c3aed",
+            "blue": "#2563eb", "green": "#059669", "yellow": "#d97706"
+        }
+
+colors = get_colors()
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CUSTOM CSS
+# ═══════════════════════════════════════════════════════════════════════════════
+st.markdown(f"""
 <style>
-    .main-header { font-size: 2.5rem; font-weight: bold; color: #E63946; text-align: center; }
-    .sub-header { font-size: 1.2rem; color: #457B9D; text-align: center; margin-bottom: 20px; }
-    .countdown { font-size: 3rem; font-weight: bold; color: #E63946; text-align: center; }
-    .day-label { font-size: 1rem; color: #666; text-align: center; }
-    .hotel-card { background: #f0f4f8; padding: 15px; border-radius: 10px; margin: 10px 0; }
-    .emergency-box { background: #fff3cd; padding: 15px; border-radius: 10px; border-left: 4px solid #ffc107; }
-    .diet-tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; margin: 2px; }
-    .diet-vegetarian { background: #d4edda; color: #155724; }
-    .diet-picky { background: #fff3cd; color: #856404; }
-    .diet-nobeef { background: #f8d7da; color: #721c24; }
-    .stCheckbox > label { font-size: 1rem !important; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+.stApp {{ background: {colors['bg']}; font-family: 'Inter', sans-serif; }}
+#MainMenu, header, footer, .stDeployButton {{ display: none; }}
+
+/* Hero */
+.hero {{
+    background: linear-gradient(135deg, {colors['pink']}20 0%, {colors['purple']}15 50%, {colors['bg']} 100%);
+    border-radius: 24px;
+    padding: 50px 40px;
+    margin: 20px 0 30px 0;
+    text-align: center;
+    border: 1px solid {colors['border']};
+}}
+.hero-badge {{
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(90deg, {colors['pink']}, {colors['coral']});
+    color: white; padding: 8px 20px; border-radius: 50px;
+    font-size: 0.875rem; font-weight: 600; margin-bottom: 20px;
+}}
+.hero h1 {{
+    font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800;
+    color: {colors['text']}; margin: 0 0 12px 0;
+    background: linear-gradient(90deg, {colors['pink']}, {colors['purple']});
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}}
+.hero p {{ color: {colors['muted']}; font-size: 1.2rem; margin: 0 0 24px 0; }}
+
+/* Family Pills */
+.family-pills {{
+    display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+}}
+.pill {{
+    background: {colors['card']}; border: 1px solid {colors['border']};
+    padding: 10px 18px; border-radius: 50px; color: {colors['text']};
+    font-size: 0.9rem; transition: all 0.3s ease;
+}}
+.pill:hover {{ transform: translateY(-2px); border-color: {colors['pink']}; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }}
+
+/* Countdown */
+.countdown {{
+    display: flex; justify-content: center; gap: 20px; margin: 30px 0;
+}}
+.count-box {{
+    background: {colors['card']}; border: 1px solid {colors['border']};
+    border-radius: 16px; padding: 20px 30px; text-align: center;
+    min-width: 90px; position: relative; overflow: hidden;
+}}
+.count-box::before {{
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, {colors['pink']}, {colors['coral']});
+}}
+.count-number {{
+    font-size: 2.5rem; font-weight: 800;
+    background: linear-gradient(90deg, {colors['pink']}, {colors['coral']});
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}}
+.count-label {{ font-size: 0.75rem; color: {colors['muted']}; text-transform: uppercase; letter-spacing: 1px; }}
+
+/* Cards */
+.card {{
+    background: {colors['card']}; border: 1px solid {colors['border']};
+    border-radius: 20px; padding: 24px; margin-bottom: 16px;
+    transition: all 0.3s ease;
+}}
+.card:hover {{ transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }}
+.card-header {{
+    display: flex; align-items: center; gap: 16px; margin-bottom: 16px;
+}}
+.card-icon {{
+    width: 56px; height: 56px; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.75rem; background: {colors['pink']}20;
+}}
+.card-title {{ font-size: 1.25rem; font-weight: 700; color: {colors['text']}; margin: 0; }}
+.card-subtitle {{ font-size: 0.875rem; color: {colors['muted']}; }}
+
+/* Hotel Cards */
+.hotel-card {{
+    background: {colors['card']}; border: 1px solid {colors['border']};
+    border-radius: 20px; overflow: hidden; margin-bottom: 16px;
+    transition: all 0.3s ease;
+}}
+.hotel-card:hover {{ transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }}
+.hotel-header {{
+    background: linear-gradient(90deg, {colors['pink']}, {colors['coral']});
+    padding: 20px 24px; color: white;
+}}
+.hotel-header h4 {{ margin: 0; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; }}
+.hotel-header h3 {{ margin: 4px 0 0 0; font-size: 1.3rem; }}
+.hotel-body {{ padding: 20px 24px; }}
+
+/* Restaurant Cards */
+.rest-grid {{
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;
+}}
+.rest-card {{
+    background: {colors['card']}; border: 1px solid {colors['border']};
+    border-radius: 16px; padding: 20px; transition: all 0.3s ease;
+}}
+.rest-card:hover {{ transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }}
+.rest-name {{ font-size: 1.1rem; font-weight: 700; color: {colors['text']}; margin: 0 0 4px 0; }}
+.rest-city {{ font-size: 0.75rem; color: {colors['muted']}; text-transform: uppercase; }}
+.rest-type {{
+    display: inline-block; background: {colors['bg']}; padding: 4px 12px;
+    border-radius: 20px; font-size: 0.75rem; color: {colors['muted']}; margin: 8px 0;
+}}
+.diet-tag {{
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; margin-right: 6px;
+}}
+.diet-veg {{ background: {colors['green']}20; color: {colors['green']}; }}
+.diet-picky {{ background: {colors['yellow']}20; color: {colors['yellow']}; }}
+.diet-nobeef {{ background: {colors['coral']}20; color: {colors['coral']}; }}
+
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {{
+    gap: 8px; background: {colors['card']}; padding: 8px;
+    border-radius: 16px; border: 1px solid {colors['border']};
+}}
+.stTabs [data-baseweb="tab"] {{
+    height: 44px; padding: 0 20px; border-radius: 12px;
+    color: {colors['muted']}; font-weight: 500; border: none !important;
+}}
+.stTabs [aria-selected="true"] {{
+    background: linear-gradient(90deg, {colors['pink']}, {colors['coral']}) !important;
+    color: white !important;
+}}
+
+/* Theme Toggle */
+.theme-toggle {{
+    position: fixed; top: 20px; right: 20px; z-index: 1000;
+}}
 </style>
 """, unsafe_allow_html=True)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # DATA
 # ═══════════════════════════════════════════════════════════════════════════════
-
-DEPARTURE_DATE = date(2026, 4, 1)
+DEPARTURE = date(2026, 4, 1)
 
 HOTELS = [
-    {"name": "Royal Park Hotel Iconic Tokyo Shiodome", "city": "Tokyo", "dates": "Apr 1-4", "lat": 35.663, "lon": 139.759, "nights": 3},
-    {"name": "Hakone Kowakien Mikawaya Ryokan", "city": "Hakone", "dates": "Apr 4-5", "lat": 35.239, "lon": 139.046, "nights": 1},
-    {"name": "Cross Hotel Kyoto", "city": "Kyoto", "dates": "Apr 5-7", "lat": 35.006, "lon": 135.766, "nights": 2},
-    {"name": "Hotel Hankyu RESPIRE OSAKA", "city": "Osaka", "dates": "Apr 7-9", "lat": 34.703, "lon": 135.495, "nights": 2},
-    {"name": "Hotel Nikko Narita", "city": "Narita", "dates": "Apr 9-10", "lat": 35.774, "lon": 140.318, "nights": 1},
+    {"city": "Tokyo", "name": "Royal Park Hotel Iconic Shiodome", "dates": "Apr 1-4", "nights": 3, "conf": "6210444904"},
+    {"city": "Hakone", "name": "Mikawaya Ryokan", "dates": "Apr 4-5", "nights": 1, "conf": "Exp: 72068424131155"},
+    {"city": "Kyoto", "name": "Cross Hotel Kyoto", "dates": "Apr 5-7", "nights": 2, "conf": "Exp: 72068669603342"},
+    {"city": "Osaka", "name": "Hotel Hankyu RESPIRE", "dates": "Apr 7-9", "nights": 2, "conf": "Exp: 72068670183986"},
+    {"city": "Narita", "name": "Hotel Nikko Narita", "dates": "Apr 9-10", "nights": 1, "conf": "Exp: 72068692164929"},
 ]
 
-ITINERARY = {
-    1: {"date": "Wed, Apr 1", "title": "✈️ Arrival & Tokyo", "city": "Tokyo", "highlights": ["2:30 PM - Arrive NRT", "4:00 PM - Narita Express to Tokyo", "5:30 PM - Check-in Shiodome", "Evening - Gentle exploration"]},
-    2: {"date": "Thu, Apr 2", "title": "⛩️ Classic Tokyo", "city": "Tokyo", "highlights": ["9:00 AM - Senso-ji Temple", "11:30 AM - Nakamise Street", "2:30 PM - Tokyo Skytree", "Evening - Dinner in Ginza"]},
-    3: {"date": "Fri, Apr 3", "title": "🌟 Pop Culture Day", "city": "Tokyo", "highlights": ["10:00 AM - Meiji Shrine", "12:00 PM - Harajuku/Takeshita St", "3:00 PM - Shibuya Crossing", "3:30 PM - Shibuya Sky"]},
-    4: {"date": "Sat, Apr 4", "title": "🏔️ Tokyo → Hakone", "city": "Hakone", "highlights": ["10:00 AM - Romancecar to Hakone", "12:30 PM - Ryokan check-in", "2:30 PM - Hakone Loop Course", "6:30 PM - Kaiseki dinner"]},
-    5: {"date": "Sun, Apr 5", "title": "🚅 Hakone → Kyoto", "city": "Kyoto", "highlights": ["7:00 AM - Ryokan breakfast", "2:03 PM - Shinkansen to Kyoto", "5:30 PM - Check-in Cross Hotel", "Evening - Gion stroll"]},
-    6: {"date": "Mon, Apr 6", "title": "🎋 Kyoto Temples", "city": "Kyoto", "highlights": ["9:00 AM - Fushimi Inari", "2:00 PM - Kiyomizu-dera", "4:00 PM - Sannenzaka streets", "Evening - Gion dinner"]},
-    7: {"date": "Tue, Apr 7", "title": "🌿 Arashiyama → Osaka", "city": "Osaka", "highlights": ["9:30 AM - Bamboo Grove", "10:30 AM - Tenryu-ji Temple", "3:00 PM - Train to Osaka", "6:00 PM - Dotonbori exploration"]},
-    8: {"date": "Wed, Apr 8", "title": "🎢 Universal Studios", "city": "Osaka", "highlights": ["8:30 AM - Depart for USJ", "9:00 AM - Park opens", "Full day - Rides & Super Nintendo World", "Evening - Return to hotel"]},
-    9: {"date": "Thu, Apr 9", "title": "🏯 Osaka → Narita", "city": "Narita", "highlights": ["10:00 AM - Osaka Castle", "3:00 PM - Train to Narita", "5:00 PM - Check-in Hotel Nikko"]},
-    10: {"date": "Fri, Apr 10", "title": "✈️ Departure", "city": "Narita", "highlights": ["8:00 AM - Breakfast", "9:30 AM - Airport shuttle", "5:15 PM - Flight UA78 to EWR"]},
-}
+ITINERARY = [
+    {"day": 1, "title": "✈️ Arrival & Tokyo", "city": "Tokyo", "date": "Wed, Apr 1",
+     "activities": ["2:30 PM - Land at NRT", "4:00 PM - Narita Express", "5:30 PM - Check-in", "Evening - Explore Shiodome"]},
+    {"day": 2, "title": "⛩️ Classic Tokyo", "city": "Tokyo", "date": "Thu, Apr 2",
+     "activities": ["9:00 AM - Senso-ji Temple", "11:30 AM - Nakamise Street", "2:30 PM - Tokyo Skytree", "Evening - Ginza dinner"]},
+    {"day": 3, "title": "🌟 Pop Culture", "city": "Tokyo", "date": "Fri, Apr 3",
+     "activities": ["10:00 AM - Meiji Shrine", "12:00 PM - Harajuku", "3:00 PM - Shibuya Crossing", "3:30 PM - Shibuya Sky"]},
+    {"day": 4, "title": "🏔️ Tokyo → Hakone", "city": "Hakone", "date": "Sat, Apr 4",
+     "activities": ["10:00 AM - Romancecar", "12:30 PM - Ryokan check-in", "2:30 PM - Hakone Loop", "6:30 PM - Kaiseki dinner"]},
+    {"day": 5, "title": "🚅 Hakone → Kyoto", "city": "Kyoto", "date": "Sun, Apr 5",
+     "activities": ["7:00 AM - Ryokan breakfast", "2:03 PM - Shinkansen", "5:30 PM - Check-in", "Evening - Gion stroll"]},
+    {"day": 6, "title": "🎋 Kyoto Temples", "city": "Kyoto", "date": "Mon, Apr 6",
+     "activities": ["9:00 AM - Fushimi Inari", "2:00 PM - Kiyomizu-dera", "4:00 PM - Sannenzaka", "Evening - Gion dinner"]},
+    {"day": 7, "title": "🌿 Arashiyama → Osaka", "city": "Osaka", "date": "Tue, Apr 7",
+     "activities": ["9:30 AM - Bamboo Grove", "10:30 AM - Tenryu-ji", "3:00 PM - Train to Osaka", "6:00 PM - Dotonbori"]},
+    {"day": 8, "title": "🎢 Universal Studios", "city": "Osaka", "date": "Wed, Apr 8",
+     "activities": ["8:30 AM - Depart for USJ", "9:00 AM - Park opens", "Full day - Rides & Nintendo World"]},
+    {"day": 9, "title": "🏯 Osaka → Narita", "city": "Narita", "date": "Thu, Apr 9",
+     "activities": ["10:00 AM - Osaka Castle", "3:00 PM - Train to Narita", "5:00 PM - Check-in"]},
+    {"day": 10, "title": "✈️ Departure", "city": "Narita", "date": "Fri, Apr 10",
+     "activities": ["8:00 AM - Breakfast", "9:30 AM - Airport shuttle", "5:15 PM - Flight UA78"]},
+]
 
 RESTAURANTS = [
-    {"name": "Sushi Zanmai", "city": "Tokyo", "type": "Conveyor Sushi", "diet": "all", "notes": "Fun for kids, English menu"},
-    {"name": "CoCo Ichibanya", "city": "Tokyo", "type": "Japanese Curry", "diet": "all", "notes": "Customizable spice, kid-friendly"},
-    {"name": "Daikokuya Tempura", "city": "Tokyo", "type": "Tempura", "diet": "vegetarian", "notes": "Historic shop near Senso-ji"},
-    {"name": "Ichiran Ramen", "city": "Tokyo", "type": "Ramen", "diet": "all", "notes": "Private booths, customizable"},
-    {"name": "Rainbow Pancake", "city": "Tokyo", "type": "Cafe", "diet": "all", "notes": "Instagram-famous pancakes"},
-    {"name": "Hatsuhana Soba", "city": "Hakone", "type": "Soba", "diet": "vegetarian", "notes": "100+ year old soba shop"},
-    {"name": "Nishiki Market", "city": "Kyoto", "type": "Food Market", "diet": "all", "notes": "Variety for everyone"},
-    {"name": "Shoraian", "city": "Kyoto", "type": "Tofu Cuisine", "diet": "vegetarian", "notes": "Bamboo forest setting - great for Riya"},
-    {"name": "Kani Dōraku", "city": "Osaka", "type": "Crab", "diet": "nobeef", "notes": "Famous giant crab sign"},
-    {"name": "Takoyaki Juhachiban", "city": "Osaka", "type": "Takoyaki", "diet": "all", "notes": "Osaka specialty"},
-    {"name": "Mario Café", "city": "Osaka", "type": "Themed Cafe", "diet": "all", "notes": "Inside USJ - expect waits"},
-    {"name": "Three Broomsticks", "city": "Osaka", "type": "Western", "diet": "all", "notes": "Harry Potter themed - good for Lara"},
-]
-
-PACKING_ITEMS = [
-    ("T-shirts/tanks (4-5)", "clothing"), ("Long-sleeve shirts (2-3)", "clothing"), ("Light sweater (2)", "clothing"),
-    ("Light jacket", "clothing"), ("Comfortable walking shoes", "clothing"), ("Slip-on shoes", "clothing"),
-    ("Socks (10 pairs, no holes!)", "clothing"), ("Rain jacket/umbrella", "clothing"),
-    ("Toothbrush & toothpaste", "toiletries"), ("Deodorant", "toiletries"), ("Sunscreen", "toiletries"),
-    ("Prescription meds", "health"), ("Motion sickness pills", "health"), ("Allergy medication", "health"),
-    ("Phone charger", "electronics"), ("Power bank", "electronics"), ("Headphones", "electronics"),
-    ("Passports", "documents"), ("Flight confirmations (JWT23D)", "documents"), ("Hotel confirmations", "documents"),
-    ("Travel insurance", "documents"), ("Credit cards + notify banks", "documents"), ("Cash (yen)", "documents"),
-    ("Day backpack", "gear"), ("Reusable water bottle", "gear"), ("Hand wipes", "gear"),
-    ("Snacks for picky eater", "gear"), ("Journal for memories", "gear"),
+    {"name": "Sushi Zanmai", "city": "Tokyo", "type": "Conveyor Sushi", "diet": ["all"], "note": "Fun for kids, English menu"},
+    {"name": "CoCo Ichibanya", "city": "Tokyo", "type": "Japanese Curry", "diet": ["all"], "note": "Customizable spice"},
+    {"name": "Daikokuya Tempura", "city": "Tokyo", "type": "Tempura", "diet": ["vegetarian"], "note": "Historic shop near Senso-ji"},
+    {"name": "Ichiran Ramen", "city": "Tokyo", "type": "Ramen", "diet": ["all"], "note": "Private booths, customizable"},
+    {"name": "Rainbow Pancake", "city": "Tokyo", "type": "Cafe", "diet": ["all", "picky"], "note": "Instagram-famous pancakes"},
+    {"name": "Hatsuhana Soba", "city": "Hakone", "type": "Soba", "diet": ["vegetarian"], "note": "100+ year old soba shop"},
+    {"name": "Nishiki Market", "city": "Kyoto", "type": "Food Market", "diet": ["all"], "note": "Variety for everyone"},
+    {"name": "Shoraian", "city": "Kyoto", "type": "Tofu Cuisine", "diet": ["vegetarian"], "note": "Bamboo forest setting"},
+    {"name": "Kani Dōraku", "city": "Osaka", "type": "Crab", "diet": ["nobeef"], "note": "Famous giant crab sign"},
+    {"name": "Takoyaki Juhachiban", "city": "Osaka", "type": "Takoyaki", "diet": ["all"], "note": "Osaka specialty"},
+    {"name": "Mario Café", "city": "Osaka", "type": "Themed Cafe", "diet": ["all"], "note": "Inside USJ"},
+    {"name": "Three Broomsticks", "city": "Osaka", "type": "Western", "diet": ["all", "picky"], "note": "Harry Potter themed"},
 ]
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# HELPER FUNCTIONS
+# HERO SECTION
 # ═══════════════════════════════════════════════════════════════════════════════
+st.markdown("""
+<div class="hero">
+    <div class="hero-badge">🌸 April 1-10, 2026</div>
+    <h1>Japan Family Adventure</h1>
+    <p>Prashant, Tejal, Riya & Lara • 10 Days, 5 Cities</p>
+    <div class="family-pills">
+        <span class="pill">👨‍💼 Prashant</span>
+        <span class="pill">👩‍💼 Tejal <small>(no beef)</small></span>
+        <span class="pill">👧 Riya <small>(vegetarian)</small></span>
+        <span class="pill">👧 Lara <small>(picky eater)</small></span>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-def get_countdown():
-    today = date.today()
-    days_left = (DEPARTURE_DATE - today).days
-    return days_left
+# Countdown
+days_left = (DEPARTURE - date.today()).days
+col1, col2, col3, col4, col5 = st.columns([1, 1, 0.5, 1, 1])
+with col2:
+    st.markdown(f"""
+    <div class="count-box">
+        <div class="count-number">{days_left}</div>
+        <div class="count-label">Days</div>
+    </div>
+    """, unsafe_allow_html=True)
+with col3:
+    st.markdown('<div style="font-size:2rem;text-align:center;color:#f472b6;padding-top:20px">:</div>', unsafe_allow_html=True)
+with col4:
+    st.markdown("""
+    <div class="count-box">
+        <div class="count-number">5</div>
+        <div class="count-label">Cities</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-def create_map():
-    fig = go.Figure()
-    
-    # Add route line
-    lats = [h["lat"] for h in HOTELS]
-    lons = [h["lon"] for h in HOTELS]
-    
-    fig.add_trace(go.Scattermapbox(
-        lat=lats, lon=lons, mode='lines+markers',
-        line=dict(color='#E63946', width=3),
-        marker=dict(size=15, color='#457B9D'),
-        text=[f"{h['city']}: {h['name']}" for h in HOTELS],
-        hovertemplate='<b>%{text}</b><extra></extra>',
-        name='Route'
-    ))
-    
-    # City labels
-    for i, h in enumerate(HOTELS):
-        fig.add_annotation(
-            x=h["lon"], y=h["lat"],
-            text=h["city"],
-            showarrow=False,
-            yshift=20,
-            font=dict(size=12, color="#333")
-        )
-    
-    fig.update_layout(
-        mapbox=dict(
-            style="carto-positron",
-            center=dict(lat=35.5, lon=138),
-            zoom=6
-        ),
-        showlegend=False,
-        margin=dict(l=0, r=0, t=0, b=0),
-        height=400
-    )
-    return fig
+# Theme Toggle
+col1, col2 = st.columns([6, 1])
+with col2:
+    if st.button("🌙 Toggle Theme" if st.session_state.theme == "dark" else "☀️ Toggle Theme"):
+        toggle_theme()
+        st.rerun()
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# MAIN APP
+# TABS
 # ═══════════════════════════════════════════════════════════════════════════════
+tabs = st.tabs(["📅 Itinerary", "🏨 Hotels", "🍜 Restaurants", "✈️ Flights & Info"])
 
-def main():
-    # Header
-    st.markdown('<div class="main-header">🇯🇵 Japan Family Adventure 2026</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sub-header">Prashant, Tejal, Riya & Lara | April 1-10</div>', unsafe_allow_html=True)
+# ITINERARY TAB
+with tabs[0]:
+    st.subheader("10-Day Journey")
     
-    # Countdown
-    days_left = get_countdown()
-    col1, col2, col3 = st.columns([1, 2, 1])
+    city_filter = st.selectbox("Filter by city:", ["All Cities", "Tokyo", "Hakone", "Kyoto", "Osaka", "Narita"])
+    
+    for day in ITINERARY:
+        if city_filter != "All Cities" and day["city"] != city_filter:
+            continue
+            
+        with st.expander(f"**Day {day['day']}** • {day['title']} • {day['date']}"):
+            st.markdown(f"**📍 {day['city']}**")
+            for act in day["activities"]:
+                st.markdown(f"• {act}")
+
+# HOTELS TAB
+with tabs[1]:
+    st.subheader("Where You're Staying")
+    
+    for hotel in HOTELS:
+        st.markdown(f"""
+        <div class="hotel-card">
+            <div class="hotel-header">
+                <h4>{hotel['city']}</h4>
+                <h3>{hotel['name']}</h3>
+            </div>
+            <div class="hotel-body">
+                <div style="display:flex;gap:24px;flex-wrap:wrap;">
+                    <span>📅 <b>{hotel['dates']}</b></span>
+                    <span>🌙 {hotel['nights']} night{'s' if hotel['nights'] > 1 else ''}</span>
+                    <span>🔖 {hotel['conf']}</span>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+# RESTAURANTS TAB
+with tabs[2]:
+    st.subheader("Where to Eat")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        rest_city = st.selectbox("City:", ["All", "Tokyo", "Hakone", "Kyoto", "Osaka"])
     with col2:
-        st.markdown(f'<div class="countdown">{days_left}</div>', unsafe_allow_html=True)
-        st.markdown('<div class="day-label">days until departure 🌸</div>', unsafe_allow_html=True)
+        diet_filter = st.selectbox("Dietary:", ["All", "Vegetarian (Riya)", "Picky (Lara)", "No Beef (Tejal)"])
     
-    st.divider()
+    st.markdown('<div class="rest-grid">', unsafe_allow_html=True)
     
-    # Tabs
-    tabs = st.tabs(["📅 Itinerary", "🗺️ Map", "🍜 Restaurants", "🎒 Packing", "📞 Quick Ref"])
-    
-    # ═══════════════════════════════════════════════════════════════════════════
-    # TAB 1: ITINERARY
-    # ═══════════════════════════════════════════════════════════════════════════
-    with tabs[0]:
-        st.subheader("10-Day Adventure")
-        
-        # City filter
-        city_filter = st.selectbox("Filter by city:", ["All", "Tokyo", "Hakone", "Kyoto", "Osaka", "Narita"])
-        
-        for day_num, day_data in ITINERARY.items():
-            if city_filter != "All" and day_data["city"] != city_filter:
-                continue
+    for r in RESTAURANTS:
+        if rest_city != "All" and r["city"] != rest_city:
+            continue
+        if diet_filter == "Vegetarian (Riya)" and "vegetarian" not in r["diet"] and "all" not in r["diet"]:
+            continue
+        if diet_filter == "Picky (Lara)" and "picky" not in r["diet"] and "all" not in r["diet"]:
+            continue
+        if diet_filter == "No Beef (Tejal)" and "nobeef" not in r["diet"] and "all" not in r["diet"] and "vegetarian" not in r["diet"]:
+            continue
             
-            with st.expander(f"Day {day_num}: {day_data['title']}"):
-                st.write(f"**📍 {day_data['city']} | {day_data['date']}**")
-                for highlight in day_data["highlights"]:
-                    st.write(f"• {highlight}")
-    
-    # ═══════════════════════════════════════════════════════════════════════════
-    # TAB 2: MAP
-    # ═══════════════════════════════════════════════════════════════════════════
-    with tabs[1]:
-        st.subheader("Tokyo → Hakone → Kyoto → Osaka → Narita")
-        st.plotly_chart(create_map(), use_container_width=True)
+        diet_html = ""
+        if "vegetarian" in r["diet"]:
+            diet_html += '<span class="diet-tag diet-veg">🌿 Veg</span>'
+        if "picky" in r["diet"]:
+            diet_html += '<span class="diet-tag diet-picky">👧 Kid</span>'
+        if "nobeef" in r["diet"]:
+            diet_html += '<span class="diet-tag diet-nobeef">🚫🥩 No Beef</span>'
+        if "all" in r["diet"] and not any(d in ["vegetarian", "picky", "nobeef"] for d in r["diet"]):
+            diet_html += '<span class="diet-tag diet-veg">✓ All</span>'
         
-        st.subheader("🏨 Hotels")
-        for hotel in HOTELS:
-            st.markdown(f"""
-            <div class="hotel-card">
-                <b>{hotel['city']}</b> ({hotel['dates']})<br>
-                {hotel['name']}<br>
-                <small>🌙 {hotel['nights']} night{'s' if hotel['nights'] > 1 else ''}</small>
+        st.markdown(f"""
+        <div class="rest-card">
+            <h4 class="rest-name">{r['name']}</h4>
+            <div class="rest-city">{r['city']}</div>
+            <span class="rest-type">{r['type']}</span>
+            <p style="color:{colors['muted']};margin:8px 0;font-size:0.9rem;">{r['note']}</p>
+            <div>{diet_html}</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# FLIGHTS & INFO TAB
+with tabs[3]:
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown(f"""
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">✈️</div>
+                <div>
+                    <h3 class="card-title">Flights</h3>
+                    <div class="card-subtitle">Confirmation: JWT23D</div>
+                </div>
             </div>
-            """, unsafe_allow_html=True)
-    
-    # ═══════════════════════════════════════════════════════════════════════════
-    # TAB 3: RESTAURANTS
-    # ═══════════════════════════════════════════════════════════════════════════
-    with tabs[2]:
-        st.subheader("Family-Friendly Dining")
-        
-        # Diet legend
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.markdown('<span class="diet-tag diet-vegetarian">✓ Riya (Vegetarian)</span>', unsafe_allow_html=True)
-        with col2:
-            st.markdown('<span class="diet-tag diet-picky">✓ Lara (Picky)</span>', unsafe_allow_html=True)
-        with col3:
-            st.markdown('<span class="diet-tag diet-nobeef">✓ Tejal (No Beef)</span>', unsafe_allow_html=True)
-        
-        st.write("")
-        
-        # Filters
-        col1, col2 = st.columns(2)
-        with col1:
-            rest_city = st.selectbox("City:", ["All", "Tokyo", "Hakone", "Kyoto", "Osaka"], key="rest_city")
-        with col2:
-            diet_filter = st.selectbox("Dietary need:", ["All", "Vegetarian (Riya)", "Kid-friendly (Lara)", "No beef (Tejal)"], key="diet_filter")
-        
-        # Filter restaurants
-        filtered = RESTAURANTS
-        if rest_city != "All":
-            filtered = [r for r in filtered if r["city"] == rest_city]
-        if diet_filter == "Vegetarian (Riya)":
-            filtered = [r for r in filtered if r["diet"] in ["vegetarian", "all"]]
-        elif diet_filter == "Kid-friendly (Lara)":
-            filtered = [r for r in filtered if "Lara" in r["notes"] or r["type"] in ["Cafe", "Western", "Food Market"]]
-        elif diet_filter == "No beef (Tejal)":
-            filtered = [r for r in filtered if r["diet"] in ["nobeef", "all", "vegetarian"]]
-        
-        # Display
-        for r in filtered:
-            tags = ""
-            if r["diet"] == "vegetarian":
-                tags += '<span class="diet-tag diet-vegetarian">Veg</span> '
-            if r["diet"] == "nobeef":
-                tags += '<span class="diet-tag diet-nobeef">No Beef</span> '
-            
-            st.markdown(f"""
-            <div class="hotel-card">
-                <b>{r['name']}</b> {tags}<br>
-                <small>{r['city']} • {r['type']}</small><br>
-                <small>💡 {r['notes']}</small>
+            <div style="color:{colors['muted']};">
+                <p><b>Outbound UA79</b><br>
+                Mar 31, 11:25 AM EWR → Apr 1, 2:30 PM NRT</p>
+                <p><b>Return UA78</b><br>
+                Apr 10, 5:15 PM NRT → 5:00 PM EWR</p>
             </div>
-            """, unsafe_allow_html=True)
-    
-    # ═══════════════════════════════════════════════════════════════════════════
-    # TAB 4: PACKING
-    # ═══════════════════════════════════════════════════════════════════════════
-    with tabs[3]:
-        st.subheader("📋 Packing Checklist")
+        </div>
+        """, unsafe_allow_html=True)
         
-        # Initialize session state for checkboxes
-        if "packed" not in st.session_state:
-            st.session_state.packed = set()
-        
-        # Progress
-        total = len(PACKING_ITEMS)
-        packed_count = len(st.session_state.packed)
-        progress = packed_count / total
-        
-        col1, col2 = st.columns([3, 1])
-        with col1:
-            st.progress(progress)
-        with col2:
-            st.write(f"**{packed_count}/{total}** items")
-        
-        # Categories
-        categories = {"clothing": "👕 Clothing", "toiletries": "🧴 Toiletries", 
-                     "health": "💊 Health", "electronics": "📱 Electronics",
-                     "documents": "📄 Documents", "gear": "🎒 Gear"}
-        
-        for cat_key, cat_name in categories.items():
-            with st.expander(cat_name):
-                items = [i for i in PACKING_ITEMS if i[1] == cat_key]
-                for item, _ in items:
-                    key = f"pack_{item}"
-                    checked = item in st.session_state.packed
-                    if st.checkbox(item, value=checked, key=key):
-                        st.session_state.packed.add(item)
-                    else:
-                        st.session_state.packed.discard(item)
-        
-        if st.button("Clear All"):
-            st.session_state.packed = set()
-            st.rerun()
-    
-    # ═══════════════════════════════════════════════════════════════════════════
-    # TAB 5: QUICK REFERENCE
-    # ═══════════════════════════════════════════════════════════════════════════
-    with tabs[4]:
-        st.subheader("🚨 Emergency & Essential Info")
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.markdown("""
-            <div class="emergency-box">
-                <h4>🚨 Emergency Numbers</h4>
-                <b>Police:</b> 110<br>
+        st.markdown(f"""
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🚨</div>
+                <div>
+                    <h3 class="card-title">Emergency</h3>
+                </div>
+            </div>
+            <div style="color:{colors['muted']};">
+                <p><b>Police:</b> 110<br>
                 <b>Fire/Ambulance:</b> 119<br>
-                <b>Tokyo English Hotline:</b> 03-3201-3330
+                <b>Tokyo English:</b> 03-3201-3330</p>
             </div>
-            """, unsafe_allow_html=True)
-            
-            st.markdown("""
-            <div class="hotel-card">
-                <h4>✈️ Flights (Conf: JWT23D)</h4>
-                <b>Outbound UA79:</b><br>
-                Mar 31, 11:25 AM EWR → Apr 1, 2:30 PM NRT<br><br>
-                <b>Return UA78:</b><br>
-                Apr 10, 5:15 PM NRT → 5:00 PM EWR
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown(f"""
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">💡</div>
+                <div>
+                    <h3 class="card-title">Essential Tips</h3>
+                </div>
             </div>
-            """, unsafe_allow_html=True)
-        
-        with col2:
-            st.markdown("""
-            <div class="hotel-card">
-                <h4>💡 Essential Tips</h4>
+            <div style="color:{colors['muted']};">
                 • Carry ¥10,000-20,000 cash/day<br>
                 • 7-Eleven ATMs accept foreign cards<br>
-                • Get Suica/Pasmo IC cards at airport<br>
-                • Download Google Translate (offline)<br>
-                • Pocket WiFi reserved - pick up at NRT
+                • Get Suica/Pasmo at airport<br>
+                • Download Google Translate offline<br>
+                • Pocket WiFi pickup at NRT
             </div>
-            """, unsafe_allow_html=True)
-            
-            st.markdown("""
-            <div class="hotel-card">
-                <h4>👨‍👩‍👧‍👧 Family Diet Notes</h4>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown(f"""
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">👨‍👩‍👧‍👧</div>
+                <div>
+                    <h3 class="card-title">Family Notes</h3>
+                </div>
+            </div>
+            <div style="color:{colors['muted']};">
                 <b>Riya (14):</b> Mostly vegetarian, eats chicken<br>
                 <b>Lara (12):</b> Picky, prefers bland foods<br>
                 <b>Tejal:</b> Seafood/chicken, no beef<br>
                 <b>Prashant:</b> No restrictions
             </div>
-            """, unsafe_allow_html=True)
-        
-        st.subheader("🏨 Hotel Confirmations")
-        hotel_df = pd.DataFrame([
-            {"City": h["city"], "Hotel": h["name"], "Dates": h["dates"], "Nights": h["nights"]}
-            for h in HOTELS
-        ])
-        st.dataframe(hotel_df, use_container_width=True, hide_index=True)
-
-if __name__ == "__main__":
-    main()
+        </div>
+        """, unsafe_allow_html=True)
