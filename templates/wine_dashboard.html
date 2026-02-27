@@ -287,6 +287,31 @@
             position: relative;
         }
 
+        /* WINE LABEL IMAGE */
+        .wine-label {
+            position: fixed;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 200px;
+            height: auto;
+            z-index: 50;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+        }
+
+        .wine-label.visible {
+            opacity: 1;
+        }
+
+        .wine-label img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
         /* COLLECTION STATS SECTION */
         .stats-section {
             background: var(--cream);
@@ -392,6 +417,18 @@
     <!-- FIXED ROTATING BOTTLE -->
     <div class="bottle-container">
         <div class="wine-bottle" id="rotatingBottle"></div>
+    </div>
+
+    <!-- WINE LABELS CONTAINER -->
+    <div id="wineLabels">
+        {% for wine in wines %}
+        {% if wine.label_image %}
+        <div class="wine-label" data-index="{{ loop.index0 }}" id="label-{{ loop.index0 }}">
+            <img src="{{ wine.label_image }}" alt="{{ wine.producer }} {{ wine.wine_name }} label" 
+                 onerror="this.style.display='none'">
+        </div>
+        {% endif %}
+        {% endfor %}
     </div>
 
     <!-- NAV -->
@@ -520,6 +557,32 @@
             const opacity = 1 - (scrollPercent * 0.3); // Fade slightly as you scroll
             bottle.style.opacity = Math.max(0.3, opacity);
         });
+
+        // WINE LABEL SCROLL VISIBILITY
+        const wineSections = document.querySelectorAll('.wine-section');
+        const wineLabels = document.querySelectorAll('.wine-label');
+        
+        function updateLabels() {
+            const scrollY = window.scrollY + (window.innerHeight / 2);
+            
+            wineSections.forEach((section, index) => {
+                const rect = section.getBoundingClientRect();
+                const sectionMiddle = rect.top + (rect.height / 2);
+                const isInView = Math.abs(sectionMiddle - (window.innerHeight / 2)) < (window.innerHeight / 2);
+                
+                const label = document.getElementById(`label-${index}`);
+                if (label) {
+                    if (isInView) {
+                        label.classList.add('visible');
+                    } else {
+                        label.classList.remove('visible');
+                    }
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateLabels);
+        updateLabels(); // Initial check
     </script>
 </body>
 </html>
