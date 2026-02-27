@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍷 Wine Cellar | Prashant's Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-wine: #1a0a0f;
+            --wine-light: #2d1a1f;
+            --burgundy: #722f37;
+            --gold: #c9a227;
+            --gold-soft: #d4af37;
+            --cream: #faf8f5;
+            --cream-dark: #f0ede8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--deep-wine);
+            font-family: 'Inter', sans-serif;
+            color: var(--cream);
+            min-height: 100vh;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #1a0a0f 0%, #2d1a1f 50%, #3d1f2f 100%);
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(114,47,55,0.3) 0%, transparent 60%);
+            border-radius: 50%;
+        }
+
+        .hero-pretitle {
+            color: var(--gold);
+            font-size: 14px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .hero-subtitle {
+            color: rgba(255,255,255,0.7);
+            font-size: 18px;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* MAIN CONTENT */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* ADD WINE FORM */
+        .add-section {
+            background: linear-gradient(135deg, #2d1a1f, #3d1f2f);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(201,162,39,0.2);
+        }
+
+        .add-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--gold);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 8px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+            color: var(--deep-wine);
+            border: none;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201,162,39,0.3);
+        }
+
+        /* WINE GRID */
+        .wines-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .wine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .wine-card {
+            background: linear-gradient(145deg, #2d1a1f, #231016);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .wine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-color: rgba(201,162,39,0.3);
+        }
+
+        .wine-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .wine-producer {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .wine-vintage {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.05);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .wine-name {
+            font-size: 16px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 10px;
+        }
+
+        .wine-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 15px;
+        }
+
+        .wine-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rating-score {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .rating-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .wine-notes {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+            font-style: italic;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .empty-state h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-pretitle">🍷 The Collection</div>
+        <h1>Wine Cellar</h1>
+        <p class="hero-subtitle">Every bottle tells a story</p>
+        
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-number">{{ wines|length }}</div>
+                <div class="stat-label">Wines Tasted</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">{% set total = namespace(value=0) %}{% for w in wines %}{% set total.value = total.value + (w.quantity or 0) %}{% endfor %}{{ total.value }}</div>
+                <div class="stat-label">Bottles</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">{% set avg = namespace(value=0, count=0) %}{% for w in wines %}{% if w.rating %}{% set avg.value = avg.value + w.rating %}{% set avg.count = avg.count + 1 %}{% endif %}{% endfor %}{% if avg.count > 0 %}{{ (avg.value / avg.count)|round|int }}{% else %}-{% endif %}</div>
+                <div class="stat-label">Avg Rating</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- ADD WINE FORM -->
+        <div class="add-section">
+            <h2>📝 Add New Wine</h2>
+            <form action="/add" method="POST">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Producer *</label>
+                        <input type="text" name="producer" placeholder="e.g., Domaine de la Romanée-Conti" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Wine Name *</label>
+                        <input type="text" name="wine_name" placeholder="e.g., La Tâche" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Vintage</label>
+                        <input type="number" name="vintage" placeholder="e.g., 2019" min="1900" max="2030">
+                    </div>
+                    <div class="form-group">
+                        <label>Region</label>
+                        <input type="text" name="region" placeholder="e.g., Côte de Nuits">
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text" name="country" placeholder="e.g., France">
+                    </div>
+                    <div class="form-group">
+                        <label>Grape Variety</label>
+                        <input type="text" name="grape_variety" placeholder="e.g., Pinot Noir">
+                    </div>
+                    <div class="form-group">
+                        <label>Date Tasted</label>
+                        <input type="date" name="date_tasted">
+                    </div>
+                    <div class="form-group">
+                        <label>Rating (0-100)</label>
+                        <input type="number" name="rating" placeholder="e.g., 95" min="0" max="100">
+                    </div>
+                    <div class="form-group">
+                        <label>Price Paid ($)</label>
+                        <input type="number" name="price_paid" placeholder="e.g., 250" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" name="quantity" value="1" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Source</label>
+                        <input type="text" name="source" placeholder="e.g., K&L Wine Merchants">
+                    </div>
+                    <div class="form-group">
+                        <label>Drink By</label>
+                        <input type="date" name="drink_by">
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label>Tasting Notes</label>
+                        <textarea name="tasting_notes" placeholder="Your impressions, aromas, taste, finish..."></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">Add to Cellar 🍷</button>
+            </form>
+        </div>
+
+        <!-- WINE LIST -->
+        <div class="wines-section">
+            <h2>Recent Tastings</h2>
+            {% if wines %}
+            <div class="wine-grid">
+                {% for wine in wines %}
+                <a href="/wine/{{ wine.id }}" class="wine-card">
+                    <div class="wine-header">
+                        <div class="wine-producer">{{ wine.producer }}</div>
+                        {% if wine.vintage %}
+                        <div class="wine-vintage">{{ wine.vintage }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="wine-name">{{ wine.wine_name }}</div>
+                    <div class="wine-meta">
+                        {% if wine.region %}<span>📍 {{ wine.region }}</span>{% endif %}
+                        {% if wine.country %}<span>🇫🇷 {{ wine.country }}</span>{% endif %}
+                        {% if wine.grape_variety %}<span>🍇 {{ wine.grape_variety }}</span>{% endif %}
+                    </div>
+                    {% if wine.rating %}
+                    <div class="wine-rating">
+                        <div class="rating-score">{{ wine.rating }}</div>
+                        <div class="rating-label">Points</div>
+                    </div>
+                    {% endif %}
+                    {% if wine.tasting_notes %}
+                    <div class="wine-notes">"{{ wine.tasting_notes[:100] }}{% if wine.tasting_notes|length > 100 %}...{% endif %}"</div>
+                    {% endif %}
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <h3>Your cellar is empty</h3>
+                <p>Add your first wine above to start your collection.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

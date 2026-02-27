@@ -107,7 +107,16 @@
 - **2026-02-06**: Never claim to make phone calls without VoIP enabled
 - **2026-02-07**: Always verify attachments BEFORE answering (flight time disaster)
 - **2026-02-08**: Set actual reminders when promising to ping about meds
+- **2026-02-27**: **Streamlit ≠ Flask** — For custom designed UIs with full CSS control, use Flask + Jinja2 templates. Streamlit sanitizes CSS heavily even with `unsafe_allow_html=True`. Flask serves raw HTML without restrictions.
 - **General**: Say "I don't know" instead of hallucinating confirmation numbers
+
+## Technical Reference
+### Web Dashboard Deployment (Railway)
+**For custom-designed dashboards with animations/gradients:**
+- Use **Flask** + `templates/index.html` + Gunicorn
+- Structure: `app.py`, `templates/`, `requirements.txt` (flask, gunicorn), `railway.json`
+- Never use Streamlit for creative/design-heavy UIs — it's built for data apps, not custom styling
+- Railway auto-detects project type by files in root (package.json = Node, requirements.txt = Python)
 
 ## Movies to Watch
 - **The Rover** - Added Feb 25, 2026
