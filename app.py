@@ -108,7 +108,18 @@ def wine_dashboard():
     conn = get_wine_db()
     wines = conn.execute('SELECT * FROM wines ORDER BY date_tasted DESC').fetchall()
     conn.close()
-    return render_template('wine_dashboard.html', wines=wines)
+    
+    # Build label URLs for wines without images
+    wine_list = []
+    for wine in wines:
+        wine_dict = dict(wine)
+        if not wine_dict.get('label_image'):
+            # Use wine-searcher label lookup as fallback
+            search_query = f"{wine_dict['producer']} {wine_dict['wine_name']}".replace(' ', '-').lower()
+            wine_dict['label_image'] = f"https://images.vivino.com/thumbs/default_label.jpg"
+        wine_list.append(wine_dict)
+    
+    return render_template('wine_dashboard.html', wines=wine_list)
 
 @app.route('/wine/add', methods=['POST'])
 def add_wine():
