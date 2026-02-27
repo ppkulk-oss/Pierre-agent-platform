@@ -95,6 +95,7 @@
                 inset 0 0 30px rgba(0,0,0,0.2);
             opacity: 0;
             transition: opacity 0.8s ease;
+            backface-visibility: hidden;
         }
 
         .bottle-label.visible {
@@ -105,6 +106,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            /* Prevent mirroring from parent rotation */
+            transform: scaleX(1);
         }
 
         /* FULL SCREEN SECTIONS */
@@ -516,6 +519,7 @@
         const bottle = document.getElementById('rotatingBottle');
         let lastScrollY = window.scrollY;
         let rotation = 0;
+        const labels = document.querySelectorAll('.bottle-label');
 
         function updateBottle() {
             const scrollY = window.scrollY;
@@ -527,12 +531,18 @@
             // Add subtle floating animation
             const floatY = Math.sin(Date.now() / 2000) * 10;
             
+            // Rotate bottle
             bottle.style.transform = `translateY(${floatY}px) rotateY(${rotation}deg)`;
+            
+            // Counter-rotate labels so they always face forward (not mirrored)
+            labels.forEach(label => {
+                label.style.transform = `translate(-50%, -50%) translateZ(10px) rotateY(${-rotation}deg)`;
+            });
             
             lastScrollY = scrollY;
             requestAnimationFrame(updateBottle);
         }
-
+        
         // Start animation
         updateBottle();
 
