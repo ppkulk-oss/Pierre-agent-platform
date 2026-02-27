@@ -11,11 +11,12 @@
 
 ## Wine Preferences
 - **Burgundy enthusiast** - loves Bonnes-Mares (Grand Cru)
-- **Hunting**: Thierry Allemand Cornas Reynard (Northern Rhône Syrah)
+- **Hunting**: Thierry Allemand Cornas Reynard (Northern Rhône Syrah) — *on hold until fall 2026*
 - **Collection**: Has Dugat-Py La Petite Levrière
 - **Style**: Terroir-driven, structured wines - no fruit bombs
 - **No cellar** - drinks by the bottle, prefers young-drinking wines
 - **Flemington source** mentioned for wine purchases
+- **Deal Hunter**: Looking for exceptional value buys (e.g., 2006 Haut-Brion at $450 — benchmark for "amazing deals")
 
 ## Travel
 ### Beaver Creek, CO (Feb 7-11, 2026)

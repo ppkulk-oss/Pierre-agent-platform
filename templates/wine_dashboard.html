@@ -306,7 +306,7 @@
         <!-- ADD WINE FORM -->
         <div class="add-section">
             <h2>📝 Add New Wine</h2>
-            <form action="/add" method="POST">
+            <form action="/wine/add" method="POST">
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Producer *</label>
@@ -371,7 +371,7 @@
             {% if wines %}
             <div class="wine-grid">
                 {% for wine in wines %}
-                <a href="/wine/{{ wine.id }}" class="wine-card">
+                <a href="/wine/{{ wine.id }}" class="wine-card" style="text-decoration: none;">
                     <div class="wine-header">
                         <div class="wine-producer">{{ wine.producer }}</div>
                         {% if wine.vintage %}

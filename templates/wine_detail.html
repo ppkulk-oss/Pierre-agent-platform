@@ -183,7 +183,7 @@
     </style>
 </head>
 <body>
-    <a href="/" class="back-btn">← Back to Cellar</a>
+    <a href="/wine" class="back-btn">← Back to Cellar</a>
     
     <div class="hero">
         <div class="hero-producer">{{ wine.producer }}</div>
@@ -262,8 +262,8 @@
         </div>
 
         <div class="actions">
-            <a href="/" class="btn btn-back">← Back to Cellar</a>
-            <form action="/delete/{{ wine.id }}" method="POST" style="display: inline;" onsubmit="return confirm('Delete this wine?');">
+            <a href="/wine" class="btn btn-back">← Back to Cellar</a>
+            <form action="/wine/delete/{{ wine.id }}" method="POST" style="display: inline;" onsubmit="return confirm('Delete this wine?');">
                 <button type="submit" class="btn btn-delete">🗑 Delete</button>
             </form>
         </div>
