@@ -83,9 +83,16 @@ def get_wine_db():
     return conn
 
 # ============================================================
-# JAPAN ROUTES
+# PORTAL / ROOT
 # ============================================================
 @app.route('/')
+def portal():
+    return render_template('portal.html')
+
+# ============================================================
+# JAPAN ROUTES
+# ============================================================
+@app.route('/japan')
 def japan():
     departure = date(2026, 4, 1)
     days_left = (departure - date.today()).days
