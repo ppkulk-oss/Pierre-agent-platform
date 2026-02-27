@@ -67,9 +67,9 @@ RESTAURANTS = [
 ]
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CINEMATIC CSS
+# CINEMATIC CSS - Using st.html for proper injection
 # ═══════════════════════════════════════════════════════════════════════════════
-st.markdown("""
+st.html("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500&display=swap');
 
@@ -615,7 +615,7 @@ st.markdown("""
 .bg-osaka { background: linear-gradient(135deg, #8b4513 0%, #4a2510 100%); }
 .bg-narita { background: linear-gradient(135deg, #2d5a3d 0%, #1a3a2a 100%); }
 </style>
-""", unsafe_allow_html=True)
+""")
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # HERO SECTION
