@@ -2,5 +2,5 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "streamlit run scripts/japan-dashboard.py --server.port $PORT --server.headless true"
-restartPolicyType = "on_failure"
+startCommand = "streamlit run scripts/japan-dashboard.py --server.port $PORT"
+healthcheckPath = "/_stcore/health"
