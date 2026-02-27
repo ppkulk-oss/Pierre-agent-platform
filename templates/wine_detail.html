@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ wine.producer }} {{ wine.wine_name }} | Wine Cellar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-wine: #1a0a0f;
+            --wine-light: #2d1a1f;
+            --burgundy: #722f37;
+            --gold: #c9a227;
+            --gold-soft: #d4af37;
+            --cream: #faf8f5;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--deep-wine);
+            font-family: 'Inter', sans-serif;
+            color: var(--cream);
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a0a0f 0%, #2d1a1f 50%, #3d1f2f 100%);
+            padding: 80px 40px 60px;
+            text-align: center;
+        }
+
+        .hero-producer {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .hero-vintage {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .detail-card {
+            background: linear-gradient(145deg, #2d1a1f, #231016);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .detail-item {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .detail-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 8px;
+        }
+
+        .detail-value {
+            font-size: 18px;
+            color: var(--cream);
+        }
+
+        .rating-display {
+            text-align: center;
+            padding: 40px;
+            background: rgba(201,162,39,0.1);
+            border-radius: 16px;
+            margin: 30px 0;
+        }
+
+        .rating-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .rating-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .notes-section {
+            margin-top: 30px;
+        }
+
+        .notes-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .notes-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.8);
+            font-style: italic;
+            padding: 25px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border-left: 3px solid var(--gold);
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .btn-back {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-back:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .btn-delete {
+            background: rgba(180, 50, 50, 0.2);
+            color: #ff6b6b;
+            border: 1px solid rgba(180, 50, 50, 0.3);
+        }
+
+        .btn-delete:hover {
+            background: rgba(180, 50, 50, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-btn">← Back to Cellar</a>
+    
+    <div class="hero">
+        <div class="hero-producer">{{ wine.producer }}</div>
+        <h1>{{ wine.wine_name }}</h1>
+        {% if wine.vintage %}
+        <div class="hero-vintage">{{ wine.vintage }}</div>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        <div class="detail-card">
+            <div class="detail-grid">
+                {% if wine.region %}
+                <div class="detail-item">
+                    <div class="detail-label">Region</div>
+                    <div class="detail-value">{{ wine.region }}</div>
+                </div>
+                {% endif %}
+                {% if wine.country %}
+                <div class="detail-item">
+                    <div class="detail-label">Country</div>
+                    <div class="detail-value">{{ wine.country }}</div>
+                </div>
+                {% endif %}
+                {% if wine.grape_variety %}
+                <div class="detail-item">
+                    <div class="detail-label">Grape Variety</div>
+                    <div class="detail-value">{{ wine.grape_variety }}</div>
+                </div>
+                {% endif %}
+                {% if wine.date_tasted %}
+                <div class="detail-item">
+                    <div class="detail-label">Date Tasted</div>
+                    <div class="detail-value">{{ wine.date_tasted }}</div>
+                </div>
+                {% endif %}
+                {% if wine.price_paid %}
+                <div class="detail-item">
+                    <div class="detail-label">Price Paid</div>
+                    <div class="detail-value">${{ "%.2f"|format(wine.price_paid) }}</div>
+                </div>
+                {% endif %}
+                {% if wine.source %}
+                <div class="detail-item">
+                    <div class="detail-label">Source</div>
+                    <div class="detail-value">{{ wine.source }}</div>
+                </div>
+                {% endif %}
+                {% if wine.quantity %}
+                <div class="detail-item">
+                    <div class="detail-label">Quantity</div>
+                    <div class="detail-value">{{ wine.quantity }} bottle(s)</div>
+                </div>
+                {% endif %}
+                {% if wine.drink_by %}
+                <div class="detail-item">
+                    <div class="detail-label">Drink By</div>
+                    <div class="detail-value">{{ wine.drink_by }}</div>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if wine.rating %}
+            <div class="rating-display">
+                <div class="rating-number">{{ wine.rating }}</div>
+                <div class="rating-label">Points</div>
+            </div>
+            {% endif %}
+
+            {% if wine.tasting_notes %}
+            <div class="notes-section">
+                <h3>📝 Tasting Notes</h3>
+                <div class="notes-text">{{ wine.tasting_notes }}</div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="actions">
+            <a href="/" class="btn btn-back">← Back to Cellar</a>
+            <form action="/delete/{{ wine.id }}" method="POST" style="display: inline;" onsubmit="return confirm('Delete this wine?');">
+                <button type="submit" class="btn btn-delete">🗑 Delete</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
