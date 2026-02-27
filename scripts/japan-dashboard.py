@@ -11,6 +11,7 @@ Run: streamlit run scripts/japan-dashboard-v2.py
 
 import streamlit as st
 from datetime import date
+import streamlit.components.v1 as components
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PAGE CONFIGURATION
@@ -69,7 +70,7 @@ RESTAURANTS = [
 # ═══════════════════════════════════════════════════════════════════════════════
 # CINEMATIC CSS - Using st.html for proper injection
 # ═══════════════════════════════════════════════════════════════════════════════
-st.html("""
+components.html("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500&display=swap');
 
