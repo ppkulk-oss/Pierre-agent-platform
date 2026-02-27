@@ -3,406 +3,523 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍷 Wine Cellar | Prashant's Collection</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Wine Cellar | Prashant's Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --deep-wine: #1a0a0f;
-            --wine-light: #2d1a1f;
-            --burgundy: #722f37;
+            --cream: #f5f0e8;
+            --wine: #2c0a10;
+            --wine-light: #4a1a25;
             --gold: #c9a227;
-            --gold-soft: #d4af37;
-            --cream: #faf8f5;
-            --cream-dark: #f0ede8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            background: var(--deep-wine);
-            font-family: 'Inter', sans-serif;
-            color: var(--cream);
-            min-height: 100vh;
+        html {
+            scroll-behavior: smooth;
         }
 
-        /* HERO */
-        .hero {
-            background: linear-gradient(135deg, #1a0a0f 0%, #2d1a1f 50%, #3d1f2f 100%);
-            padding: 60px 40px;
-            text-align: center;
+        body {
+            background: var(--wine);
+            color: var(--cream);
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
+        }
+
+        /* SCROLLYTELLING CONTAINER */
+        .scrolly-container {
             position: relative;
+        }
+
+        /* FIXED BOTTLE ELEMENT */
+        .bottle-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            pointer-events: none;
+            width: 300px;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wine-bottle {
+            width: 120px;
+            height: 400px;
+            background: linear-gradient(90deg, 
+                rgba(0,0,0,0.8) 0%,
+                rgba(60,20,30,0.9) 20%,
+                rgba(100,30,40,0.8) 50%,
+                rgba(60,20,30,0.9) 80%,
+                rgba(0,0,0,0.8) 100%
+            );
+            border-radius: 60px 60px 20px 20px;
+            position: relative;
+            box-shadow: 
+                0 0 100px rgba(201,162,39,0.3),
+                inset -10px 0 30px rgba(0,0,0,0.5),
+                inset 10px 0 30px rgba(255,255,255,0.1);
+            transform-style: preserve-3d;
+            transition: transform 0.1s linear;
+        }
+
+        .wine-bottle::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 80px;
+            background: linear-gradient(90deg, #1a1a1a, #333, #1a1a1a);
+            border-radius: 10px 10px 0 0;
+            box-shadow: inset -5px 0 10px rgba(0,0,0,0.8);
+        }
+
+        .wine-bottle::after {
+            content: 'PRASHANT\'S\ACOLLECTION';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 14px;
+            letter-spacing: 8px;
+            color: var(--gold);
+            opacity: 0.6;
+            font-weight: 300;
+        }
+
+        /* FULL SCREEN SECTIONS */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        /* VIDEO/GIF BACKGROUNDS */
+        .bg-video {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
             overflow: hidden;
         }
 
-        .hero::before {
+        .bg-video::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(114,47,55,0.3) 0%, transparent 60%);
-            border-radius: 50%;
+            inset: 0;
+            background: rgba(44,10,16,0.7);
+            z-index: 1;
         }
 
-        .hero-pretitle {
+        .vineyard-gif {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        /* Fallback animated backgrounds */
+        .bg-animated {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 30% 70%, rgba(201,162,39,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 30%, rgba(100,30,40,0.3) 0%, transparent 50%),
+                linear-gradient(180deg, #1a0a0f 0%, #2c0a10 50%, #1a0a0f 100%);
+            z-index: 0;
+        }
+
+        .bg-grapes {
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(60,20,30,0.8) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(30,10,20,0.9) 0%, transparent 50%),
+                linear-gradient(135deg, #0d0508 0%, #1f0a10 100%);
+        }
+
+        .bg-cellar {
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(201,162,39,0.1) 0%, transparent 70%),
+                linear-gradient(180deg, #050505 0%, #1a0a0f 100%);
+        }
+
+        /* TYPOGRAPHY */
+        .hero-section .title {
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 300;
+            line-height: 0.9;
+            letter-spacing: -5px;
+            z-index: 10;
+            mix-blend-mode: difference;
+        }
+
+        .hero-section .title span {
+            display: block;
+            font-style: italic;
+            font-weight: 400;
             color: var(--gold);
-            font-size: 14px;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-top: 40px;
+            opacity: 0.7;
+            z-index: 10;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
             letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            opacity: 0.5;
+            animation: pulse 2s infinite;
+            z-index: 10;
         }
 
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 64px;
-            font-weight: 700;
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: translateX(-50%) translateY(0); }
+            50% { opacity: 0.7; transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* WINE ENTRY SECTIONS */
+        .wine-entry {
+            z-index: 10;
+            max-width: 800px;
+        }
+
+        .vintage-year {
+            font-size: clamp(6rem, 20vw, 15rem);
+            font-weight: 300;
+            line-height: 1;
+            opacity: 0.15;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .producer {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 500;
             margin-bottom: 10px;
+            z-index: 10;
+            position: relative;
         }
 
-        .hero-subtitle {
-            color: rgba(255,255,255,0.7);
-            font-size: 18px;
+        .wine-name {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-style: italic;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.8;
+            z-index: 10;
+            position: relative;
         }
 
-        .stats-bar {
+        .region {
+            font-size: 14px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            opacity: 0.5;
+            z-index: 10;
+            position: relative;
+        }
+
+        .rating {
+            font-size: clamp(4rem, 8vw, 6rem);
+            font-weight: 300;
+            color: var(--gold);
+            margin-bottom: 10px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .rating-label {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.5;
+            z-index: 10;
+            position: relative;
+        }
+
+        .tasting-notes {
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            font-style: italic;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 40px auto 0;
+            opacity: 0.7;
+            z-index: 10;
+            position: relative;
+        }
+
+        .meta {
             display: flex;
+            gap: 40px;
             justify-content: center;
-            gap: 60px;
             margin-top: 40px;
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.4;
+            z-index: 10;
+            position: relative;
         }
 
-        .stat {
+        /* COLLECTION STATS SECTION */
+        .stats-section {
+            background: var(--cream);
+            color: var(--wine);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            max-width: 1000px;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .stat-item {
             text-align: center;
         }
 
         .stat-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--gold);
+            font-size: clamp(4rem, 10vw, 7rem);
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 10px;
         }
 
         .stat-label {
             font-size: 12px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.6);
+            opacity: 0.6;
         }
 
-        /* MAIN CONTENT */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px;
-        }
-
-        /* ADD WINE FORM */
-        .add-section {
-            background: linear-gradient(135deg, #2d1a1f, #3d1f2f);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(201,162,39,0.2);
-        }
-
-        .add-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            margin-bottom: 30px;
-            color: var(--gold);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 8px;
-        }
-
-        .form-group input, .form-group select, .form-group textarea {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            padding: 12px 16px;
-            color: white;
-            font-size: 16px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--gold);
-        }
-
-        .form-group textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-
-        .btn-submit {
-            background: linear-gradient(135deg, var(--gold), var(--gold-soft));
-            color: var(--deep-wine);
-            border: none;
-            padding: 16px 40px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(201,162,39,0.3);
-        }
-
-        /* WINE GRID */
-        .wines-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            margin-bottom: 30px;
-        }
-
-        .wine-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
-        }
-
-        .wine-card {
-            background: linear-gradient(145deg, #2d1a1f, #231016);
-            border-radius: 16px;
-            padding: 25px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .wine-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            border-color: rgba(201,162,39,0.3);
-        }
-
-        .wine-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .wine-producer {
-            font-family: 'Playfair Display', serif;
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--gold);
-        }
-
-        .wine-vintage {
-            font-size: 14px;
-            color: rgba(255,255,255,0.5);
-            background: rgba(255,255,255,0.05);
-            padding: 4px 12px;
-            border-radius: 20px;
-        }
-
-        .wine-name {
-            font-size: 16px;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 10px;
-        }
-
-        .wine-meta {
-            display: flex;
-            gap: 15px;
-            font-size: 13px;
-            color: rgba(255,255,255,0.5);
-            margin-bottom: 15px;
-        }
-
-        .wine-rating {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .rating-score {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--gold);
-        }
-
-        .rating-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: rgba(255,255,255,0.4);
-        }
-
-        .wine-notes {
-            font-size: 14px;
-            color: rgba(255,255,255,0.6);
-            line-height: 1.5;
-            font-style: italic;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
+        /* EMPTY STATE */
         .empty-state {
+            z-index: 10;
             text-align: center;
-            padding: 80px;
-            color: rgba(255,255,255,0.4);
         }
 
-        .empty-state h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            margin-bottom: 10px;
+        .empty-state h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .empty-state p {
+            font-size: 1.2rem;
+            opacity: 0.5;
+            max-width: 500px;
+        }
+
+        /* NAV */
+        .nav {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            z-index: 1000;
+        }
+
+        .nav a {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        .nav a:hover {
+            opacity: 1;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .section {
+                padding: 60px 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .bottle-container {
+                width: 200px;
+                height: 400px;
+            }
+
+            .wine-bottle {
+                width: 80px;
+                height: 280px;
+            }
+
+            .meta {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <div class="hero-pretitle">🍷 The Collection</div>
-        <h1>Wine Cellar</h1>
-        <p class="hero-subtitle">Every bottle tells a story</p>
-        
-        <div class="stats-bar">
-            <div class="stat">
-                <div class="stat-number">{{ wines|length }}</div>
-                <div class="stat-label">Wines Tasted</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">{% set total = namespace(value=0) %}{% for w in wines %}{% set total.value = total.value + (w.quantity or 0) %}{% endfor %}{{ total.value }}</div>
-                <div class="stat-label">Bottles</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">{% set avg = namespace(value=0, count=0) %}{% for w in wines %}{% if w.rating %}{% set avg.value = avg.value + w.rating %}{% set avg.count = avg.count + 1 %}{% endif %}{% endfor %}{% if avg.count > 0 %}{{ (avg.value / avg.count)|round|int }}{% else %}-{% endif %}</div>
-                <div class="stat-label">Avg Rating</div>
-            </div>
-        </div>
+    <!-- FIXED ROTATING BOTTLE -->
+    <div class="bottle-container">
+        <div class="wine-bottle" id="rotatingBottle"></div>
     </div>
 
-    <div class="container">
-        <!-- ADD WINE FORM -->
-        <div class="add-section">
-            <h2>📝 Add New Wine</h2>
-            <form action="/wine/add" method="POST">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Producer *</label>
-                        <input type="text" name="producer" placeholder="e.g., Domaine de la Romanée-Conti" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Wine Name *</label>
-                        <input type="text" name="wine_name" placeholder="e.g., La Tâche" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Vintage</label>
-                        <input type="number" name="vintage" placeholder="e.g., 2019" min="1900" max="2030">
-                    </div>
-                    <div class="form-group">
-                        <label>Region</label>
-                        <input type="text" name="region" placeholder="e.g., Côte de Nuits">
-                    </div>
-                    <div class="form-group">
-                        <label>Country</label>
-                        <input type="text" name="country" placeholder="e.g., France">
-                    </div>
-                    <div class="form-group">
-                        <label>Grape Variety</label>
-                        <input type="text" name="grape_variety" placeholder="e.g., Pinot Noir">
-                    </div>
-                    <div class="form-group">
-                        <label>Date Tasted</label>
-                        <input type="date" name="date_tasted">
-                    </div>
-                    <div class="form-group">
-                        <label>Rating (0-100)</label>
-                        <input type="number" name="rating" placeholder="e.g., 95" min="0" max="100">
-                    </div>
-                    <div class="form-group">
-                        <label>Price Paid ($)</label>
-                        <input type="number" name="price_paid" placeholder="e.g., 250" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <label>Quantity</label>
-                        <input type="number" name="quantity" value="1" min="1">
-                    </div>
-                    <div class="form-group">
-                        <label>Source</label>
-                        <input type="text" name="source" placeholder="e.g., K&L Wine Merchants">
-                    </div>
-                    <div class="form-group">
-                        <label>Drink By</label>
-                        <input type="date" name="drink_by">
-                    </div>
-                    <div class="form-group" style="grid-column: 1 / -1;">
-                        <label>Tasting Notes</label>
-                        <textarea name="tasting_notes" placeholder="Your impressions, aromas, taste, finish..."></textarea>
-                    </div>
+    <!-- NAV -->
+    <div class="nav">
+        <a href="/">← Back to Portal</a>
+    </div>
+
+    <div class="scrolly-container">
+        <!-- HERO SECTION -->
+        <section class="section hero-section" style="background: linear-gradient(180deg, #0d0508 0%, #1a0a0f 50%, #2c0a10 100%);">
+            <div class="bg-animated"></div>
+            <h1 class="title">
+                Wine
+                <span>Cellar</span>
+            </h1>
+            <p class="subtitle">A Collection of Terroir</p>
+            <div class="scroll-indicator">Scroll to Explore</div>
+        </section>
+
+        {% if wines %}
+        <!-- STATS SECTION -->
+        <section class="section stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">{{ wines|length }}</div>
+                    <div class="stat-label">Wines Tasted</div>
                 </div>
-                <button type="submit" class="btn-submit">Add to Cellar 🍷</button>
-            </form>
-        </div>
+                <div class="stat-item">
+                    <div class="stat-number">{% set total = namespace(value=0) %}{% for w in wines %}{% set total.value = total.value + (w.quantity or 0) %}{% endfor %}{{ total.value }}</div>
+                    <div class="stat-label">Bottles</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">{% set avg = namespace(value=0, count=0) %}{% for w in wines %}{% if w.rating %}{% set avg.value = avg.value + w.rating %}{% set avg.count = avg.count + 1 %}{% endif %}{% endfor %}{% if avg.count > 0 %}{{ (avg.value / avg.count)|round|int }}{% else %}-{% endif %}</div>
+                    <div class="stat-label">Average</div>
+                </div>
+            </div>
+        </section>
 
-        <!-- WINE LIST -->
-        <div class="wines-section">
-            <h2>Recent Tastings</h2>
-            {% if wines %}
-            <div class="wine-grid">
-                {% for wine in wines %}
-                <a href="/wine/{{ wine.id }}" class="wine-card" style="text-decoration: none;">
-                    <div class="wine-header">
-                        <div class="wine-producer">{{ wine.producer }}</div>
-                        {% if wine.vintage %}
-                        <div class="wine-vintage">{{ wine.vintage }}</div>
-                        {% endif %}
-                    </div>
-                    <div class="wine-name">{{ wine.wine_name }}</div>
-                    <div class="wine-meta">
-                        {% if wine.region %}<span>📍 {{ wine.region }}</span>{% endif %}
-                        {% if wine.country %}<span>🇫🇷 {{ wine.country }}</span>{% endif %}
-                        {% if wine.grape_variety %}<span>🍇 {{ wine.grape_variety }}</span>{% endif %}
-                    </div>
-                    {% if wine.rating %}
-                    <div class="wine-rating">
-                        <div class="rating-score">{{ wine.rating }}</div>
-                        <div class="rating-label">Points</div>
-                    </div>
-                    {% endif %}
-                    {% if wine.tasting_notes %}
-                    <div class="wine-notes">"{{ wine.tasting_notes[:100] }}{% if wine.tasting_notes|length > 100 %}...{% endif %}"</div>
-                    {% endif %}
-                </a>
-                {% endfor %}
-            </div>
-            {% else %}
-            <div class="empty-state">
-                <h3>Your cellar is empty</h3>
-                <p>Add your first wine above to start your collection.</p>
-            </div>
+        <!-- WINE ENTRIES -->
+        {% for wine in wines %}
+        <section class="section wine-section" style="background: linear-gradient(180deg, #1a0a0f 0%, #2c0a10 50%, #1a0a0f 100%);">
+            <div class="bg-animated bg-grapes"></div>
+            
+            {% if wine.vintage %}
+            <div class="vintage-year">{{ wine.vintage }}</div>
             {% endif %}
-        </div>
+            
+            <div class="wine-entry">
+                <h2 class="producer">{{ wine.producer }}</h2>
+                <p class="wine-name">{{ wine.wine_name }}</p>
+                
+                {% if wine.region %}
+                <p class="region">{{ wine.region }}{% if wine.country %}, {{ wine.country }}{% endif %}</p>
+                {% endif %}
+                
+                {% if wine.rating %}
+                <div class="rating">{{ wine.rating }}</div>
+                <div class="rating-label">Points</div>
+                {% endif %}
+                
+                {% if wine.tasting_notes %}
+                <p class="tasting-notes">"{{ wine.tasting_notes }}"</p>
+                {% endif %}
+                
+                <div class="meta">
+                    {% if wine.grape_variety %}<span>{{ wine.grape_variety }}</span>{% endif %}
+                    {% if wine.date_tasted %}<span>Tasted {{ wine.date_tasted }}</span>{% endif %}
+                    {% if wine.price_paid %}<span>${{ "%.0f"|format(wine.price_paid) }}</span>{% endif %}
+                </div>
+            </div>
+        </section>
+        {% endfor %}
+
+        {% else %}
+        <!-- EMPTY STATE -->
+        <section class="section" style="background: linear-gradient(180deg, #1a0a0f 0%, #2c0a10 100%);">
+            <div class="bg-animated bg-cellar"></div>
+            <div class="empty-state">
+                <h2>The Cellar Awaits</h2>
+                <p>Your collection is empty. Snap a photo of your first bottle and share it with Pierre to begin.</p>
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- FOOTER -->
+        <section class="section" style="background: #0d0508; min-height: 50vh;">
+            <div style="z-index: 10; text-align: center;">
+                <p style="font-size: 14px; letter-spacing: 4px; text-transform: uppercase; opacity: 0.4;">
+                    Curated with care
+                </p>
+                <p style="font-size: 12px; opacity: 0.2; margin-top: 20px;">
+                    Send wine labels to Pierre 🍷
+                </p>
+            </div>
+        </section>
     </div>
+
+    <!-- BOTTLE ROTATION SCRIPT -->
+    <script>
+        const bottle = document.getElementById('rotatingBottle');
+        let lastScrollY = window.scrollY;
+        let rotation = 0;
+
+        function updateBottle() {
+            const scrollY = window.scrollY;
+            const scrollDelta = scrollY - lastScrollY;
+            
+            // Rotate based on scroll direction and amount
+            rotation += scrollDelta * 0.3;
+            
+            // Add subtle floating animation
+            const floatY = Math.sin(Date.now() / 2000) * 10;
+            
+            bottle.style.transform = `translateY(${floatY}px) rotateY(${rotation}deg)`;
+            
+            lastScrollY = scrollY;
+            requestAnimationFrame(updateBottle);
+        }
+
+        // Start animation
+        updateBottle();
+
+        // Fade bottle on scroll (optional visual effect)
+        window.addEventListener('scroll', () => {
+            const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            const opacity = 1 - (scrollPercent * 0.3); // Fade slightly as you scroll
+            bottle.style.opacity = Math.max(0.3, opacity);
+        });
+    </script>
 </body>
 </html>
