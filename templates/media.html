@@ -3,510 +3,757 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Library | Prashant</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <title>Cinema | Prashant's Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@200;300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         :root {
-            --deep-indigo: #0a0a1a;
-            --indigo-light: #151530;
+            --void: #050508;
+            --void-light: #0a0a12;
             --coral: #ff6b9d;
-            --gold: #ffd700;
-            --gold-soft: #c9a227;
-            --teal: #0d7377;
-            --cream: #faf8f5;
-            --wine: #722f37;
-            --wine-glow: rgba(114,47,55,0.5);
+            --gold: #c9a227;
+            --silver: #a0a0b0;
+            --neon: #ff0040;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
 
         body {
-            background: var(--deep-indigo);
+            background: var(--void);
+            color: white;
             font-family: 'Inter', sans-serif;
-            color: var(--cream);
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .bg-animation {
+        /* FIXED MOVIE POSTER ELEMENT */
+        .poster-container {
             position: fixed;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%);
+            z-index: 100;
+            pointer-events: none;
+            width: 350px;
+            height: 525px;
+            perspective: 1500px;
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 
+                0 50px 100px rgba(0,0,0,0.8),
+                0 0 0 1px rgba(255,255,255,0.1);
+        }
+
+        .poster-frame {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .poster-art {
+            position: absolute;
+            inset: 12px;
+            background: linear-gradient(180deg, 
+                rgba(255,107,157,0.1) 0%, 
+                rgba(0,0,0,0.5) 50%,
+                rgba(201,162,39,0.1) 100%);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .poster-art::before {
+            content: '';
+            position: absolute;
             inset: 0;
             background: 
-                radial-gradient(ellipse at 20% 80%, rgba(255,107,157,0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(114,47,55,0.15) 0%, transparent 50%),
-                linear-gradient(135deg, #0a0a1a 0%, #121228 100%);
+                radial-gradient(ellipse at 30% 20%, rgba(255,0,64,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(255,107,157,0.15) 0%, transparent 50%);
+        }
+
+        .poster-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 42px;
+            letter-spacing: 4px;
+            line-height: 1;
+            text-transform: uppercase;
+            z-index: 2;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+        }
+
+        .poster-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-style: italic;
+            color: var(--gold);
+            margin-top: 10px;
+            z-index: 2;
+        }
+
+        .poster-stars {
+            font-size: 24px;
+            margin-top: 20px;
+            color: var(--gold);
+            z-index: 2;
+        }
+
+        .poster-glow {
+            position: absolute;
+            inset: -20px;
+            background: radial-gradient(circle, rgba(255,107,157,0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.6s;
+            z-index: -1;
+        }
+
+        .movie-poster.active .poster-glow {
+            opacity: 1;
+        }
+
+        /* FILM GRAIN OVERLAY */
+        .film-grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* SECTIONS */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 100px 60px;
+            position: relative;
+        }
+
+        /* HERO */
+        .hero {
+            background: 
+                radial-gradient(ellipse at 30% 70%, rgba(255,0,64,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 30%, rgba(255,107,157,0.1) 0%, transparent 50%),
+                var(--void);
+            text-align: center;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(6rem, 20vw, 15rem);
+            letter-spacing: 20px;
+            line-height: 0.9;
+            background: linear-gradient(180deg, #fff 0%, #a0a0b0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .hero-title::after {
+            content: 'CINEMA';
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            background: linear-gradient(180deg, rgba(255,0,64,0.3) 0%, transparent 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: -1;
+            filter: blur(20px);
+        }
+
+        .hero-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-style: italic;
+            color: var(--coral);
+            margin-top: 20px;
+            letter-spacing: 8px;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.4;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* MOVIE ENTRIES */
+        .movie-section {
+            max-width: 50%;
+        }
+
+        .movie-year-bg {
+            position: absolute;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(10rem, 30vw, 25rem);
+            opacity: 0.03;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
             z-index: 0;
         }
 
-        .container {
+        .movie-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            line-height: 1;
+            margin-bottom: 10px;
             position: relative;
             z-index: 10;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 30px;
         }
 
-        .header {
-            margin-bottom: 50px;
+        .movie-meta {
+            display: flex;
+            gap: 30px;
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--silver);
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 10;
         }
 
-        .back-link {
-            color: rgba(255,255,255,0.4);
-            text-decoration: none;
-            font-size: 14px;
+        .movie-rating {
+            color: var(--gold);
+        }
+
+        .movie-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.3rem, 2vw, 1.8rem);
+            font-style: italic;
+            line-height: 1.6;
+            max-width: 500px;
+            color: rgba(255,255,255,0.8);
+            position: relative;
+            z-index: 10;
+            padding-left: 30px;
+            border-left: 2px solid var(--coral);
+        }
+
+        .movie-tags {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 10;
+        }
+
+        .tag {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 11px;
             letter-spacing: 2px;
             text-transform: uppercase;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 30px;
-            transition: color 0.3s;
         }
 
-        .back-link:hover {
-            color: var(--coral);
+        /* DIRECTOR SECTION */
+        .director-section {
+            background: linear-gradient(180deg, var(--void) 0%, var(--void-light) 100%);
         }
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 48px;
-            font-weight: 600;
+        .director-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+        }
+
+        .director-card {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            transition: all 0.4s;
+        }
+
+        .director-card:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateY(-10px);
+            border-color: var(--coral);
+        }
+
+        .director-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            letter-spacing: 3px;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+        }
+
+        .director-films {
+            font-size: 12px;
+            color: var(--silver);
+            opacity: 0.6;
+        }
+
+        /* STATS */
+        .stats-section {
+            background: linear-gradient(180deg, var(--void-light) 0%, var(--void) 100%);
+            text-align: center;
+            align-items: center;
+        }
+
+        .stats-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            letter-spacing: 8px;
+            margin-bottom: 60px;
+        }
+
+        .big-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(8rem, 20vw, 15rem);
+            line-height: 1;
+            background: linear-gradient(180deg, #fff 0%, var(--coral) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .subtitle {
-            color: rgba(255,255,255,0.4);
-            font-size: 16px;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 40px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 20px;
-        }
-
-        .tab {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 12px 24px;
-            color: rgba(255,255,255,0.6);
-            cursor: pointer;
-            transition: all 0.3s;
+        .stat-label {
             font-size: 14px;
-            font-weight: 500;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--silver);
+            margin-top: 10px;
         }
 
-        .tab:hover {
-            background: rgba(255,255,255,0.1);
+        /* WATCHLIST */
+        .watchlist-section {
+            max-width: 100%;
         }
 
-        .tab.active {
-            background: var(--wine);
-            border-color: var(--wine);
-            color: white;
-        }
-
-        .section {
+        .watchlist-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            letter-spacing: 6px;
             margin-bottom: 50px;
+            text-align: center;
         }
 
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            color: var(--gold-soft);
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .grid {
+        .watchlist-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 30px;
         }
 
-        .card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
+        .watchlist-item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 16px;
-            padding: 24px;
-            transition: all 0.3s;
+            padding: 30px;
+            transition: all 0.4s;
         }
 
-        .card:hover {
-            background: rgba(255,255,255,0.05);
-            border-color: rgba(255,255,255,0.1);
-            transform: translateY(-4px);
+        .watchlist-item:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: var(--gold);
         }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
+        .watchlist-movie {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
         }
 
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: white;
-            margin-bottom: 4px;
-        }
-
-        .card-year {
+        .watchlist-year {
             font-size: 13px;
-            color: rgba(255,255,255,0.4);
+            color: var(--silver);
+            margin-bottom: 15px;
         }
 
-        .card-rating {
-            color: var(--gold);
-            font-size: 14px;
-        }
-
-        .card-notes {
+        .watchlist-note {
             font-size: 14px;
             color: rgba(255,255,255,0.5);
-            line-height: 1.6;
+            font-style: italic;
         }
 
-        .card-meta {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+        /* NAV */
+        .nav {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            z-index: 1000;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
             font-size: 12px;
-            color: rgba(255,255,255,0.3);
+            letter-spacing: 3px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
         }
 
-        .table-view {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 16px;
-            overflow: hidden;
+        .nav a:hover {
+            opacity: 1;
         }
 
-        .table-row {
-            display: grid;
-            grid-template-columns: 2fr 80px 100px 2fr;
-            gap: 20px;
-            padding: 18px 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            align-items: center;
-            transition: background 0.2s;
+        /* PROGRESS BAR */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--coral), var(--gold));
+            z-index: 10000;
+            transition: width 0.1s;
         }
 
-        .table-row:hover {
-            background: rgba(255,255,255,0.03);
-        }
-
-        .table-row:last-child {
-            border-bottom: none;
-        }
-
-        .table-header {
-            background: rgba(255,255,255,0.04);
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: rgba(255,255,255,0.4);
-            font-weight: 600;
-        }
-
-        .table-header:hover {
-            background: rgba(255,255,255,0.04);
-        }
-
-        .hidden { display: none; }
-
-        .emoji {
-            font-size: 20px;
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 36px; }
-            .table-row {
-                grid-template-columns: 1fr;
-                gap: 8px;
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .poster-container {
+                display: none;
             }
-            .table-header { display: none; }
+            .movie-section {
+                max-width: 100%;
+                text-align: center;
+            }
+            .movie-quote {
+                padding-left: 0;
+                border-left: none;
+                border-top: 2px solid var(--coral);
+                padding-top: 30px;
+            }
+            .movie-tags {
+                justify-content: center;
+            }
+            .director-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="bg-animation"></div>
-    
-    <div class="container">
-        <div class="header">
-            <a href="/" class="back-link">← Back to Portal</a>
-            <h1>Media Library</h1>
-            <p class="subtitle">Movies, books, and stories worth remembering</p>
-        </div>
+    <div class="film-grain"></div>
+    <div class="progress-bar" id="progressBar"></div>
 
-        <div class="tabs">
-            <button class="tab active" onclick="showTab('movies')">🎬 Movies</button>
-            <button class="tab" onclick="showTab('books')">📚 Books</button>
-        </div>
-
-        <!-- MOVIES SECTION -->
-        <div id="movies" class="tab-content">
-            <div class="section">
-                <h2 class="section-title"><span class="emoji">🏆</span> The Canon (10/10)</h2>
-                <div class="table-view">
-                    <div class="table-row table-header">
-                        <div>Title</div>
-                        <div>Year</div>
-                        <div>Rating</div>
-                        <div>Notes</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>Rounders</strong></div>
-                        <div>1998</div>
-                        <div>★★★★★</div>
-                        <div>"All time favorite" — poker classic, Damon & Norton</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>Boiler Room</strong></div>
-                        <div>2000</div>
-                        <div>★★★★★</div>
-                        <div>"All time favorite" — finance bros, pump & dump</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>Heat</strong></div>
-                        <div>1995</div>
-                        <div>★★★★★</div>
-                        <div>"Amazing" — Mann's masterpiece</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>The Departed</strong></div>
-                        <div>2006</div>
-                        <div>★★★★★</div>
-                        <div>"Amazing" — Scorsese crime epic</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>The Town</strong></div>
-                        <div>2010</div>
-                        <div>★★★★★</div>
-                        <div>"What a great movie" — Affleck's Boston crime</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>The Menu</strong></div>
-                        <div>2022</div>
-                        <div>★★★★★</div>
-                        <div>Dark/wine masterpiece 🍷</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>Incendies</strong></div>
-                        <div>2010</div>
-                        <div>★★★★★</div>
-                        <div>Denis Villeneuve — devastating twist</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>Arrival</strong></div>
-                        <div>2016</div>
-                        <div>★★★★★</div>
-                        <div>Villeneuve's linguistic sci-fi masterpiece</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>Blade Runner 2049</strong></div>
-                        <div>2017</div>
-                        <div>★★★★★</div>
-                        <div>"Out of this world"</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>The Killer</strong></div>
-                        <div>2023</div>
-                        <div>★★★★★</div>
-                        <div>Fincher — methodical hitman</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>The Call</strong></div>
-                        <div>2020</div>
-                        <div>★★★★★</div>
-                        <div>Korean time-travel thriller</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>Nobody 2</strong></div>
-                        <div>2026</div>
-                        <div>★★★★★</div>
-                        <div>Watched Feb 14, 2026</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>Predator: Badlands</strong></div>
-                        <div>2026</div>
-                        <div>★★★★★</div>
-                        <div>Watched Feb 14, 2026</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2 class="section-title"><span class="emoji">🎪</span> John Wick Saga</h2>
-                <div class="grid">
-                    <div class="card">
-                        <div class="card-header">
-                            <div>
-                                <div class="card-title">John Wick</div>
-                                <div class="card-year">2014</div>
-                            </div>
-                            <div class="card-rating">★★★★★</div>
-                        </div>
-                        <div class="card-notes">The Baba Yaga origin</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <div>
-                                <div class="card-title">John Wick: Chapter 2</div>
-                                <div class="card-year">2017</div>
-                            </div>
-                            <div class="card-rating">★★★★★</div>
-                        </div>
-                        <div class="card-notes">Continental chaos, Rome action</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <div>
-                                <div class="card-title">John Wick: Chapter 3</div>
-                                <div class="card-year">2019</div>
-                            </div>
-                            <div class="card-rating">★★★★★</div>
-                        </div>
-                        <div class="card-notes">Dogs, horses, knife fights</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <div>
-                                <div class="card-title">John Wick: Chapter 4</div>
-                                <div class="card-year">2023</div>
-                            </div>
-                            <div class="card-rating">★★★★★</div>
-                        </div>
-                        <div class="card-notes">Osaka Continental, Arc de Triomphe</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2 class="section-title"><span class="emoji">📋</span> The Backlog</h2>
-                <div class="table-view">
-                    <div class="table-row table-header">
-                        <div>Title</div>
-                        <div>Year</div>
-                        <div></div>
-                        <div>Notes</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>The Rover</strong></div>
-                        <div>2014</div>
-                        <div></div>
-                        <div>Bleak post-apocalyptic Australia. Pearce + Pattinson</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>Atomic Blonde</strong></div>
-                        <div>2017</div>
-                        <div></div>
-                        <div>Charlize, stairwell fight, neon-noir action</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>The Raid</strong></div>
-                        <div>2011</div>
-                        <div></div>
-                        <div>Indonesian martial arts, relentless</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>The Raid 2</strong></div>
-                        <div>2014</div>
-                        <div></div>
-                        <div>Prison fight, car chase, even more ambitious</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>Kill Bill: Vol. 1</strong></div>
-                        <div>2003</div>
-                        <div></div>
-                        <div>Tarantino, stylized violence</div>
-                    </div>
-                    <div class="table-row">
-                        <div><strong>Kill Bill: Vol. 2</strong></div>
-                        <div>2004</div>
-                        <div></div>
-                        <div>Western vibes, emotional stakes</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- BOOKS SECTION -->
-        <div id="books" class="tab-content hidden">
-            <div class="section">
-                <h2 class="section-title"><span class="emoji">🏆</span> The Trophy Shelf (★★★★★)</h2>
-                <div class="grid">
-                    <div class="card">
-                        <div class="card-header">
-                            <div>
-                                <div class="card-title">Recursion</div>
-                                <div class="card-year">Blake Crouch</div>
-                            </div>
-                            <div class="card-rating">★★★★★</div>
-                        </div>
-                        <div class="card-notes">Mind-bending sci-fi. Time, memory, and the nature of reality.</div>
-                        <div class="card-meta">🍷 Wine Pairing: Burgundy</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <div>
-                                <div class="card-title">The Silent Patient</div>
-                                <div class="card-year">Alex Michaelides</div>
-                            </div>
-                            <div class="card-rating">★★★★★</div>
-                        </div>
-                        <div class="card-notes">Dark psychological thriller. A woman who refuses to speak.</div>
-                        <div class="card-meta">🍷 Wine Pairing: Syrah</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2 class="section-title"><span class="emoji">📚</span> To Read (The Pile)</h2>
-                <div class="grid">
-                    <div class="card">
-                        <div class="card-header">
-                            <div>
-                                <div class="card-title">Dark Matter</div>
-                                <div class="card-year">Blake Crouch</div>
-                            </div>
-                        </div>
-                        <div class="card-notes">Similar to Recursion — multiverse, choices, paths not taken</div>
-                        <div class="card-meta">Sci-Fi</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <div>
-                                <div class="card-title">The Maidens</div>
-                                <div class="card-year">Alex Michaelides</div>
-                            </div>
-                        </div>
-                        <div class="card-notes">Same author as Silent Patient — dark academia thriller</div>
-                        <div class="card-meta">Thriller</div>
-                    </div>
+    <!-- FIXED MOVIE POSTER -->
+    <div class="poster-container">
+        <div class="movie-poster" id="moviePoster">
+            <div class="poster-glow"></div>
+            <div class="poster-frame">
+                <div class="poster-art">
+                    <div class="poster-title" id="posterTitle">CINEMA</div>
+                    <div class="poster-year" id="posterYear"></div>
+                    <div class="poster-stars" id="posterStars"></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- NAV -->
+    <div class="nav">
+        <a href="/">← Back to Portal</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="section hero" data-movie="hero">
+        <h1 class="hero-title">CINEMA</h1>
+        <p class="hero-subtitle">The Personal Canon</p>
+        <div class="scroll-hint">Scroll to Begin</div>
+    </section>
+
+    <!-- ROUNDERS -->
+    <section class="section movie-section" data-movie="rounders" data-year="1998" data-rating="10/10">
+        <div class="movie-year-bg">1998</div>
+        <h2 class="movie-title">Rounders</h2>
+        <div class="movie-meta">
+            <span>1998</span>
+            <span class="movie-rating">★★★★★</span>
+            <span>Drama / Crime</span>
+        </div>
+        <p class="movie-quote">"All time favorite — poker classic. Damon & Norton at their best. The underground world of high-stakes poker never looked so good."</p>
+        <div class="movie-tags">
+            <span class="tag">Rewatch Forever</span>
+            <span class="tag">Poker</span>
+            <span class="tag">John Malkovich</span>
+        </div>
+    </section>
+
+    <!-- BOILER ROOM -->
+    <section class="section movie-section" data-movie="boiler" data-year="2000" data-rating="10/10">
+        <div class="movie-year-bg">2000</div>
+        <h2 class="movie-title">Boiler Room</h2>
+        <div class="movie-meta">
+            <span>2000</span>
+            <span class="movie-rating">★★★★★</span>
+            <span>Crime / Drama</span>
+        </div>
+        <p class="movie-quote">"All time favorite — finance bros, pump & dump schemes. Giovanni Ribisi crushes it. The Wolf of Wall Street before it was cool."</p>
+        <div class="movie-tags">
+            <span class="tag">Finance</span>
+            <span class="tag">Vin Diesel</span>
+            <span class="tag">Cult Classic</span>
+        </div>
+    </section>
+
+    <!-- HEAT -->
+    <section class="section movie-section" data-movie="heat" data-year="1995" data-rating="10/10">
+        <div class="movie-year-bg">1995</div>
+        <h2 class="movie-title">Heat</h2>
+        <div class="movie-meta">
+            <span>1995</span>
+            <span class="movie-rating">★★★★★</span>
+            <span>Crime / Thriller</span>
+        </div>
+        <p class="movie-quote">"Amazing — Mann's masterpiece. De Niro vs Pacino in the greatest cat-and-mouse game ever filmed. That coffee shop scene is legendary."</p>
+        <div class="movie-tags">
+            <span class="tag">Michael Mann</span>
+            <span class="tag">LA Crime</span>
+            <span class="tag">Heist</span>
+        </div>
+    </section>
+
+    <!-- THE DEPARTED -->
+    <section class="section movie-section" data-movie="departed" data-year="2006" data-rating="10/10">
+        <div class="movie-year-bg">2006</div>
+        <h2 class="movie-title">The Departed</h2>
+        <div class="movie-meta">
+            <span>2006</span>
+            <span class="movie-rating">★★★★★</span>
+            <span>Crime / Thriller</span>
+        </div>
+        <p class="movie-quote">"Amazing — Scorsese crime epic. Boston Irish mob, double agents, and some of the most quotable dialogue ever written."</p>
+        <div class="movie-tags">
+            <span class="tag">Scorsese</span>
+            <span class="tag">Boston</span>
+            <span class="tag">DiCaprio</span>
+        </div>
+    </section>
+
+    <!-- THE TOWN -->
+    <section class="section movie-section" data-movie="town" data-year="2010" data-rating="10/10">
+        <div class="movie-year-bg">2010</div>
+        <h2 class="movie-title">The Town</h2>
+        <div class="movie-meta">
+            <span>2010</span>
+            <span class="movie-rating">★★★★★</span>
+            <span>Crime / Drama</span>
+        </div>
+        <p class="movie-quote">"What a great movie — Affleck's Boston crime thriller. Fenway heist, Charlestown, and one hell of a tension-filled final act."</p>
+        <div class="movie-tags">
+            <span class="tag">Boston</span>
+            <span class="tag">Heist</span>
+            <span class="tag">Jeremy Renner</span>
+        </div>
+    </section>
+
+    <!-- JOHN WICK SAGA -->
+    <section class="section movie-section" data-movie="wick" data-year="2014-2023" data-rating="10/10">
+        <div class="movie-year-bg">WICK</div>
+        <h2 class="movie-title">John Wick Saga</h2>
+        <div class="movie-meta">
+            <span>2014 — 2023</span>
+            <span class="movie-rating">★★★★★</span>
+            <span>Action / Thriller</span>
+        </div>
+        <p class="movie-quote">"The Baba Yaga. Four chapters of relentless, beautifully choreographed action. Continental chaos, Rome, dogs, horses, and the Osaka Continental. Gun-fu perfection."</p>
+        <div class="movie-tags">
+            <span class="tag">Keanu Reeves</span>
+            <span class="tag">Gun-Fu</span>
+            <span class="tag">Continental</span>
+            <span class="tag">4 Films</span>
+        </div>
+    </section>
+
+    <!-- THE MENU -->
+    <section class="section movie-section" data-movie="menu" data-year="2022" data-rating="10/10">
+        <div class="movie-year-bg">2022</div>
+        <h2 class="movie-title">The Menu</h2>
+        <div class="movie-meta">
+            <span>2022</span>
+            <span class="movie-rating">★★★★★</span>
+            <span>Thriller / Dark Comedy</span>
+        </div>
+        <p class="movie-quote">"Dark wine masterpiece. Ralph Fiennes serves vengeance with a side of pretension. Perfect pairing with a bottle of Burgundy — trust me on this."</p>
+        <div class="movie-tags">
+            <span class="tag">🍷 Wine Scenes</span>
+            <span class="tag">Fine Dining</span>
+            <span class="tag">Anya Taylor-Joy</span>
+        </div>
+    </section>
+
+    <!-- VILLENEUVE TRILOGY -->
+    <section class="section movie-section" data-movie="villeneuve" data-year="2010-2017" data-rating="10/10">
+        <div class="movie-year-bg">DENIS</div>
+        <h2 class="movie-title">The Villeneuve Trilogy</h2>
+        <div class="movie-meta">
+            <span>2010 — 2017</span>
+            <span class="movie-rating">★★★★★</span>
+            <span>Sci-Fi / Drama</span>
+        </div>
+        <p class="movie-quote">"Incendies — devastating twist. Arrival — linguistic sci-fi masterpiece. Blade Runner 2049 — out of this world. Denis Villeneuve doesn't miss."</p>
+        <div class="movie-tags">
+            <span class="tag">Denis Villeneuve</span>
+            <span class="tag">Sci-Fi</span>
+            <span class="tag">3 Masterpieces</span>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="section stats-section">
+        <h2 class="stats-title">The Numbers</h2>
+        <div class="big-number">17</div>
+        <div class="stat-label">Perfect 10/10 Films</div>
+    </section>
+
+    <!-- DIRECTORS -->
+    <section class="section director-section">
+        <h2 class="stats-title" style="text-align: center; margin-bottom: 60px;">Directors to Watch</h2>
+        <div class="director-grid">
+            <div class="director-card">
+                <div class="director-name">Denis Villeneuve</div>
+                <div class="director-films">Incendies, Arrival, Blade Runner 2049, Dune</div>
+            </div>
+            <div class="director-card">
+                <div class="director-name">Michael Mann</div>
+                <div class="director-films">Heat, Thief, Collateral</div>
+            </div>
+            <div class="director-card">
+                <div class="director-name">David Fincher</div>
+                <div class="director-films">The Killer, Se7en, Fight Club</div>
+            </div>
+            <div class="director-card">
+                <div class="director-name">Chad Stahelski</div>
+                <div class="director-films">John Wick 1-4, Ballerina</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WATCHLIST -->
+    <section class="section watchlist-section">
+        <h2 class="watchlist-title">The Backlog</h2>
+        <div class="watchlist-grid">
+            <div class="watchlist-item">
+                <div class="watchlist-movie">The Rover</div>
+                <div class="watchlist-year">2014</div>
+                <div class="watchlist-note">Bleak post-apocalyptic Australia. Pearce + Pattinson.</div>
+            </div>
+            <div class="watchlist-item">
+                <div class="watchlist-movie">Atomic Blonde</div>
+                <div class="watchlist-year">2017</div>
+                <div class="watchlist-note">Charlize, stairwell fight, neon-noir action.</div>
+            </div>
+            <div class="watchlist-item">
+                <div class="watchlist-movie">The Raid</div>
+                <div class="watchlist-year">2011</div>
+                <div class="watchlist-note">Indonesian martial arts, relentless.</div>
+            </div>
+            <div class="watchlist-item">
+                <div class="watchlist-movie">The Raid 2</div>
+                <div class="watchlist-year">2014</div>
+                <div class="watchlist-note">Prison fight, car chase, even more ambitious.</div>
+            </div>
+            <div class="watchlist-item">
+                <div class="watchlist-movie">Kill Bill: Vol. 1</div>
+                <div class="watchlist-year">2003</div>
+                <div class="watchlist-note">Tarantino, stylized violence.</div>
+            </div>
+            <div class="watchlist-item">
+                <div class="watchlist-movie">Kill Bill: Vol. 2</div>
+                <div class="watchlist-year">2004</div>
+                <div class="watchlist-note">Western vibes, emotional stakes.</div>
+            </div>
+        </div>
+    </section>
+
     <script>
-        function showTab(tab) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById(tab).classList.remove('hidden');
-            
-            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
-            event.target.classList.add('active');
+        // SCROLL PROGRESS
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        });
+
+        // MOVIE POSTER UPDATE
+        const movieSections = document.querySelectorAll('.movie-section');
+        const posterTitle = document.getElementById('posterTitle');
+        const posterYear = document.getElementById('posterYear');
+        const posterStars = document.getElementById('posterStars');
+        const moviePoster = document.getElementById('moviePoster');
+
+        const movieData = {
+            'rounders': { title: 'ROUNDERS', year: '1998', stars: '★★★★★' },
+            'boiler': { title: 'BOILER ROOM', year: '2000', stars: '★★★★★' },
+            'heat': { title: 'HEAT', year: '1995', stars: '★★★★★' },
+            'departed': { title: 'THE DEPARTED', year: '2006', stars: '★★★★★' },
+            'town': { title: 'THE TOWN', year: '2010', stars: '★★★★★' },
+            'wick': { title: 'JOHN WICK', year: 'SAGA', stars: '★★★★★' },
+            'menu': { title: 'THE MENU', year: '2022', stars: '★★★★★' },
+            'villeneuve': { title: 'VILLENEUVE', year: 'TRILOGY', stars: '★★★★★' }
+        };
+
+        function updatePoster() {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const windowMiddle = scrollY + (windowHeight / 2);
+
+            let activeMovie = null;
+            let minDistance = Infinity;
+
+            movieSections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const sectionMiddle = rect.top + (rect.height / 2);
+                const distance = Math.abs(sectionMiddle - (windowHeight / 2));
+
+                if (distance < minDistance && rect.top < windowHeight && rect.bottom > 0) {
+                    minDistance = distance;
+                    activeMovie = section.dataset.movie;
+                }
+            });
+
+            if (activeMovie && movieData[activeMovie]) {
+                const data = movieData[activeMovie];
+                posterTitle.textContent = data.title;
+                posterYear.textContent = data.year;
+                posterStars.textContent = data.stars;
+                moviePoster.classList.add('active');
+            } else {
+                moviePoster.classList.remove('active');
+            }
+
+            // Parallax effect on poster
+            const parallaxY = (scrollY * 0.1) % 20;
+            moviePoster.style.transform = `translateY(calc(-50% + ${parallaxY}px)) rotateY(${scrollY * 0.02}deg)`;
         }
+
+        window.addEventListener('scroll', updatePoster);
+        updatePoster();
     </script>
 </body>
 </html>
