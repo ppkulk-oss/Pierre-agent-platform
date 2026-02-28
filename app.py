@@ -164,5 +164,12 @@ def delete_wine(wine_id):
     conn.close()
     return redirect(url_for('wine_dashboard'))
 
+# ============================================================
+# MEDIA ROUTE
+# ============================================================
+@app.route('/media')
+def media_dashboard():
+    return render_template('media.html')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

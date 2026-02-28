@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Library | Prashant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-indigo: #0a0a1a;
+            --indigo-light: #151530;
+            --coral: #ff6b9d;
+            --gold: #ffd700;
+            --gold-soft: #c9a227;
+            --teal: #0d7377;
+            --cream: #faf8f5;
+            --wine: #722f37;
+            --wine-glow: rgba(114,47,55,0.5);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--deep-indigo);
+            font-family: 'Inter', sans-serif;
+            color: var(--cream);
+            min-height: 100vh;
+        }
+
+        .bg-animation {
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(255,107,157,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(114,47,55,0.15) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0a1a 0%, #121228 100%);
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 30px;
+        }
+
+        .header {
+            margin-bottom: 50px;
+        }
+
+        .back-link {
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--coral);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.4);
+            font-size: 16px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+        }
+
+        .tab {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px 24px;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .tab:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .tab.active {
+            background: var(--wine);
+            border-color: var(--wine);
+            color: white;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--gold-soft);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.1);
+            transform: translateY(-4px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .card-year {
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .card-rating {
+            color: var(--gold);
+            font-size: 14px;
+        }
+
+        .card-notes {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.6;
+        }
+
+        .card-meta {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 12px;
+            color: rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .table-view {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 2fr 80px 100px 2fr;
+            gap: 20px;
+            padding: 18px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .table-row:hover {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-header {
+            background: rgba(255,255,255,0.04);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.4);
+            font-weight: 600;
+        }
+
+        .table-header:hover {
+            background: rgba(255,255,255,0.04);
+        }
+
+        .hidden { display: none; }
+
+        .emoji {
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 36px; }
+            .table-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .table-header { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    
+    <div class="container">
+        <div class="header">
+            <a href="/" class="back-link">← Back to Portal</a>
+            <h1>Media Library</h1>
+            <p class="subtitle">Movies, books, and stories worth remembering</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('movies')">🎬 Movies</button>
+            <button class="tab" onclick="showTab('books')">📚 Books</button>
+        </div>
+
+        <!-- MOVIES SECTION -->
+        <div id="movies" class="tab-content">
+            <div class="section">
+                <h2 class="section-title"><span class="emoji">🏆</span> The Canon (10/10)</h2>
+                <div class="table-view">
+                    <div class="table-row table-header">
+                        <div>Title</div>
+                        <div>Year</div>
+                        <div>Rating</div>
+                        <div>Notes</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>Rounders</strong></div>
+                        <div>1998</div>
+                        <div>★★★★★</div>
+                        <div>"All time favorite" — poker classic, Damon & Norton</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>Boiler Room</strong></div>
+                        <div>2000</div>
+                        <div>★★★★★</div>
+                        <div>"All time favorite" — finance bros, pump & dump</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>Heat</strong></div>
+                        <div>1995</div>
+                        <div>★★★★★</div>
+                        <div>"Amazing" — Mann's masterpiece</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>The Departed</strong></div>
+                        <div>2006</div>
+                        <div>★★★★★</div>
+                        <div>"Amazing" — Scorsese crime epic</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>The Town</strong></div>
+                        <div>2010</div>
+                        <div>★★★★★</div>
+                        <div>"What a great movie" — Affleck's Boston crime</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>The Menu</strong></div>
+                        <div>2022</div>
+                        <div>★★★★★</div>
+                        <div>Dark/wine masterpiece 🍷</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>Incendies</strong></div>
+                        <div>2010</div>
+                        <div>★★★★★</div>
+                        <div>Denis Villeneuve — devastating twist</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>Arrival</strong></div>
+                        <div>2016</div>
+                        <div>★★★★★</div>
+                        <div>Villeneuve's linguistic sci-fi masterpiece</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>Blade Runner 2049</strong></div>
+                        <div>2017</div>
+                        <div>★★★★★</div>
+                        <div>"Out of this world"</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>The Killer</strong></div>
+                        <div>2023</div>
+                        <div>★★★★★</div>
+                        <div>Fincher — methodical hitman</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>The Call</strong></div>
+                        <div>2020</div>
+                        <div>★★★★★</div>
+                        <div>Korean time-travel thriller</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>Nobody 2</strong></div>
+                        <div>2026</div>
+                        <div>★★★★★</div>
+                        <div>Watched Feb 14, 2026</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>Predator: Badlands</strong></div>
+                        <div>2026</div>
+                        <div>★★★★★</div>
+                        <div>Watched Feb 14, 2026</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><span class="emoji">🎪</span> John Wick Saga</h2>
+                <div class="grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">John Wick</div>
+                                <div class="card-year">2014</div>
+                            </div>
+                            <div class="card-rating">★★★★★</div>
+                        </div>
+                        <div class="card-notes">The Baba Yaga origin</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">John Wick: Chapter 2</div>
+                                <div class="card-year">2017</div>
+                            </div>
+                            <div class="card-rating">★★★★★</div>
+                        </div>
+                        <div class="card-notes">Continental chaos, Rome action</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">John Wick: Chapter 3</div>
+                                <div class="card-year">2019</div>
+                            </div>
+                            <div class="card-rating">★★★★★</div>
+                        </div>
+                        <div class="card-notes">Dogs, horses, knife fights</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">John Wick: Chapter 4</div>
+                                <div class="card-year">2023</div>
+                            </div>
+                            <div class="card-rating">★★★★★</div>
+                        </div>
+                        <div class="card-notes">Osaka Continental, Arc de Triomphe</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><span class="emoji">📋</span> The Backlog</h2>
+                <div class="table-view">
+                    <div class="table-row table-header">
+                        <div>Title</div>
+                        <div>Year</div>
+                        <div></div>
+                        <div>Notes</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>The Rover</strong></div>
+                        <div>2014</div>
+                        <div></div>
+                        <div>Bleak post-apocalyptic Australia. Pearce + Pattinson</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>Atomic Blonde</strong></div>
+                        <div>2017</div>
+                        <div></div>
+                        <div>Charlize, stairwell fight, neon-noir action</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>The Raid</strong></div>
+                        <div>2011</div>
+                        <div></div>
+                        <div>Indonesian martial arts, relentless</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>The Raid 2</strong></div>
+                        <div>2014</div>
+                        <div></div>
+                        <div>Prison fight, car chase, even more ambitious</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>Kill Bill: Vol. 1</strong></div>
+                        <div>2003</div>
+                        <div></div>
+                        <div>Tarantino, stylized violence</div>
+                    </div>
+                    <div class="table-row">
+                        <div><strong>Kill Bill: Vol. 2</strong></div>
+                        <div>2004</div>
+                        <div></div>
+                        <div>Western vibes, emotional stakes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOOKS SECTION -->
+        <div id="books" class="tab-content hidden">
+            <div class="section">
+                <h2 class="section-title"><span class="emoji">🏆</span> The Trophy Shelf (★★★★★)</h2>
+                <div class="grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Recursion</div>
+                                <div class="card-year">Blake Crouch</div>
+                            </div>
+                            <div class="card-rating">★★★★★</div>
+                        </div>
+                        <div class="card-notes">Mind-bending sci-fi. Time, memory, and the nature of reality.</div>
+                        <div class="card-meta">🍷 Wine Pairing: Burgundy</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">The Silent Patient</div>
+                                <div class="card-year">Alex Michaelides</div>
+                            </div>
+                            <div class="card-rating">★★★★★</div>
+                        </div>
+                        <div class="card-notes">Dark psychological thriller. A woman who refuses to speak.</div>
+                        <div class="card-meta">🍷 Wine Pairing: Syrah</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><span class="emoji">📚</span> To Read (The Pile)</h2>
+                <div class="grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Dark Matter</div>
+                                <div class="card-year">Blake Crouch</div>
+                            </div>
+                        </div>
+                        <div class="card-notes">Similar to Recursion — multiverse, choices, paths not taken</div>
+                        <div class="card-meta">Sci-Fi</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">The Maidens</div>
+                                <div class="card-year">Alex Michaelides</div>
+                            </div>
+                        </div>
+                        <div class="card-notes">Same author as Silent Patient — dark academia thriller</div>
+                        <div class="card-meta">Thriller</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tab).classList.remove('hidden');
+            
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

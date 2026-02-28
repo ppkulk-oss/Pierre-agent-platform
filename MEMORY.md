@@ -119,8 +119,67 @@
 - Never use Streamlit for creative/design-heavy UIs — it's built for data apps, not custom styling
 - Railway auto-detects project type by files in root (package.json = Node, requirements.txt = Python)
 
-## Movies to Watch
-- **The Rover** - Added Feb 25, 2026
+## Media
+
+### 🎬 Movies
+
+#### To Watch (The Backlog)
+| Title | Year | Added | Notes |
+|-------|------|-------|-------|
+| **The Rover** | 2014 | Feb 25, 2026 | Post-apocalyptic Australia. Guy Pearce + Robert Pattinson. Bleak and brutal. |
+| **Atomic Blonde** | 2017 | Feb 15, 2026 | Charlize Theron, stairwell fight, neon-noir action |
+| **The Raid** | 2011 | Feb 15, 2026 | Indonesian martial arts, relentless |
+| **The Raid 2** | 2014 | Feb 15, 2026 | Prison fight, car chase, even more ambitious |
+| **Kill Bill: Vol. 1** | 2003 | Feb 15, 2026 | Tarantino, stylized violence |
+| **Kill Bill: Vol. 2** | 2004 | Feb 15, 2026 | Western vibes, emotional stakes |
+
+#### Watched (The Canon) — 10/10 Films
+| Title | Year | Rating | Rewatch? | Notes |
+|-------|------|--------|----------|-------|
+| **Rounders** | 1998 | ★★★★★ | Always | *"All time favorite"* — poker classic, Damon & Norton |
+| **Boiler Room** | 2000 | ★★★★★ | Always | *"All time favorite"* — finance bros, pump & dump |
+| **Heat** | 1995 | ★★★★★ | Always | *"Amazing"* — Mann's masterpiece |
+| **The Departed** | 2006 | ★★★★★ | Always | *"Amazing"* — Scorsese crime epic |
+| **The Town** | 2010 | ★★★★★ | Yes | *"What a great movie"* — Affleck's Boston crime |
+| **John Wick** | 2014 | ★★★★★ | Yes | The Baba Yaga origin |
+| **John Wick 2** | 2017 | ★★★★★ | Yes | Continental chaos, Rome action |
+| **John Wick 3** | 2019 | ★★★★★ | Yes | Dogs, horses, knife fights |
+| **John Wick 4** | 2023 | ★★★★★ | Yes | Osaka Continental, Arc de Triomphe |
+| **Incendies** | 2010 | ★★★★★ | Maybe | Denis Villeneuve — devastating twist |
+| **Arrival** | 2016 | ★★★★★ | Maybe | Villeneuve's linguistic sci-fi masterpiece |
+| **Blade Runner 2049** | 2017 | ★★★★★ | Yes | *"Out of this world"* |
+| **The Menu** | 2022 | ★★★★★ | Yes | Dark/wine masterpiece 🍷 |
+| **The Call** | 2020 | ★★★★★ | Maybe | Korean time-travel thriller |
+| **The Killer** | 2023 | ★★★★★ | Yes | Fincher — methodical hitman |
+| **Nobody 2** | 2026 | ★★★★★ | Yes | Watched Feb 14 |
+| **Predator: Badlands** | 2026 | ★★★★★ | ? | Watched Feb 14 |
+
+#### Favorite Directors/Actors to Track
+- **Denis Villeneuve** — Incendies, Arrival, Blade Runner 2049
+- **Michael Mann** — Heat, likely Thief
+- **David Fincher** — The Killer
+- **Chad Stahelski** — John Wick franchise
+- **Charlize Theron** — Atomic Blonde on deck
 
 ---
+
+### 📚 Books
+
+#### To Read (The Pile)
+| Title | Author | Added | Genre | Notes |
+|-------|--------|-------|-------|-------|
+| **Dark Matter** | Blake Crouch | Feb 15, 2026 | Sci-Fi | Similar to Recursion |
+| **The Maidens** | Alex Michaelides | Feb 15, 2026 | Thriller | Same author as Silent Patient |
+
+#### Reading Now
+- *(Nothing currently — accepting submissions)*
+
+#### Finished (The Trophy Shelf) — ★★★★★
+| Title | Author | Finished | Genre | Notes |
+|-------|--------|----------|-------|-------|
+| **Recursion** | Blake Crouch | 2025? | Sci-Fi | Mind-bending 🍷 Pairing: Burgundy |
+| **The Silent Patient** | Alex Michaelides | 2025? | Thriller | Dark intensity 🍷 Pairing: Syrah |
+
+---
+
 *This is Pierre's curated long-term memory. Updated after significant events/learnings.*
