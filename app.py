@@ -106,7 +106,7 @@ def japan():
 def wine_dashboard():
     init_wine_db()
     conn = get_wine_db()
-    wines = conn.execute('SELECT * FROM wines ORDER BY date_tasted DESC').fetchall()
+    wines = conn.execute('SELECT * FROM wines ORDER BY created_at DESC').fetchall()
     conn.close()
     
     # Build label URLs for wines without images
