@@ -47,7 +47,46 @@ const SHIT_WINE_TERMS = [
 const UNICORNS = [
   'clape', 'gonon', 'allemand', 'chave', 'jamet',
   'dugat-py', 'roumier', 'mugnier', 'vogüé', 'leroy',
-  'ramonet', 'lafon', 'coche-dury'
+  'ramonet', 'lafon', 'coche-dury', 'voge',
+  'montrose', 'tempier', 'clos mogador', 'paolo bea',
+  'sorrel', 'cappellano'
+];
+
+// === THE "GRANITE HEAD" KILL LIST ===
+// Structure, Iron, and Granite - Anti-Watery, Anti-Makeup profile
+const SPECIFIC_HUNTS = [
+  // 1. Clape Cornas - The "Desert Island" wine
+  { producer: 'clape', wine: 'cornas', vintages: ['2019', '2015'], region: 'cornas', price: '$225-275' },
+  
+  // 2. Jamet Cote-Rotie - The "Feral King"
+  { producer: 'jamet', wine: "côte-rôtie", vintages: ['2019', '2022'], region: 'côte-rôtie', price: '$250-325' },
+  
+  // 3. Montrose Saint-Estephe - The "Latour of Saint-Estèphe"
+  { producer: 'montrose', wine: 'saint-estèphe', vintages: ['2016', '2010'], region: 'bordeaux', price: '$220-280' },
+  
+  // 4. Tempier Bandol "Cabassaou" - The "Meat Monster"
+  { producer: 'tempier', wine: 'cabassaou', vintages: ['2019', '2020'], region: 'bandol', price: '$140-180' },
+  
+  // 5. Clos Mogador Priorat - The "Slate Monster"
+  { producer: 'clos mogador', wine: 'priorat', vintages: ['2019'], region: 'priorat', price: '$110-130' },
+  
+  // 6. Paolo Bea Sagrantino "Pagliaro" - The "Friction King"
+  { producer: 'paolo bea', wine: 'pagliaro', vintages: ['2015', '2017'], region: 'montefalco', price: '$130-160' },
+  
+  // 7. Marc Sorrel Hermitage "Le Gréal" - The "Blood of Hermitage"
+  { producer: 'sorrel', wine: 'le gréal', vintages: ['2019'], region: 'hermitage', price: '$180-240' },
+  
+  // 8. Dugat-Py Gevrey "Cœur de Roy" TVV - The "Iron Pinot"
+  { producer: 'dugat-py', wine: 'cœur de roy', vintages: ['2019', '2020'], region: 'gevrey', price: '$175-220' },
+  
+  // 9. Cappellano Barolo "Pie Rupestris" - The "Anti-Modernist"
+  { producer: 'cappellano', wine: 'pie rupestris', vintages: ['2016', '2019'], region: 'barolo', price: '$250-350' },
+  
+  // 10. Allemand Cornas "Chaillot" - The "Cult Reference"
+  { producer: 'allemand', wine: 'chaillot', vintages: ['2018', '2019'], region: 'cornas', price: '$350-400' },
+  
+  // BONUS: Voge (previously requested)
+  { producer: 'voge', wine: 'les vieilles vignes', vintages: ['2019', '2020'], region: 'cornas', price: '$200-250' }
 ];
 
 // === DEAL KEYWORDS (value indicators) ===
@@ -89,10 +128,44 @@ function isNewEmail(emailDate, lastCheck) {
   return emailTime > lastCheck;
 }
 
+function checkSpecificHunts(email) {
+  const text = `${email.subject} ${email.body || ''}`.toLowerCase();
+  let huntMatches = [];
+  
+  for (const hunt of SPECIFIC_HUNTS) {
+    const hasProducer = text.includes(hunt.producer);
+    const hasWine = text.includes(hunt.wine);
+    const hasVintage = hunt.vintages.some(v => text.includes(v));
+    const hasRegion = text.includes(hunt.region);
+    
+    if (hasProducer && hasWine && hasVintage) {
+      const matchedVintage = hunt.vintages.filter(v => text.includes(v)).join('/');
+      huntMatches.push({
+        name: `${hunt.producer.toUpperCase()} ${hunt.wine} ${matchedVintage}`,
+        targetPrice: hunt.price
+      });
+    } else if (hasProducer && hasWine && hasRegion) {
+      huntMatches.push({
+        name: `${hunt.producer.toUpperCase()} ${hunt.wine} (region match)`,
+        targetPrice: hunt.price
+      });
+    }
+  }
+  
+  return huntMatches;
+}
+
 function scoreEmail(email) {
   const text = `${email.subject} ${email.body || ''}`.toLowerCase();
   let score = 0;
   let reasons = [];
+  
+  // Check for specific hunt targets (highest priority)
+  const huntMatches = checkSpecificHunts(email);
+  for (const match of huntMatches) {
+    score += 150;
+    reasons.push(`🎯 KILL LIST: ${match.name} [Target: ${match.targetPrice}]`);
+  }
   
   // Check for unicorn producers (instant alert)
   for (const unicorn of UNICORNS) {
@@ -144,23 +217,23 @@ function scoreEmail(email) {
 function scanEmailForWines(email) {
   const { score, reasons, isFromRetailer } = scoreEmail(email);
   
-  // Must be from trusted retailer AND score high enough
-  if (!isFromRetailer) return { hasMatch: false };
-  
-  // Unicorn sightings always alert regardless of score
+  // Check ALL emails - no retailer filter (for forwarded emails from Gmail)
+  // Unicorn sightings ALWAYS alert regardless of score
   const hasUnicorn = reasons.some(r => r.startsWith('UNICORN'));
   
   // Deal + quality combo = alert
   const hasDeal = reasons.some(r => r.startsWith('deal:'));
   const hasQuality = reasons.some(r => r.startsWith('quality:'));
   
-  // Threshold: either unicorn, or (deal + quality) combo, or score >= 25
-  const shouldAlert = hasUnicorn || (hasDeal && hasQuality) || score >= 25;
+  // Lower threshold for non-retailer emails - be more aggressive
+  // Threshold: either unicorn, or (deal + quality) combo, or score >= 20
+  const shouldAlert = hasUnicorn || (hasDeal && hasQuality) || score >= 20;
   
   let priority = 'LOW';
   if (hasUnicorn) priority = 'UNICORN 🦄';
   else if (score >= 40) priority = 'HIGH';
   else if (score >= 25) priority = 'MEDIUM';
+  else if (score >= 20) priority = 'WATCH';
   
   return {
     hasMatch: shouldAlert,
@@ -175,7 +248,8 @@ function generateAlert(emails) {
   const timestamp = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
   
   let alert = `🍷 WINE SCOUT ALERT - ${timestamp} ET\n`;
-  alert += `Criteria: Terroir-driven, structured wines. NO fruit bombs.\n\n`;
+  alert += `Criteria: Structure, Iron, Granite. NO watery fruit bombs.\n`;
+  alert += `🎯 KILL LIST: 10 Targets - Clape, Jamet, Montrose, Tempier, Clos Mogador, Paolo Bea, Sorrel, Dugat-Py, Cappellano, Allemand\n\n`;
   
   for (const email of emails) {
     alert += `**${email.priority}** (score: ${email.score})\n`;
@@ -218,8 +292,8 @@ async function main() {
         });
         console.log(`🍷 ${scan.priority}: ${email.subject.substring(0, 50)}...`);
         console.log(`   Score: ${scan.score}, Reasons: ${scan.reasons.slice(0, 4).join(', ')}`);
-      } else if (scan.isFromRetailer) {
-        console.log(`📧 Skipped (low score ${scan.score}): ${email.subject.substring(0, 40)}...`);
+      } else {
+        console.log(`📧 Skipped (score ${scan.score}): ${email.subject.substring(0, 40)}...`);
       }
     }
     
