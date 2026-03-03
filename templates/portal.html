@@ -183,6 +183,7 @@
         .portal-card:nth-child(2) { animation-delay: 0.75s; }
         .portal-card:nth-child(3) { animation-delay: 0.9s; }
         .portal-card:nth-child(4) { animation-delay: 1.05s; }
+        .portal-card:nth-child(5) { animation-delay: 1.2s; }
 
         .portal-card::before {
             content: '';
@@ -306,6 +307,15 @@
             box-shadow: 0 40px 80px rgba(114,47,55,0.25), inset 0 1px 0 rgba(114,47,55,0.1);
         }
 
+        .card-restaurant { 
+            --accent: #ff6b35;
+        }
+        .card-restaurant::after { background: #ff6b35; }
+        .card-restaurant .card-title { color: #ff6b35; }
+        .card-restaurant:hover { 
+            box-shadow: 0 40px 80px rgba(255,107,53,0.25), inset 0 1px 0 rgba(255,107,53,0.1);
+        }
+
         .card-coming {
             opacity: 0.4;
             cursor: not-allowed;
@@ -393,6 +403,16 @@
                 <div class="card-desc">Movies watched and queued. Books read and waiting. Your personal canon of stories.</div>
                 <div class="card-meta">
                     <span>Library</span>
+                    <span class="card-arrow">→</span>
+                </div>
+            </a>
+            
+            <a href="/restaurants" class="portal-card card-restaurant">
+                <span class="card-icon">🍽️</span>
+                <div class="card-title">Restaurants</div>
+                <div class="card-desc">NYC hit list — 11 spots from Instagram reels. Addresses, phone numbers, and reels all in one place.</div>
+                <div class="card-meta">
+                    <span>11 Spots</span>
                     <span class="card-arrow">→</span>
                 </div>
             </a>
