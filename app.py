@@ -171,5 +171,12 @@ def delete_wine(wine_id):
 def media_dashboard():
     return render_template('media.html')
 
+# ============================================================
+# RESTAURANTS ROUTE
+# ============================================================
+@app.route('/restaurants')
+def restaurants():
+    return render_template('restaurants.html')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
