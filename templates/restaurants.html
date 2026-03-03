@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prashant's NYC Restaurant Hit List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #141414;
+            --accent: #ff6b35;
+            --accent-light: #ff8c5a;
+            --text: #f5f5f5;
+            --text-muted: #888;
+            --border: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(255, 140, 90, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+        }
+
+        .header-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Restaurant Grid */
+        .restaurant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
+        }
+
+        /* Restaurant Card */
+        .restaurant-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .restaurant-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.1);
+        }
+
+        .restaurant-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-header {
+            padding: 25px 25px 15px;
+            position: relative;
+        }
+
+        .card-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            color: var(--bg-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .cuisine-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .restaurant-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .location i {
+            color: var(--accent);
+            width: 16px;
+        }
+
+        .phone {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .phone i {
+            color: var(--accent);
+            width: 16px;
+        }
+
+        .card-body {
+            padding: 0 25px 15px;
+        }
+
+        .notes {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .hours {
+            color: var(--accent-light);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        .card-footer {
+            padding: 0 25px 25px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .restaurant-grid { grid-template-columns: 1fr; }
+            .stats { gap: 20px; }
+        }
+
+        /* Loading animation */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .restaurant-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .restaurant-card:nth-child(1) { animation-delay: 0.1s; }
+        .restaurant-card:nth-child(2) { animation-delay: 0.15s; }
+        .restaurant-card:nth-child(3) { animation-delay: 0.2s; }
+        .restaurant-card:nth-child(4) { animation-delay: 0.25s; }
+        .restaurant-card:nth-child(5) { animation-delay: 0.3s; }
+        .restaurant-card:nth-child(6) { animation-delay: 0.35s; }
+        .restaurant-card:nth-child(7) { animation-delay: 0.4s; }
+        .restaurant-card:nth-child(8) { animation-delay: 0.45s; }
+        .restaurant-card:nth-child(9) { animation-delay: 0.5s; }
+        .restaurant-card:nth-child(10) { animation-delay: 0.55s; }
+        .restaurant-card:nth-child(11) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    
+    <div class="container">
+        <header>
+            <div class="header-icon">
+                <i class="fas fa-utensils"></i>
+            </div>
+            <h1>NYC Restaurant Hit List</h1>
+            <p class="subtitle">Curated by Prashant & Pierre | March 2026</p>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">11</div>
+                    <div class="stat-label">Spots to Try</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Visited</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Deliciousness</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="restaurant-grid">
+            <!-- Restaurant 1: Nyona -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <div class="card-number">1</div>
+                    <span class="cuisine-tag">Malaysian</span>
+                    <h2 class="restaurant-name">Nyona (Nyonya)</h2>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>199 Grand St, New York, NY</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="notes">Malaysian-Chinese cuisine. Try Roti Canai and Nyonya Rojak!</p>
+                    <p class="hours">Mon-Sun: 11:00 AM - 10:00 PM</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.instagram.com/reel/DVZtTcvgDja/" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-instagram"></i> Watch Reel
+                    </a>
+                </div>
+            </div>
+
+            <!-- Restaurant 2: Glur -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <div class="card-number">2</div>
+                    <span class="cuisine-tag">Thai</span>
+                    <h2 class="restaurant-name">Glur</h2>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>144 W 19th St, New York, NY 10011</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="notes">Thai restaurant in Chelsea. Open until 9:30 PM.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.instagram.com/reel/DU9q2KGjeoy/" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-instagram"></i> Watch Reel
+                    </a>
+                </div>
+            </div>
+
+            <!-- Restaurant 3: Willow -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <div class="card-number">3</div>
+                    <span class="cuisine-tag">Vegan Bistro</span>
+                    <h2 class="restaurant-name">Willow</h2>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Chelsea, NYC</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="notes">Vegan bistro with American comfort food. Chef Guy Vaknin. Reservations on Resy. Perfect for Riya!</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.instagram.com/reel/DUQ3i3-iTyO/" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-instagram"></i> Watch Reel
+                    </a>
+                </div>
+            </div>
+
+            <!-- Restaurant 4: Hangawi -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <div class="card-number">4</div>
+                    <span class="cuisine-tag">Korean Vegetarian</span>
+                    <h2 class="restaurant-name">Hangawi</h2>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>12 E 32nd St, New York, NY 10016</span>
+                    </div>
+                    <div class="phone">
+                        <i class="fas fa-phone"></i>
+                        <span>(212) 213-0077</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="notes">Korean vegan restaurant. "A vegetarian shrine in another space and time." Great for Riya!</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.instagram.com/reel/DUMN8TnEmF8/" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-instagram"></i> Watch Reel
+                    </a>
+                    <a href="https://hangawirestaurant.com/" class="btn btn-secondary" target="_blank">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                </div>
+            </div>
+
+            <!-- Restaurant 5: Lungi -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <div class="card-number">5</div>
+                    <span class="cuisine-tag">TBD</span>
+                    <h2 class="restaurant-name">Lungi</h2>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>NYC</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="notes">From the combo reel with Glur, Hangawi & more</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.instagram.com/reel/DUMN8TnEmF8/" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-instagram"></i> Watch Reel
+                    </a>
+                </div>
+            </div>
+
+            <!-- Restaurant 6: Dhamaka -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <div class="card-number">6</div>
+                    <span class="cuisine-tag">Indian • Michelin</span>
+                    <h2 class="restaurant-name">Dhamaka</h2>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>119 Delancey St, New York, NY 10002</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="notes">Upscale casual Indian in Essex Market. MICHELIN Guide restaurant! Unapologetic Indian cuisine.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.instagram.com/reel/DUMN8TnEmF8/" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-instagram"></i> Watch Reel
+                    </a>
+                </div>
+            </div>
+
+            <!-- Restaurant 7: Dirt Candy -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <div class="card-number">7</div>
+                    <span class="cuisine-tag">Vegetarian • Michelin</span>
+                    <h2 class="restaurant-name">Dirt Candy</h2>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>86 Allen St, New York, NY 10002</span>
+                    </div>
+                    <div class="phone">
+                        <i class="fas fa-phone"></i>
+                        <span>(212) 228-7732</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="notes">MICHELIN Guide vegetarian restaurant. Dinner only: Tues-Sat 5:30-10:30 PM. Great for Riya!</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.instagram.com/reel/DUMN8TnEmF8/" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-instagram"></i> Watch Reel
+                    </a>
+                    <a href="https://www.dirtcandynyc.com/" class="btn btn-secondary" target="_blank">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                </div>
+            </div>
+
+            <!-- Restaurant 8: Fonty's -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <div class="card-number">8</div>
+                    <span class="cuisine-tag">Deli</span>
+                    <h2 class="restaurant-name">Fonty's Deli + Dukaan</h2>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>NYC</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="notes">Deli meets dukaan concept</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.instagram.com/reel/DTeKHgnDG87/" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-instagram"></i> Watch Reel
+                    </a>
+                </div>
+            </div>
+
+            <!-- Restaurant 9: Chor Bazaar -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <div class="card-number">9</div>
+                    <span class="cuisine-tag">TBD</span>
+                    <h2 class="restaurant-name">Chor Bazaar</h2>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>NYC</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="notes">Thieves market vibes? (Indian street food possibly)</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.instagram.com/reel/DTyZr3uD21F/" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-instagram"></i> Watch Reel
+                    </a>
+                </div>
+            </div>
+
+            <!-- Restaurant 10: Hampton Chutney Co -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <div class="card-number">10</div>
+                    <span class="cuisine-tag">Indian</span>
+                    <h2 class="restaurant-name">Hampton Chutney Co</h2>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>2 Astor Place, New York, NY 10003</span>
+                    </div>
+                    <div class="phone">
+                        <i class="fas fa-phone"></i>
+                        <span>(646) 449-9099</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="notes">Indian food in NoHo. Order-at-the-counter spot.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.instagram.com/reel/DTk5gLTESBD/" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-instagram"></i> Watch Reel
+                    </a>
+                    <a href="https://hamptonchutney.com/" class="btn btn-secondary" target="_blank">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                </div>
+            </div>
+
+            <!-- Restaurant 11: Kidilum -->
+            <div class="restaurant-card">
+                <div class="card-header">
+                    <div class="card-number">11</div>
+                    <span class="cuisine-tag">TBD</span>
+                    <h2 class="restaurant-name">Kidilum</h2>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>NYC</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="notes">From the Google share — need more info</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://share.google/IMDRacX4v4VH8fDUq" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-google"></i> View
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>🍽️ Curated with hunger by <strong>Prashant</strong> & <strong>Pierre</strong></p>
+            <p style="margin-top: 10px;">Last updated: March 3, 2026</p>
+        </footer>
+    </div>
+</body>
+</html>
