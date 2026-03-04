@@ -23,8 +23,8 @@ def get_agent_config(agent_name):
         return response.data[0]
     return None
 
-def call_openrouter(model, system_prompt, user_message):
-    """Call OpenRouter API."""
+def call_openrouter_chat(model, system_prompt, user_message):
+    """Call OpenRouter chat completions API."""
     headers = {
         "Authorization": f"Bearer {OPENROUTER_API_KEY}",
         "Content-Type": "application/json",
@@ -49,9 +49,71 @@ def call_openrouter(model, system_prompt, user_message):
     response.raise_for_status()
     return response.json()
 
+def call_openrouter_embedding(content):
+    """Generate embedding via OpenRouter."""
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://pierre-orchestrator.railway.app",
+        "X-Title": "Pierre Orchestrator"
+    }
+    
+    data = {
+        "model": "openai/text-embedding-3-small",
+        "input": content
+    }
+    
+    response = requests.post(
+        "https://openrouter.ai/api/v1/embeddings",
+        headers=headers,
+        json=data
+    )
+    response.raise_for_status()
+    return response.json()
+
+def store_memory_vector(content, metadata=None):
+    """Store content with embedding in memory_vectors table."""
+    result = call_openrouter_embedding(content)
+    embedding = result['data'][0]['embedding']
+    
+    data = {
+        "content": content,
+        "embedding": embedding,
+        "metadata": metadata or {
+            "source": "worker_embed_memory",
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }
+    }
+    
+    supabase.table("memory_vectors").insert(data).execute()
+    return {"stored": True, "dimensions": len(embedding)}
+
 def process_job(job):
     """Process a job using the appropriate agent."""
     job_type = job['job_type']
+    
+    # Special handling for embed_memory jobs
+    if job_type == "embed_memory":
+        content = job['payload'].get('content', '')
+        if not content:
+            return {"error": "No content provided for embedding", "stored": False}
+        
+        try:
+            metadata = job['payload'].get('metadata', {})
+            result = store_memory_vector(content, metadata)
+            return {
+                "response": f"Memory stored: {content[:100]}...",
+                "stored": True,
+                "dimensions": result["dimensions"]
+            }
+        except Exception as e:
+            return {
+                "error": str(e),
+                "response": f"Error storing memory: {str(e)}",
+                "stored": False
+            }
+    
+    # Standard chat agent jobs
     query = job['payload'].get('query', '')
     
     # Get agent config from database
@@ -67,8 +129,8 @@ def process_job(job):
     system_prompt = config.get('system_prompt', 'You are a helpful assistant.')
     
     try:
-        # Call OpenRouter
-        result = call_openrouter(model, system_prompt, query)
+        # Call OpenRouter chat
+        result = call_openrouter_chat(model, system_prompt, query)
         response_text = result['choices'][0]['message']['content']
         
         return {
@@ -89,9 +151,12 @@ def run_worker():
             job = fetch_next_job()
             if job:
                 print(f"📦 Processing Job {job['id']}: {job['job_type']}")
-                print(f"   Query: {job['payload'].get('query', '')[:50]}...")
+                if job['job_type'] == 'embed_memory':
+                    print(f"   Content: {job['payload'].get('content', '')[:50]}...")
+                else:
+                    print(f"   Query: {job['payload'].get('query', '')[:50]}...")
                 
-                # Process with LLM
+                # Process job (chat or embedding)
                 result = process_job(job)
                 
                 # Write result back
