@@ -11,6 +11,12 @@
 ## Current Collection
 - **Dugat-Py La Petite Levrière** (Burgundy)
   - Status: In collection (untried in logs)
+- **2013 Delas Frères "Les Bessards"** (Hermitage, Northern Rhône)
+  - Producer: Delas Frères
+  - Vineyard: Les Bessards (Hermitage)
+  - Vintage: 2013
+  - Status: In collection
+  - Notes: Single vineyard Hermitage from granitic slopes
 
 ## Wines Tried
 - **2005 Drouhin-Laroze Bonnes-Mares** (Burgundy Grand Cru)

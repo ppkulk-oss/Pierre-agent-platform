@@ -18,6 +18,35 @@
 - **Flemington source** mentioned for wine purchases
 - **Deal Hunter**: Looking for exceptional value buys (e.g., 2006 Haut-Brion at $450 — benchmark for "amazing deals")
 
+### The "Dead Fruit" Rule (Mar 2026 Discovery)
+**Palate Profile**: "Necromancer" — prefers wines where primary fruit has died, revealing earth/rock/skeleton.
+
+**Key Insight**: Levet 2022 (Côte-Rôtie) failed because solar vintage = baby fat fruit covering the meat. Las Cases 2012 hit because 14 years = fruit is dead, only graphite/cedar remains.
+
+**Vintage Rules**:
+- **Target**: 10+ years of age (2016 or older)
+- **Avoid**: Solar/hot vintages (2018-2022) for young wines
+- **Safe Zones**: Cornas, Bordeaux (aged), Bandol (aged), Dunn Napa
+- **KILL**: Côte-Rôtie (too floral/aromatic) — removed Jamet from list
+
+**⚠️ WARNING**: Balthazar 2019 (coming) is solar vintage — decant 3-4 hours OR wait 5 years
+
+**Updated Kill List** (Target cool/classic vintages):
+| Producer | Vintages | Price |
+|----------|----------|-------|
+| Clape Cornas | 2013-2014 (cool) | $250 |
+| Léoville Barton | 2009-2010 | $200 |
+| Montrose | 2005, 2008 | $250 |
+| Tempier Bandol | 2011, 2013 | $180 |
+| Dunn Howell Mtn | 2011, 2013 | $220 |
+| Paolo Bea Pagliaro | 2012, 2015 | $145 |
+| Sorrel Le Gréal | 2013-2014 | $210 |
+| Pape Clément | 1998, 2004 | $150-200 |
+| Cappellano Barolo | 2010, 2013 | $300 |
+| Allemand Chaillot | 2011, 2014 | $375 |
+
+**Bot Instruction**: "Ignore hype vintages (2018, 2022). Hunt for Cool, Classic, and Aged. If it describes 'lush fruit,' DELETE."
+
 ## Travel
 ### Beaver Creek, CO (Feb 7-11, 2026)
 - **Great success** - both girls skied all 3 days

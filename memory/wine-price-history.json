@@ -1,0 +1,46 @@
+{
+  "Clape_Cornas": {
+    "price": 50,
+    "date": "3/4/2026, 10:00:35 AM"
+  },
+  "Jamet_Côte-Rôtie": {
+    "price": 20,
+    "date": "3/4/2026, 10:00:35 AM"
+  },
+  "Montrose_Saint-Estèphe": {
+    "price": 25,
+    "date": "3/2/2026, 10:00:10 AM"
+  },
+  "Tempier_Cabassaou": {
+    "price": 100,
+    "date": "3/2/2026, 10:00:10 AM"
+  },
+  "Clos Mogador_Priorat": {
+    "price": 99.95,
+    "date": "3/4/2026, 10:00:35 AM"
+  },
+  "Paolo Bea_Pagliaro": {
+    "price": 25,
+    "date": "3/3/2026, 10:00:19 AM"
+  },
+  "Sorrel_Le Gréal": {
+    "price": 117,
+    "date": "3/2/2026, 10:00:10 AM"
+  },
+  "Dugat-Py_Cœur de Roy": {
+    "price": 30,
+    "date": "3/4/2026, 11:32:08 AM"
+  },
+  "Cappellano_Pie Rupestris": {
+    "price": 50,
+    "date": "3/3/2026, 10:00:19 AM"
+  },
+  "Allemand_Chaillot": {
+    "price": 185.51,
+    "date": "3/3/2026, 10:00:19 AM"
+  },
+  "Voge_Les Vieilles Vignes": {
+    "price": 68,
+    "date": "3/2/2026, 10:00:10 AM"
+  }
+}
