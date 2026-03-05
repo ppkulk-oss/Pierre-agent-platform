@@ -72,9 +72,9 @@ def call_openrouter_embedding(content):
     return response.json()
 
 def search_memory(query_embedding, match_threshold=0.7, match_count=5):
-    """Search memory_vectors for relevant context using match_memory RPC."""
+    """Search memory_vectors for relevant context using search_memories RPC."""
     try:
-        response = supabase.rpc("match_memory", {
+        response = supabase.rpc("search_memories", {
             "query_embedding": query_embedding,
             "match_threshold": match_threshold,
             "match_count": match_count
