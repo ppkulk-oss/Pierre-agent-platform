@@ -71,6 +71,22 @@ def call_openrouter_embedding(content):
     response.raise_for_status()
     return response.json()
 
+def search_memory(query_embedding, match_threshold=0.7, match_count=5):
+    """Search memory_vectors for relevant context using match_memory RPC."""
+    try:
+        response = supabase.rpc("match_memory", {
+            "query_embedding": query_embedding,
+            "match_threshold": match_threshold,
+            "match_count": match_count
+        }).execute()
+        
+        if response.data:
+            return response.data
+        return []
+    except Exception as e:
+        print(f"⚠️ Memory search error: {e}")
+        return []
+
 def store_memory_vector(content, metadata=None):
     """Store content with embedding in memory_vectors table."""
     result = call_openrouter_embedding(content)
@@ -126,17 +142,38 @@ def process_job(job):
     
     config = agent_config.get('config', {})
     model = config.get('model', 'anthropic/claude-3.5-sonnet')
-    system_prompt = config.get('system_prompt', 'You are a helpful assistant.')
+    system_prompt = agent_config.get('system_prompt', 'You are a helpful assistant.')
     
     try:
-        # Call OpenRouter chat
-        result = call_openrouter_chat(model, system_prompt, query)
+        # STEP 1: Generate embedding of the query
+        embedding_result = call_openrouter_embedding(query)
+        query_embedding = embedding_result['data'][0]['embedding']
+        
+        # STEP 2: Search memory for relevant context
+        memories = search_memory(query_embedding)
+        
+        # STEP 3: Build context-enhanced prompt
+        if memories:
+            memory_context = "\n\n--- RELEVANT CONTEXT FROM MEMORY ---\n"
+            for i, mem in enumerate(memories, 1):
+                memory_context += f"\n[{i}] {mem.get('content', '')}\n"
+            memory_context += "\n--- END CONTEXT ---\n"
+            
+            enhanced_prompt = system_prompt + memory_context + "\n\nUse the above context to provide a personalized, accurate response. If the context doesn't contain relevant information, proceed with your general knowledge."
+            print(f"   📚 Found {len(memories)} relevant memories")
+        else:
+            enhanced_prompt = system_prompt
+            print(f"   📭 No relevant memories found")
+        
+        # STEP 4: Call OpenRouter chat with enhanced context
+        result = call_openrouter_chat(model, enhanced_prompt, query)
         response_text = result['choices'][0]['message']['content']
         
         return {
             "response": response_text,
             "model_used": model,
-            "tokens_used": result.get('usage', {}).get('total_tokens', 0)
+            "tokens_used": result.get('usage', {}).get('total_tokens', 0),
+            "memories_used": len(memories)
         }
     except Exception as e:
         return {
