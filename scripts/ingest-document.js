@@ -15,17 +15,41 @@ const PIERRE_API_KEY = process.env.PIERRE_API_KEY;
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const ORCHESTRATOR_URL = 'https://pierre-orchestrator-production.up.railway.app';
 
-// Generate embedding via OpenRouter
+// Generate embedding via OpenRouter - writes to temp file to avoid shell escaping issues
 async function getEmbedding(text) {
   try {
-    const result = execSync(
+    const fs = require('fs');
+    const os = require('os');
+    const path = require('path');
+    
+    // Write request body to temp file to avoid shell escaping hell
+    const tmpDir = os.tmpdir();
+    const reqFile = path.join(tmpDir, `embed_req_${Date.now()}.json`);
+    const respFile = path.join(tmpDir, `embed_resp_${Date.now()}.json`);
+    
+    const requestBody = JSON.stringify({
+      model: "openai/text-embedding-3-small",
+      input: text
+    });
+    
+    fs.writeFileSync(reqFile, requestBody);
+    
+    execSync(
       `curl -s -X POST "https://openrouter.ai/api/v1/embeddings" \
         -H "Authorization: Bearer ${OPENROUTER_API_KEY}" \
         -H "Content-Type: application/json" \
-        -d '{"model": "openai/text-embedding-3-small", "input": ${JSON.stringify(text)}}'`,
-      { encoding: 'utf-8', timeout: 30000 }
+        -d @"${reqFile}" \
+        -o "${respFile}"`,
+      { timeout: 30000 }
     );
-    const parsed = JSON.parse(result);
+    
+    const response = fs.readFileSync(respFile, 'utf-8');
+    
+    // Cleanup temp files
+    try { fs.unlinkSync(reqFile); } catch (e) {}
+    try { fs.unlinkSync(respFile); } catch (e) {}
+    
+    const parsed = JSON.parse(response);
     return parsed.data[0].embedding;
   } catch (e) {
     console.error('Embedding error:', e.message);
@@ -55,23 +79,43 @@ async function searchSimilarMemories(embedding, threshold = 0.85, limit = 3) {
   }
 }
 
-// Insert embed_memory job directly to job_queue
+// Insert embed_memory job directly to job_queue - uses temp file to avoid shell escaping
 async function queueEmbedMemory(content, metadata = {}) {
   try {
-    const result = execSync(
+    const fs = require('fs');
+    const os = require('os');
+    const path = require('path');
+    
+    const tmpDir = os.tmpdir();
+    const reqFile = path.join(tmpDir, `queue_req_${Date.now()}.json`);
+    const respFile = path.join(tmpDir, `queue_resp_${Date.now()}.json`);
+    
+    const requestBody = JSON.stringify({
+      job_type: "embed_memory",
+      payload: { content, metadata, source: "ingestion" },
+      status: "new"
+    });
+    
+    fs.writeFileSync(reqFile, requestBody);
+    
+    execSync(
       `curl -s -X POST "${SUPABASE_URL}/rest/v1/job_queue" \
         -H "apikey: ${SUPABASE_KEY}" \
         -H "Authorization: Bearer ${SUPABASE_KEY}" \
         -H "Content-Type: application/json" \
         -H "Prefer: return=representation" \
-        -d '${JSON.stringify({
-          job_type: "embed_memory",
-          payload: { content, metadata, source: "ingestion" },
-          status: "new"
-        })}'`,
-      { encoding: 'utf-8', timeout: 30000 }
+        -d @"${reqFile}" \
+        -o "${respFile}"`,
+      { timeout: 30000 }
     );
-    return JSON.parse(result);
+    
+    const response = fs.readFileSync(respFile, 'utf-8');
+    
+    // Cleanup
+    try { fs.unlinkSync(reqFile); } catch (e) {}
+    try { fs.unlinkSync(respFile); } catch (e) {}
+    
+    return JSON.parse(response);
   } catch (e) {
     console.error('Queue error:', e.message);
     return null;
