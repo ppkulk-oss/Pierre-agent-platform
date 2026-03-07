@@ -10,27 +10,27 @@ app = Flask(__name__)
 # ============================================================
 TRAVELERS = [
     {"name": "Prashant", "initial": "P", "note": "", "color": "#ff6b9d"},
-    {"name": "Tejal", "initial": "T", "note": "no beef", "color": "#0d7377"},
-    {"name": "Riya", "initial": "R", "note": "vegetarian", "color": "#9b59b6"},
-    {"name": "Lara", "initial": "L", "note": "picky", "color": "#ffd700"},
+    {"name": "Tejal", "initial": "T", "note": "seafood and chicken, no beef", "color": "#0d7377"},
+    {"name": "Riya", "initial": "R", "note": "vegetarian, eats chicken", "color": "#9b59b6"},
+    {"name": "Lara", "initial": "L", "note": "picky eater, likes bland foods", "color": "#ffd700"},
 ]
 
 DESTINATIONS = [
     {"city": "Tokyo", "jp": "東京", "prefecture": "Kanto", "nights": 3, "dates": "Apr 1-4",
-     "hotel": "Royal Park Hotel Iconic Shiodome", "conf": "6210444904",
-     "highlights": ["Senso-ji Temple", "Shibuya Crossing", "Tokyo Skytree", "Harajuku"]},
+     "hotel": "The Royal Park Hotel Iconic Tokyo Shiodome", "conf": "6210444904",
+     "highlights": ["Junior Suite Twin + 2 Extra beds", "PIN: 5140", "Check-in: 3PM-11:30PM"]},
     {"city": "Hakone", "jp": "箱根", "prefecture": "Kanagawa", "nights": 1, "dates": "Apr 4-5",
-     "hotel": "Mikawaya Ryokan", "conf": "Exp: 72068424131155",
-     "highlights": ["Hot Springs", "Hakone Loop", "Mt. Fuji Views", "Kaiseki Dinner"]},
-    {"city": "Kyoto", "jp": "京都", "prefecture": "Kansai", "nights": 2, "dates": "Apr 5-7",
+     "hotel": "Hakone Kowakien Mikawaya Ryokan", "conf": "Exp: 72068424131155",
+     "highlights": ["2 Japanese-style Twin rooms", "Wagyu & Kaiseki Dinner included"]},
+    {"city": "Kyoto", "jp": "京都", "prefecture": "Kyoto", "nights": 2, "dates": "Apr 5-7",
      "hotel": "Cross Hotel Kyoto", "conf": "Exp: 72068669603342",
-     "highlights": ["Fushimi Inari", "Kiyomizu-dera", "Gion District", "Bamboo Grove"]},
-    {"city": "Osaka", "jp": "大阪", "prefecture": "Kansai", "nights": 2, "dates": "Apr 7-9",
-     "hotel": "Hotel Hankyu RESPIRE", "conf": "Exp: 72068670183986",
-     "highlights": ["Dotonbori", "Universal Studios", "Osaka Castle", "Street Food"]},
+     "highlights": ["Deluxe Family Twin Room", "Check-in: 3PM"]},
+    {"city": "Osaka", "jp": "大阪", "prefecture": "Osaka", "nights": 2, "dates": "Apr 7-9",
+     "hotel": "Hotel Hankyu RESPIRE OSAKA", "conf": "Exp: 72068670183986",
+     "highlights": ["Connecting Room for 5 people", "Check-out: 12PM"]},
     {"city": "Narita", "jp": "成田", "prefecture": "Chiba", "nights": 1, "dates": "Apr 9-10",
      "hotel": "Hotel Nikko Narita", "conf": "Exp: 72068692164929",
-     "highlights": ["Narita-san Temple", "Last Minute Shopping", "Airport Shuttle"]},
+     "highlights": ["Japanese Style Family Room", "Free Breakfast"]},
 ]
 
 RESTAURANTS = [
