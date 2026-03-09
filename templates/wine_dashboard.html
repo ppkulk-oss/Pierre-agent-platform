@@ -594,5 +594,71 @@
                 .catch((error) => console.log('[PWA] SW registration failed:', error));
         }
     </script>
+
+    <!-- Bottom Navigation -->
+    <style>
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: linear-gradient(180deg, rgba(44,10,16,0.9) 0%, rgba(44,10,16,0.98) 100%);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 15px 30px 25px;
+        }
+        .nav-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: rgba(255,255,255,0.4);
+            transition: all 0.3s ease;
+            padding: 10px 25px;
+            border-radius: 16px;
+        }
+        .nav-item:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .nav-item.active { color: #fff; background: rgba(255,255,255,0.08); }
+        .nav-icon { font-size: 28px; }
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .nav-wine:hover, .nav-wine.active { color: #c9a227; }
+        .nav-travel:hover, .nav-travel.active { color: #ff6b9d; }
+        .nav-finance:hover, .nav-finance.active { color: #0d7377; }
+        @media (max-width: 768px) {
+            .nav-item { padding: 10px 15px; }
+            .nav-label { font-size: 10px; }
+        }
+    </style>
+    <nav class="bottom-nav">
+        <div class="nav-container">
+            <a href="/wine" class="nav-item nav-wine active">
+                <span class="nav-icon">🍷</span>
+                <span class="nav-label">Wine</span>
+            </a>
+            <a href="/japan" class="nav-item nav-travel">
+                <span class="nav-icon">🗾</span>
+                <span class="nav-label">Travel</span>
+            </a>
+            <a href="/finance" class="nav-item nav-finance">
+                <span class="nav-icon">💰</span>
+                <span class="nav-label">Finance</span>
+            </a>
+        </div>
+    </nav>
 </body>
 </html>

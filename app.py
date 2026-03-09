@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import sqlite3
 from datetime import date, datetime
 import os
+import glob
+import json
 
 app = Flask(__name__)
 
@@ -180,6 +182,49 @@ def media_dashboard():
 @app.route('/restaurants')
 def restaurants():
     return render_template('restaurants.html')
+
+# ============================================================
+# FINANCE ROUTE
+# ============================================================
+@app.route('/finance')
+def finance_dashboard():
+    return render_template('finance.html')
+
+# ============================================================
+# BRIEF API - Serve latest daily brief content
+# ============================================================
+def get_latest_brief():
+    """Find and return the latest daily brief from memory files."""
+    try:
+        # Look for brief files in memory directory
+        brief_files = glob.glob('/data/workspace/memory/*Brief*.md')
+        brief_files += glob.glob('/data/workspace/Prashant_*_Daily_Brief*.md')
+        
+        if not brief_files:
+            return None
+        
+        # Sort by modification time (newest first)
+        latest_file = max(brief_files, key=os.path.getmtime)
+        
+        with open(latest_file, 'r') as f:
+            content = f.read()
+        
+        return {
+            'filename': os.path.basename(latest_file),
+            'content': content,
+            'date': datetime.fromtimestamp(os.path.getmtime(latest_file)).isoformat()
+        }
+    except Exception as e:
+        print(f"Error loading brief: {e}")
+        return None
+
+@app.route('/api/brief')
+def api_brief():
+    """API endpoint to get the latest daily brief."""
+    brief = get_latest_brief()
+    if brief:
+        return jsonify(brief)
+    return jsonify({'error': 'No brief found'}), 404
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

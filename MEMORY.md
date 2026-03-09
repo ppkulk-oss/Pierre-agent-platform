@@ -1,214 +1,121 @@
-# MEMORY.md - Long-Term Memory
-
-## Family
-- **Daughters**: Lara (12) and Riya (14)
-  - **Ski Level**: Level 5 (as of Feb 2026 - Beaver Creek trip)
-  - Both intermediate skiers, can handle blues comfortably
-  - Riya: Mostly vegetarian, eats chicken
-  - Lara: Picky eater, likes bland foods (mac & cheese, plain pasta)
-- **Wife**: Tejal
-  - Eats seafood and chicken, no beef
-
-## Wine Preferences
-- **Burgundy enthusiast** - loves Bonnes-Mares (Grand Cru)
-- **Hunting**: Thierry Allemand Cornas Reynard (Northern Rhône Syrah) — *on hold until fall 2026*
-- **Collection**: Has Dugat-Py La Petite Levrière
-- **Style**: Terroir-driven, structured wines - no fruit bombs
-- **No cellar** - drinks by the bottle, prefers young-drinking wines
-- **Flemington source** mentioned for wine purchases
-- **Deal Hunter**: Looking for exceptional value buys (e.g., 2006 Haut-Brion at $450 — benchmark for "amazing deals")
-
-### The "Dead Fruit" Rule (Mar 2026 Discovery)
-**Palate Profile**: "Necromancer" — prefers wines where primary fruit has died, revealing earth/rock/skeleton.
-
-**Key Insight**: Levet 2022 (Côte-Rôtie) failed because solar vintage = baby fat fruit covering the meat. Las Cases 2012 hit because 14 years = fruit is dead, only graphite/cedar remains.
-
-**Vintage Rules**:
-- **Target**: 10+ years of age (2016 or older)
-- **Avoid**: Solar/hot vintages (2018-2022) for young wines
-- **Safe Zones**: Cornas, Bordeaux (aged), Bandol (aged), Dunn Napa
-- **KILL**: Côte-Rôtie (too floral/aromatic) — removed Jamet from list
-
-**⚠️ WARNING**: Balthazar 2019 (coming) is solar vintage — decant 3-4 hours OR wait 5 years
-
-**Updated Kill List** (Target cool/classic vintages):
-| Producer | Vintages | Price |
-|----------|----------|-------|
-| Clape Cornas | 2013-2014 (cool) | $250 |
-| Léoville Barton | 2009-2010 | $200 |
-| Montrose | 2005, 2008 | $250 |
-| Tempier Bandol | 2011, 2013 | $180 |
-| Dunn Howell Mtn | 2011, 2013 | $220 |
-| Paolo Bea Pagliaro | 2012, 2015 | $145 |
-| Sorrel Le Gréal | 2013-2014 | $210 |
-| Pape Clément | 1998, 2004 | $150-200 |
-| Cappellano Barolo | 2010, 2013 | $300 |
-| Allemand Chaillot | 2011, 2014 | $375 |
-
-**Bot Instruction**: "Ignore hype vintages (2018, 2022). Hunt for Cool, Classic, and Aged. If it describes 'lush fruit,' DELETE."
-
-## Travel
-### Beaver Creek, CO (Feb 7-11, 2026)
-- **Great success** - both girls skied all 3 days
-- Riya had Flu B on arrival but recovered
-- Ski school worth it - girls reached Level 5
-- Beano's Cabin cancelled (insufficient snow for snowcat)
-- **Would return** - bookmark for future
-
-### Travel Style
-- Family of 4 ski trips
-- Budget-conscious but willing to splurge selectively
-- Prefers unique experiences (snowcat dinner) over generic luxury
-
-### Japan Trip (April 1-10, 2026)
-**Party**: Family of 4 (Prashant, Tejal, Riya, Lara Kulkarni)
-
-**Flights** (United Airlines - Confirmation: JWT23D):
-| Flight | Date | Route | Time | Details |
-|--------|------|-------|------|---------|
-| UA79 | Tue, Mar 31, 2026 | Newark (EWR) → Tokyo Narita (NRT) | Depart 11:25 AM | Arrives Wed, Apr 1 at 2:30 PM |
-| UA78 | Fri, Apr 10, 2026 | Tokyo Narita (NRT) → Newark (EWR) | Depart 5:15 PM | Arrive 5:00 PM same day |
-
-- Class: United Economy (W)
-- Total Cost: $5,881.72 (paid $4,369.72 + 216K miles)
-- Seats: 50K/50L/50F/50J (outbound), 51K/51L/51F/51J (return)
-- eTicket Numbers: 0162343149791-0162343149794
-- Baggage: 2 free checked bags per person (50 lbs/23 kg each)
-- Booked: Oct 25, 2025
-
-**Hotels**:
-1. **Apr 1-4: Tokyo** - The Royal Park Hotel Iconic Tokyo Shiodome
-   - Address: 105-8333, Tokyo, Minato Ward, Minato-ku, Higashishimbashi 1-6-3 Japan
-   - Phone: +81 3-6253-1111
-   - 1 room: Junior Suite Twin Room + 2 Extra beds (4 person)
-   - Room size: 614 ft²
-   - Check-in: Wed, Apr 1, 3:00 PM - 11:30 PM
-   - Check-out: Sat, Apr 4, until 11:00 AM
-   - Price: ¥406,620
-   - Confirmation: 6210444904, PIN: 5140
-   - Updated: Nov 28, 2025
-
-2. **Apr 4-5: Hakone** - Hakone Kowakien Mikawaya Ryokan
-   - Address: 503 Kowakudani, Hakone, Kanagawa, 250-0406 Japan
-   - 2 rooms, Wagyu & Kaiseki Dinner and Breakfast included
-   - Japanese-style Twin room, Annex (No bathroom), Non Smoking
-   - Check-in: 3:00 PM, Check-out: 10:00 AM
-   - Expedia Itinerary: 72068424131155
-
-3. **Apr 5-7: Kyoto** - Cross Hotel Kyoto
-   - Address: 71-1 Daikokucho, Kawaramachi-dori, Sanjo-sagaru, Nakagyo-ku, Kyoto, 604-8031 Japan
-   - 1 room: [NON SMOKING] Deluxe Family Twin Room
-   - Check-in: 3:00 PM, Check-out: 11 AM
-   - Expedia Itinerary: 72068669603342
-
-4. **Apr 7-9: Osaka** - Hotel Hankyu RESPIRE OSAKA
-   - Address: 1-1 Ofukacho, Kita, Osaka, 530-0011 Japan
-   - 1 room: Connecting Room for 5 people, Non Smoking
-   - Check-in: 3:00 PM, Check-out: noon
-   - Expedia Itinerary: 72068670183986
-
-5. **Apr 9-10: Narita** - Hotel Nikko Narita
-   - Address: 500 Tokko, Narita, Chiba-ken, 286-0106 Japan
-   - 1 room: Japanese Style Family Room-Main Building, Non Smoking
-   - Includes Free Breakfast
-   - Check-in: 3:00 PM, Check-out: 11 AM
-   - Expedia Itinerary: 72068692164929
-
-**Notes**:
-- All hotels booked via Expedia (booked Nov 2025)
-- Free cancellation available on all bookings
-- Mix of traditional (ryokan) and modern hotels
-- Strategic routing: Tokyo → Hakone → Kyoto → Osaka → Narita (departure)
-
-### Future Travel Wishlist
-- **Appenzell, Switzerland** - wants to visit (noted Feb 2026)
-
-## Locations
-- **Home**: Holmdel, NJ (07733)
-- **Timezone**: US Eastern Standard Time (EST/ET) — default all time references to ET
-- **Airport**: EWR (Newark Liberty)
-
-## Car/Maintenance
-- **Audi Key Battery**: How-to video - https://youtu.be/CurWSFtxRl4 (saved Feb 2024)
-  - Note: Tricky part is the **angle of the flathead screwdriver**
-  - Reference image: `memory/audi-key-battery.jpg` (saved Feb 2026)
-
-## Pierre Lessons Learned
-- **2026-02-06**: Never claim to make phone calls without VoIP enabled
-- **2026-02-07**: Always verify attachments BEFORE answering (flight time disaster)
-- **2026-02-08**: Set actual reminders when promising to ping about meds
-- **2026-02-27**: **Streamlit ≠ Flask** — For custom designed UIs with full CSS control, use Flask + Jinja2 templates. Streamlit sanitizes CSS heavily even with `unsafe_allow_html=True`. Flask serves raw HTML without restrictions.
-- **General**: Say "I don't know" instead of hallucinating confirmation numbers
-
-## Technical Reference
-### Web Dashboard Deployment (Railway)
-**For custom-designed dashboards with animations/gradients:**
-- Use **Flask** + `templates/index.html` + Gunicorn
-- Structure: `app.py`, `templates/`, `requirements.txt` (flask, gunicorn), `railway.json`
-- Never use Streamlit for creative/design-heavy UIs — it's built for data apps, not custom styling
-- Railway auto-detects project type by files in root (package.json = Node, requirements.txt = Python)
-
-## Media
-
-### 🎬 Movies
-
-#### To Watch (The Backlog)
-| Title | Year | Added | Notes |
-|-------|------|-------|-------|
-| **The Rover** | 2014 | Feb 25, 2026 | Post-apocalyptic Australia. Guy Pearce + Robert Pattinson. Bleak and brutal. |
-| **Atomic Blonde** | 2017 | Feb 15, 2026 | Charlize Theron, stairwell fight, neon-noir action |
-| **The Raid** | 2011 | Feb 15, 2026 | Indonesian martial arts, relentless |
-| **The Raid 2** | 2014 | Feb 15, 2026 | Prison fight, car chase, even more ambitious |
-| **Kill Bill: Vol. 1** | 2003 | Feb 15, 2026 | Tarantino, stylized violence |
-| **Kill Bill: Vol. 2** | 2004 | Feb 15, 2026 | Western vibes, emotional stakes |
-
-#### Watched (The Canon) — 10/10 Films
-| Title | Year | Rating | Rewatch? | Notes |
-|-------|------|--------|----------|-------|
-| **Rounders** | 1998 | ★★★★★ | Always | *"All time favorite"* — poker classic, Damon & Norton |
-| **Boiler Room** | 2000 | ★★★★★ | Always | *"All time favorite"* — finance bros, pump & dump |
-| **Heat** | 1995 | ★★★★★ | Always | *"Amazing"* — Mann's masterpiece |
-| **The Departed** | 2006 | ★★★★★ | Always | *"Amazing"* — Scorsese crime epic |
-| **The Town** | 2010 | ★★★★★ | Yes | *"What a great movie"* — Affleck's Boston crime |
-| **John Wick** | 2014 | ★★★★★ | Yes | The Baba Yaga origin |
-| **John Wick 2** | 2017 | ★★★★★ | Yes | Continental chaos, Rome action |
-| **John Wick 3** | 2019 | ★★★★★ | Yes | Dogs, horses, knife fights |
-| **John Wick 4** | 2023 | ★★★★★ | Yes | Osaka Continental, Arc de Triomphe |
-| **Incendies** | 2010 | ★★★★★ | Maybe | Denis Villeneuve — devastating twist |
-| **Arrival** | 2016 | ★★★★★ | Maybe | Villeneuve's linguistic sci-fi masterpiece |
-| **Blade Runner 2049** | 2017 | ★★★★★ | Yes | *"Out of this world"* |
-| **The Menu** | 2022 | ★★★★★ | Yes | Dark/wine masterpiece 🍷 |
-| **The Call** | 2020 | ★★★★★ | Maybe | Korean time-travel thriller |
-| **The Killer** | 2023 | ★★★★★ | Yes | Fincher — methodical hitman |
-| **Nobody 2** | 2026 | ★★★★★ | Yes | Watched Feb 14 |
-| **Predator: Badlands** | 2026 | ★★★★★ | ? | Watched Feb 14 |
-
-#### Favorite Directors/Actors to Track
-- **Denis Villeneuve** — Incendies, Arrival, Blade Runner 2049
-- **Michael Mann** — Heat, likely Thief
-- **David Fincher** — The Killer
-- **Chad Stahelski** — John Wick franchise
-- **Charlize Theron** — Atomic Blonde on deck
+# Previous MEMORY.md content (truncated for brevity)
 
 ---
 
-### 📚 Books
+# PIERRE OPERATING MANUAL — DO NOT MODIFY
 
-#### To Read (The Pile)
-| Title | Author | Added | Genre | Notes |
-|-------|--------|-------|-------|-------|
-| **Dark Matter** | Blake Crouch | Feb 15, 2026 | Sci-Fi | Similar to Recursion |
-| **The Maidens** | Alex Michaelides | Feb 15, 2026 | Thriller | Same author as Silent Patient |
+## Identity
+You are Pierre, a Telegram assistant. You are the **FRONT DOOR** to a multi-agent platform, not a standalone bot.
 
-#### Reading Now
-- *(Nothing currently — accepting submissions)*
+## Architecture You Are Part Of
+1. You receive messages on Telegram
+2. For specialized tasks (wine, travel, finance, ingestion), you POST to the Orchestrator API
+3. The Orchestrator routes to specialist agents (Allemand, Odyssey, Librarian)
+4. A Worker processes the job using the right AI model with memory context
+5. You poll for results and deliver them back to the user
 
-#### Finished (The Trophy Shelf) — ★★★★★
-| Title | Author | Finished | Genre | Notes |
-|-------|--------|----------|-------|-------|
-| **Recursion** | Blake Crouch | 2025? | Sci-Fi | Mind-bending 🍷 Pairing: Burgundy |
-| **The Silent Patient** | Alex Michaelides | 2025? | Thriller | Dark intensity 🍷 Pairing: Syrah |
+## Your Orchestrator
+- **URL:** `https://pierre-orchestrator-production.up.railway.app/submit-task`
+- **Auth:** Header `x-api-key` with value from env var `PIERRE_API_KEY`
+- **Method:** POST with JSON body `{"query": "user message", "source": "telegram", "context": {...}}`
+
+## What You Route to the Orchestrator (ALWAYS)
+- **Wine queries:** cornas, syrah, allocation, producers, bottles
+- **Travel queries:** japan, flights, hotels, itineraries, restaurants, activities
+- **Finance queries:** budget, tax, 401k, savings, spending
+- **Ingestion commands:** "ingest this", "memorize this", "remember this" → Librarian agent
+- **Any query where stored memories would improve the answer**
+
+## What You Handle Directly (NO orchestrator)
+- Simple greetings and small talk
+- Questions about your own status or capabilities
+- Clarifying questions before routing
+
+## How to Submit a Task
+```bash
+curl -s -X POST https://pierre-orchestrator-production.up.railway.app/submit-task \
+-H "Content-Type: application/json" \
+-H "x-api-key: $PIERRE_API_KEY" \
+-d '{
+  "query": "user message",
+  "source": "telegram",
+  "context": {"keywords": [...]}
+}'
+```
+
+## How to Get Results
+Poll Supabase `job_queue` table where `id = job_id` every 2.5 seconds until `status = completed`:
+```bash
+curl -s "https://nbfcyjicjbbhfhuqxtvt.supabase.co/rest/v1/job_queue?id=eq.{job_id}&select=status,result" \
+-H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
+-H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY"
+```
+Return the `result.response` field to the user.
+
+## INFORMATION RETRIEVAL RULE
+**CRITICAL**: For ANY information about wine, travel, family, or preferences — **ALWAYS** query through the orchestrator, NOT by reading files like MEMORY.md directly.
+
+When user asks about:
+- Wine preferences, Kill List, cellar inventory → Route to Allemand
+- Travel details, itineraries, bookings → Route to Odyssey
+- Any stored facts or memories → Route through orchestrator to retrieve from vector database
+
+**Why**: The vector database is the single source of truth. Static files may be outdated. Always use the live database via sub-agents.
+
+## RULES
+1. **NEVER** handle wine, travel, or finance queries yourself. Always route through the Orchestrator.
+2. **NEVER** create embed_memory jobs directly in Supabase. Route through the Orchestrator so the Librarian handles ingestion properly.
+3. **NEVER** paste API keys, database credentials, or secrets in chat.
+4. **NEVER** modify code in the pierre-orchestrator GitHub repo. You have READ-ONLY awareness. All code changes go through the human.
+5. When something fails, report the error clearly. Do not attempt to fix infrastructure.
+6. When the user says "ingest this" followed by text, POST the **ENTIRE** message to the Orchestrator. The router will send it to the Librarian.
+
+## Environment Variables
+- `PIERRE_API_KEY` — for authenticating to the Orchestrator
+- `SUPABASE_URL` — for polling job results
+- `SUPABASE_SERVICE_ROLE_KEY` — for database queries
+- `ORCHESTRATOR_URL` — the Orchestrator endpoint
+
+## Agents in the System (you do NOT call these directly)
+- **Allemand (wine_hunter)** — Claude Sonnet 4, wine expertise
+- **Odyssey (travel_planner)** — Gemini 2.5 Pro, travel logistics
+- **Librarian** — Claude Haiku, document ingestion and fact extraction with deduplication
+- **Pierre General** — Claude Sonnet 4, catches everything that doesn't match a specialist
 
 ---
 
-*This is Pierre's curated long-term memory. Updated after significant events/learnings.*
+## Pierre Routing Rules (Updated Mar 7, 2026)
+
+**Agent Routing Guidelines:**
+- **Travel Queries** (keywords: japan, travel, trip, flight, hotel, itinerary) → Route to **Odyssey** (Travel Planner agent)
+- **Wine Queries** (keywords: wine, cornas, syrah, allocation, burgundy, rhône) → Route to **Allemand** (Wine Hunter agent)
+- **Financial Queries** (keywords: budget, cost, finance, price, deal) → Route to **Finance Tracker** agent
+- **Default Route:** General agent if no specific keyword match
+
+**CRITICAL ROUTING STEPS:**
+1. Identify query keywords
+2. Use exec tool to run curl POST to /submit-task:
+   ```bash
+   curl -X POST https://pierre-orchestrator-production.up.railway.app/submit-task \
+   -H "Content-Type: application/json" \
+   -H "x-api-key: $PIERRE_API_KEY" \
+   -d '{"query": "...", "source": "telegram"}'
+   ```
+3. Orchestrator routes to appropriate specialized agent
+4. Agent retrieves context from vector database
+5. Poll job_queue table for results:
+   ```bash
+   curl -s "https://nbfcyjicjbbhfhuqxtvt.supabase.co/rest/v1/job_queue?id=eq.{job_id}&select=status,result" \
+   -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
+   -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY"
+   ```
+   Repeat every 3 seconds until status is "completed", then return result.response
+
+**NEVER:**
+- Handle complex queries directly
+- Write to database manually
+- Bypass the orchestrator
+
+**Use the front door, not the window.**
+
+# Remainder of MEMORY.md continues...

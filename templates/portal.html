@@ -6,26 +6,31 @@
     <meta name="theme-color" content="#0a0a1a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Prashant">
-    <meta name="description" content="Personal portal for travel, wine, and media">
+    <meta name="apple-mobile-web-app-title" content="PK Mission Control">
+    <meta name="description" content="Mission Control — Daily Brief, Wine, Travel, Finance">
     <link rel="manifest" href="/static/manifest.json">
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/icons/icon-72x72.png">
-    <title>Prashant's Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <title>Mission Control | Prashant Kulkarni</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --deep-indigo: #0a0a1a;
             --indigo-light: #151530;
+            --indigo-lighter: #1e1e3f;
             --coral: #ff6b9d;
-            --coral-glow: rgba(255,107,157,0.4);
+            --coral-glow: rgba(255,107,157,0.3);
             --gold: #ffd700;
             --gold-soft: #c9a227;
+            --gold-glow: rgba(201,162,39,0.3);
             --teal: #0d7377;
-            --teal-glow: rgba(13,115,119,0.4);
+            --teal-glow: rgba(13,115,119,0.3);
             --cream: #faf8f5;
             --wine: #722f37;
-            --wine-glow: rgba(114,47,55,0.5);
+            --wine-glow: rgba(114,47,55,0.3);
+            --text-muted: rgba(255,255,255,0.5);
+            --text-dim: rgba(255,255,255,0.3);
+            --border-subtle: rgba(255,255,255,0.08);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -36,6 +41,7 @@
             color: var(--cream);
             min-height: 100vh;
             overflow-x: hidden;
+            padding-bottom: 100px;
         }
 
         /* ANIMATED BACKGROUND */
@@ -43,325 +49,443 @@
             position: fixed;
             inset: 0;
             background: 
-                radial-gradient(ellipse at 20% 80%, rgba(255,107,157,0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(13,115,119,0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 40% 40%, rgba(114,47,55,0.1) 0%, transparent 40%),
-                linear-gradient(135deg, #0a0a1a 0%, #121228 50%, #0d0d20 100%);
+                radial-gradient(ellipse at 20% 0%, rgba(255,107,157,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(13,115,119,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(114,47,55,0.05) 0%, transparent 40%),
+                linear-gradient(180deg, #0a0a1a 0%, #0d0d1f 100%);
             z-index: 0;
         }
 
         .floating-orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.5;
+            filter: blur(100px);
+            opacity: 0.3;
             z-index: 1;
         }
 
         .orb-1 {
-            width: 500px;
-            height: 500px;
+            width: 600px;
+            height: 600px;
             background: radial-gradient(circle, var(--coral-glow) 0%, transparent 70%);
-            top: -10%;
-            right: -5%;
-            animation: drift1 25s ease-in-out infinite;
+            top: -20%;
+            right: -10%;
+            animation: drift1 30s ease-in-out infinite;
         }
 
         .orb-2 {
-            width: 400px;
-            height: 400px;
+            width: 500px;
+            height: 500px;
             background: radial-gradient(circle, var(--teal-glow) 0%, transparent 70%);
-            bottom: 10%;
-            left: -10%;
-            animation: drift2 30s ease-in-out infinite;
-        }
-
-        .orb-3 {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, var(--wine-glow) 0%, transparent 70%);
-            top: 40%;
-            left: 30%;
-            animation: drift3 20s ease-in-out infinite;
+            bottom: 20%;
+            left: -15%;
+            animation: drift2 35s ease-in-out infinite;
         }
 
         @keyframes drift1 {
             0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(-50px, 30px) scale(1.1); }
-            66% { transform: translate(30px, -20px) scale(0.95); }
+            50% { transform: translate(-30px, 20px) scale(1.05); }
         }
 
         @keyframes drift2 {
             0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(40px, -40px) scale(1.15); }
+            50% { transform: translate(20px, -30px) scale(1.1); }
         }
 
-        @keyframes drift3 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(-30px, 20px) scale(1.05); }
-            75% { transform: translate(20px, -30px) scale(0.9); }
-        }
-
-        /* HERO */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 80px 30px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .greeting {
-            font-size: 13px;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 25px;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3.5rem, 10vw, 7rem);
-            font-weight: 600;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, #e0e0e0 50%, #fff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.2s forwards;
-            letter-spacing: -2px;
-        }
-
-        .subtitle {
-            font-size: 20px;
-            font-weight: 300;
-            color: rgba(255,255,255,0.5);
-            max-width: 500px;
-            margin-bottom: 80px;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.4s forwards;
-            line-height: 1.6;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* PORTAL CARDS */
-        .portal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 35px;
-            max-width: 1100px;
-            width: 100%;
-            padding: 0 20px;
-        }
-
-        .portal-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 28px;
-            padding: 45px 35px;
-            text-decoration: none;
-            color: inherit;
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.6s forwards;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            backdrop-filter: blur(10px);
-        }
-
-        .portal-card:nth-child(2) { animation-delay: 0.75s; }
-        .portal-card:nth-child(3) { animation-delay: 0.9s; }
-        .portal-card:nth-child(4) { animation-delay: 1.05s; }
-        .portal-card:nth-child(5) { animation-delay: 1.2s; }
-
-        .portal-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .portal-card::after {
-            content: '';
-            position: absolute;
+        /* HEADER */
+        .header {
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            opacity: 0.8;
-            transition: all 0.5s;
+            z-index: 100;
+            background: linear-gradient(180deg, rgba(10,10,26,0.95) 0%, rgba(10,10,26,0.8) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 20px 30px;
         }
 
-        .portal-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            border-color: rgba(255,255,255,0.15);
-            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .portal-card:hover::before {
-            opacity: 1;
-        }
-
-        .portal-card:hover::after {
-            height: 5px;
-            box-shadow: 0 0 40px currentColor;
-        }
-
-        .card-icon {
-            font-size: 56px;
-            margin-bottom: 25px;
-            display: block;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
-            transition: transform 0.5s;
-        }
-
-        .portal-card:hover .card-icon {
-            transform: scale(1.1);
-        }
-
-        .card-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            transition: color 0.3s;
-        }
-
-        .card-desc {
-            font-size: 15px;
-            color: rgba(255,255,255,0.4);
-            line-height: 1.7;
-            font-weight: 300;
-            margin-bottom: 30px;
-        }
-
-        .card-meta {
+        .brand {
             display: flex;
             align-items: center;
             gap: 15px;
+        }
+
+        .brand-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--coral), var(--gold-soft));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 10px 30px rgba(255,107,157,0.3);
+        }
+
+        .brand-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-text span {
+            font-size: 12px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .datetime {
+            text-align: right;
+        }
+
+        .datetime .day {
             font-size: 13px;
-            color: rgba(255,255,255,0.3);
+            color: var(--gold-soft);
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        .card-arrow {
-            font-size: 20px;
-            opacity: 0;
-            transform: translateX(-15px);
-            transition: all 0.4s;
+        .datetime .date {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 2px;
         }
 
-        .portal-card:hover .card-arrow {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Card-specific styling */
-        .card-travel { 
-            --accent: var(--coral);
-        }
-        .card-travel::after { background: var(--coral); }
-        .card-travel .card-title { color: var(--coral); }
-        .card-travel:hover { 
-            box-shadow: 0 40px 80px rgba(255,107,157,0.25), inset 0 1px 0 rgba(255,107,157,0.1);
-        }
-
-        .card-wine { 
-            --accent: var(--gold-soft);
-        }
-        .card-wine::after { background: var(--gold-soft); }
-        .card-wine .card-title { color: var(--gold-soft); }
-        .card-wine:hover { 
-            box-shadow: 0 40px 80px rgba(201,162,39,0.25), inset 0 1px 0 rgba(201,162,39,0.1);
-        }
-
-        .card-finance { 
-            --accent: var(--teal);
-        }
-        .card-finance::after { background: var(--teal); }
-        .card-finance .card-title { color: var(--teal); }
-        .card-finance:hover { 
-            box-shadow: 0 40px 80px rgba(13,115,119,0.25), inset 0 1px 0 rgba(13,115,119,0.1);
-        }
-
-        .card-media { 
-            --accent: var(--wine);
-        }
-        .card-media::after { background: var(--wine); }
-        .card-media .card-title { color: var(--wine); }
-        .card-media:hover { 
-            box-shadow: 0 40px 80px rgba(114,47,55,0.25), inset 0 1px 0 rgba(114,47,55,0.1);
-        }
-
-        .card-restaurant { 
-            --accent: #ff6b35;
-        }
-        .card-restaurant::after { background: #ff6b35; }
-        .card-restaurant .card-title { color: #ff6b35; }
-        .card-restaurant:hover { 
-            box-shadow: 0 40px 80px rgba(255,107,53,0.25), inset 0 1px 0 rgba(255,107,53,0.1);
-        }
-
-        .card-coming {
-            opacity: 0.4;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        /* FOOTER */
-        .footer {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-            color: rgba(255,255,255,0.2);
-            letter-spacing: 3px;
-            text-transform: uppercase;
+        /* MAIN CONTENT */
+        .main {
+            position: relative;
             z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 30px;
         }
 
-        .footer span {
-            background: linear-gradient(90deg, var(--coral), var(--gold-soft), var(--teal));
+        /* BRIEF HEADER */
+        .brief-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .brief-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 0%, var(--gold-soft) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .portal-grid {
-                grid-template-columns: 1fr;
-                max-width: 420px;
-            }
-            
-            .portal-card {
-                padding: 35px 30px;
-            }
-            
-            .hero {
-                padding: 60px 20px;
-            }
+        .brief-header p {
+            color: var(--text-dim);
+            font-size: 15px;
         }
 
-        /* Loading shimmer effect */
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
+        /* SECTIONS */
+        .brief-section {
+            margin-bottom: 50px;
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .brief-section:nth-child(2) { animation-delay: 0.1s; }
+        .brief-section:nth-child(3) { animation-delay: 0.2s; }
+        .brief-section:nth-child(4) { animation-delay: 0.3s; }
+        .brief-section:nth-child(5) { animation-delay: 0.4s; }
+        .brief-section:nth-child(6) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .section-icon {
+            font-size: 28px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.03);
+            border-radius: 14px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .section-title {
+            flex: 1;
+        }
+
+        .section-title h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .section-title span {
+            font-size: 13px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Section color accents */
+        .section-world .section-icon { border-color: rgba(255,107,157,0.3); background: rgba(255,107,157,0.05); }
+        .section-world h3 { color: var(--coral); }
+        
+        .section-clinical .section-icon { border-color: rgba(13,115,119,0.3); background: rgba(13,115,119,0.05); }
+        .section-clinical h3 { color: var(--teal); }
+        
+        .section-quantum .section-icon { border-color: rgba(100,100,255,0.3); background: rgba(100,100,255,0.05); }
+        .section-quantum h3 { color: #7b7bff; }
+        
+        .section-tennis .section-icon { border-color: rgba(255,193,7,0.3); background: rgba(255,193,7,0.05); }
+        .section-tennis h3 { color: #ffc107; }
+        
+        .section-tech .section-icon { border-color: rgba(0,200,255,0.3); background: rgba(0,200,255,0.05); }
+        .section-tech h3 { color: #00c8ff; }
+        
+        .section-lifestyle .section-icon { border-color: rgba(201,162,39,0.3); background: rgba(201,162,39,0.05); }
+        .section-lifestyle h3 { color: var(--gold-soft); }
+
+        /* NEWS CARDS */
+        .news-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .news-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 22px 25px;
+            transition: all 0.3s ease;
+        }
+
+        .news-card:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.15);
+            transform: translateX(5px);
+        }
+
+        .news-card h4 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            color: #fff;
+        }
+
+        .news-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .news-source {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .news-source a {
+            color: var(--gold-soft);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .news-source a:hover {
+            color: var(--gold);
+        }
+
+        /* BOTTOM NAVIGATION */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: linear-gradient(180deg, rgba(10,10,26,0.9) 0%, rgba(10,10,26,0.98) 100%);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid var(--border-subtle);
+            padding: 15px 30px 25px;
+        }
+
+        .nav-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-dim);
+            transition: all 0.3s ease;
+            padding: 10px 25px;
+            border-radius: 16px;
+        }
+
+        .nav-item:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-item.active {
+            color: #fff;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .nav-icon {
+            font-size: 28px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover .nav-icon {
+            transform: scale(1.1);
+        }
+
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Special nav colors */
+        .nav-wine:hover, .nav-wine.active { color: var(--gold-soft); }
+        .nav-travel:hover, .nav-travel.active { color: var(--coral); }
+        .nav-finance:hover, .nav-finance.active { color: var(--teal); }
+
+        /* Refresh button */
+        .refresh-btn {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            z-index: 50;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 12px 20px;
+            color: var(--text-muted);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--gold-soft);
+            color: #fff;
+        }
+
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 100px 20px;
+            color: var(--text-dim);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--border-subtle);
+            border-top-color: var(--gold-soft);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Error state */
+        .error-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-dim);
+        }
+
+        .error-state button {
+            margin-top: 20px;
+            background: rgba(255,107,157,0.1);
+            border: 1px solid var(--coral);
+            color: var(--coral);
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .error-state button:hover {
+            background: var(--coral);
+            color: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .brief-header h2 {
+                font-size: 32px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .nav-item {
+                padding: 10px 15px;
+            }
+
+            .nav-label {
+                font-size: 10px;
+            }
+
+            .main {
+                padding: 20px 15px;
+            }
         }
     </style>
 </head>
@@ -369,80 +493,259 @@
     <div class="bg-animation"></div>
     <div class="floating-orb orb-1"></div>
     <div class="floating-orb orb-2"></div>
-    <div class="floating-orb orb-3"></div>
     
-    <div class="hero">
-        <div class="greeting">Welcome Home</div>
-        <h1>Prashant</h1>
-        <p class="subtitle">Your personal universe of travel, wine, and life's finer things</p>
-        
-        <div class="portal-grid">
-            <a href="/japan" class="portal-card card-travel">
-                <span class="card-icon">🗾</span>
-                <div class="card-title">Travel</div>
-                <div class="card-desc">Japan 2026 adventure planning — Tokyo to Osaka. Flights, hotels, restaurants, and the journey ahead.</div>
-                <div class="card-meta">
-                    <span>Explore</span>
-                    <span class="card-arrow">→</span>
-                </div>
-            </a>
-            
-            <a href="/wine" class="portal-card card-wine">
-                <span class="card-icon">🍷</span>
-                <div class="card-title">Wine Cellar</div>
-                <div class="card-desc">Track your tastings, ratings, and collection. Every bottle tells a story — terroir-driven, always.</div>
-                <div class="card-meta">
-                    <span>Collection</span>
-                    <span class="card-arrow">→</span>
-                </div>
-            </a>
-            
-            <a href="/media" class="portal-card card-media">
-                <span class="card-icon">🎬</span>
-                <div class="card-title">Media</div>
-                <div class="card-desc">Movies watched and queued. Books read and waiting. Your personal canon of stories.</div>
-                <div class="card-meta">
-                    <span>Library</span>
-                    <span class="card-arrow">→</span>
-                </div>
-            </a>
-            
-            <a href="/restaurants" class="portal-card card-restaurant">
-                <span class="card-icon">🍽️</span>
-                <div class="card-title">Restaurants</div>
-                <div class="card-desc">NYC hit list — 11 spots from Instagram reels. Addresses, phone numbers, and reels all in one place.</div>
-                <div class="card-meta">
-                    <span>11 Spots</span>
-                    <span class="card-arrow">→</span>
-                </div>
-            </a>
-            
-            <div class="portal-card card-finance card-coming">
-                <span class="card-icon">💰</span>
-                <div class="card-title">Finance</div>
-                <div class="card-desc">Investment tracking, portfolio overview, and financial planning. Coming soon.</div>
-                <div class="card-meta">
-                    <span>Soon</span>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="brand">
+                <div class="brand-icon">🌀</div>
+                <div class="brand-text">
+                    <h1>Mission Control</h1>
+                    <span>Prashant Kulkarni</span>
                 </div>
             </div>
+            <div class="datetime">
+                <div class="day" id="current-day">Loading...</div>
+                <div class="date" id="current-date">...</div>
+            </div>
         </div>
-        
-        <div class="footer">Curated with <span>♥</span> by Pierre</div>
-    </div>
-    
-    <!-- PWA Service Worker Registration -->
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Brief Header -->
+        <div class="brief-header">
+            <h2>The Daily Brief</h2>
+            <p>Your morning intelligence briefing — curated by Pierre</p>
+        </div>
+
+        <!-- Loading State -->
+        <div id="brief-loading" class="loading">
+            <div class="loading-spinner"></div>
+            <p>Compiling your morning briefing...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="brief-error" class="error-state" style="display: none;">
+            <p>Unable to load today's brief.</p>
+            <button onclick="loadBrief()">Retry</button>
+        </div>
+
+        <!-- Brief Content -->
+        <div id="brief-content" style="display: none;">
+            <!-- Content loaded dynamically -->
+        </div>
+
+        <!-- Static fallback content for when API is unavailable -->
+        <div id="brief-fallback">
+            <!-- World News -->
+            <section class="brief-section section-world">
+                <div class="section-header">
+                    <div class="section-icon">🌍</div>
+                    <div class="section-title">
+                        <h3>The 1440 Brief</h3>
+                        <span>World News Digest</span>
+                    </div>
+                </div>
+                <div class="news-grid">
+                    <div class="news-card">
+                        <h4>Iran names Mojtaba Khamenei new Supreme Leader</h4>
+                        <p>Iran's Council of Experts elected Mojtaba Khamenei, son of the late Ayatollah Ali Khamenei, as the country's new supreme leader on March 9, 2026. The IRGC has pledged allegiance to the new leader.</p>
+                        <div class="news-source"><a href="https://www.aljazeera.com" target="_blank">Al Jazeera</a> — March 9, 2026</div>
+                    </div>
+                    <div class="news-card">
+                        <h4>Oil prices surge on Middle East conflict escalation</h4>
+                        <p>Oil markets rallied sharply as military strikes hit Tehran oil storage facilities over the weekend amid ongoing U.S.-Israel military campaign in the region.</p>
+                        <div class="news-source"><a href="https://www.theguardian.com" target="_blank">The Guardian</a> — March 9, 2026</div>
+                    </div>
+                    <div class="news-card">
+                        <h4>JPMorgan: Iran conflict likely limited, ending within two weeks</h4>
+                        <p>Analysts predict the war will remain contained and conclude within the next fortnight despite current escalations.</p>
+                        <div class="news-source"><a href="https://www.cnbc.com" target="_blank">CNBC</a> — March 9, 2026</div>
+                    </div>
+                    <div class="news-card">
+                        <h4>U.S. markets decline</h4>
+                        <p>S&P 500 fell to 6,678 (-0.91%), Dow Jones dropped 0.95%, and Nasdaq Composite closed at 22,748.86 on March 9, 2026.</p>
+                        <div class="news-source"><a href="https://tradingeconomics.com" target="_blank">Trading Economics</a> — March 9, 2026</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clinical Edge -->
+            <section class="brief-section section-clinical">
+                <div class="section-header">
+                    <div class="section-icon">🏥</div>
+                    <div class="section-title">
+                        <h3>The Clinical Edge</h3>
+                        <span>Anesthesiology & MedTech</span>
+                    </div>
+                </div>
+                <div class="news-grid">
+                    <div class="news-card">
+                        <h4>NEJM: Post-surgical atrial fibrillation signals elevated stroke risk</h4>
+                        <p>New-onset atrial fibrillation after noncardiac surgery indicates a heightened risk for stroke or TIA in subsequent years, challenging the view that it is always transient.</p>
+                        <div class="news-source"><a href="https://clinician.nejm.org" target="_blank">NEJM Journal Watch</a> — 2026</div>
+                    </div>
+                    <div class="news-card">
+                        <h4>FDA clears AI-powered ultrasound for anesthesia</h4>
+                        <p>Accuro 3S diagnostic ultrasound with SpineNav-AI granted 510(k) clearance, advancing AI-assisted guidance for neuraxial anesthesia.</p>
+                        <div class="news-source"><a href="https://www.anesthesiologynews.com" target="_blank">Anesthesiology News</a> — 2026</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quantum Observer -->
+            <section class="brief-section section-quantum">
+                <div class="section-header">
+                    <div class="section-icon">⚛️</div>
+                    <div class="section-title">
+                        <h3>The Quantum Observer</h3>
+                        <span>Physics & Astronomy</span>
+                    </div>
+                </div>
+                <div class="news-grid">
+                    <div class="news-card">
+                        <h4>Dark matter-neutrino interaction challenges Standard Model</h4>
+                        <p>University of Sheffield research presents evidence that dark matter and neutrinos may interact, casting doubt on the long-standing cosmological model.</p>
+                        <div class="news-source"><a href="https://phys.org" target="_blank">Phys.org</a> — January 2026</div>
+                    </div>
+                    <div class="news-card">
+                        <h4>IBM achieves 1,000+ qubit quantum processors</h4>
+                        <p>IBM unveiled quantum processors surpassing 1,000 qubits in 2026, marking a significant hardware milestone toward commercial quantum advantage.</p>
+                        <div class="news-source"><a href="#" target="_blank">IBM Research</a> — 2026</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Court Vision -->
+            <section class="brief-section section-tennis">
+                <div class="section-header">
+                    <div class="section-icon">🎾</div>
+                    <div class="section-title">
+                        <h3>Court Vision</h3>
+                        <span>Tennis — Indian Wells 2026</span>
+                    </div>
+                </div>
+                <div class="news-grid">
+                    <div class="news-card">
+                        <h4>Major Upset: Learner Tien d. Ben Shelton</h4>
+                        <p>19-year-old American Learner Tien upset No. 8 seed Ben Shelton 7-6(3), 4-6, 6-3 to advance to the Round of 16.</p>
+                        <div class="news-source"><a href="https://www.atptour.com" target="_blank">ATP Tour</a> — March 8, 2026</div>
+                    </div>
+                    <div class="news-card">
+                        <h4>João Fonseca continues breakthrough run</h4>
+                        <p>18-year-old Brazilian upset No. 23 Tommy Paul 6-2, 6-3 to set up a showdown with Sinner, breaking new ATP Masters 1000 ground.</p>
+                        <div class="news-source"><a href="https://www.atptour.com" target="_blank">ATP Tour</a> — March 8, 2026</div>
+                    </div>
+                    <div class="news-card">
+                        <h4>Jannik Sinner dominates Shapovalov</h4>
+                        <p>World No. 2 defeated Denis Shapovalov 6-3, 6-2 to advance to the fourth round.</p>
+                        <div class="news-source"><a href="https://www.atptour.com" target="_blank">ATP Tour</a> — March 8, 2026</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Silicon & Intelligence -->
+            <section class="brief-section section-tech">
+                <div class="section-header">
+                    <div class="section-icon">🤖</div>
+                    <div class="section-title">
+                        <h3>Silicon & Intelligence</h3>
+                        <span>Tech & AI</span>
+                    </div>
+                </div>
+                <div class="news-grid">
+                    <div class="news-card">
+                        <h4>Anthropic and OpenAI release dueling models</h4>
+                        <p>Claude Opus 4.5 and GPT-5.3-Codex launched same day in February 2026, escalating the AI rivalry with enhanced coding and reasoning capabilities.</p>
+                        <div class="news-source"><a href="https://www.businessinsider.com" target="_blank">Business Insider</a> — February 2026</div>
+                    </div>
+                    <div class="news-card">
+                        <h4>Huawei Mate XT 2 confirmed for mid-2026 release</h4>
+                        <p>Huawei's next-generation trifold smartphone scheduled for release mid-2026 according to recent reports.</p>
+                        <div class="news-source"><a href="#" target="_blank">Huawei Central</a> — January 2026</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cellar & League -->
+            <section class="brief-section section-lifestyle">
+                <div class="section-header">
+                    <div class="section-icon">🍷</div>
+                    <div class="section-title">
+                        <h3>The Cellar & The League</h3>
+                        <span>Wine & NFL</span>
+                    </div>
+                </div>
+                <div class="news-grid">
+                    <div class="news-card">
+                        <h4>Wine Alert: Kill List Monitoring Active</h4>
+                        <p>Recent K&L allocations include Grand Cru Burgundy and Bordeaux. Unicorn alert: Domaine with original Leroy winemaker (Gevrey-Chambertin, 50+ year vines) at $65 under review.</p>
+                        <div class="news-source">Wine Scout Alert — March 3, 2026</div>
+                    </div>
+                    <div class="news-card">
+                        <h4>NFL: Maxx Crosby traded to Ravens</h4>
+                        <p>Edge rusher traded from Las Vegas for 2026 1st-round pick (No. 14) and 2027 1st-rounder. Crosby generated 69.5 sacks in seven seasons with Vegas.</p>
+                        <div class="news-source"><a href="https://www.nfl.com" target="_blank">NFL.com</a> — March 5-8, 2026</div>
+                    </div>
+                    <div class="news-card">
+                        <h4>NFL: Trent McDuffie to Rams</h4>
+                        <p>Chiefs traded All-Pro cornerback to Los Angeles for 2026 1st-round pick (No. 29), 5th, 6th, and 2027 3rd-rounder.</p>
+                        <div class="news-source"><a href="https://www.nfl.com" target="_blank">NFL.com</a> — March 8, 2026</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-container">
+            <a href="/wine" class="nav-item nav-wine">
+                <span class="nav-icon">🍷</span>
+                <span class="nav-label">Wine</span>
+            </a>
+            <a href="/japan" class="nav-item nav-travel">
+                <span class="nav-icon">🗾</span>
+                <span class="nav-label">Travel</span>
+            </a>
+            <a href="/finance" class="nav-item nav-finance">
+                <span class="nav-icon">💰</span>
+                <span class="nav-label">Finance</span>
+            </a>
+        </div>
+    </nav>
+
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/static/sw.js')
-                    .then((registration) => {
-                        console.log('[PWA] Service Worker registered:', registration.scope);
-                    })
-                    .catch((error) => {
-                        console.log('[PWA] Service Worker registration failed:', error);
-                    });
-            });
+        // Update date/time
+        function updateDateTime() {
+            const now = new Date();
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+            
+            document.getElementById('current-day').textContent = days[now.getDay()];
+            document.getElementById('current-date').textContent = 
+                `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
         }
+
+        // Load brief from API (placeholder for future implementation)
+        async function loadBrief() {
+            // This can be connected to an API endpoint that serves the latest brief
+            // For now, we show the static fallback content
+            document.getElementById('brief-loading').style.display = 'none';
+            document.getElementById('brief-fallback').style.display = 'block';
+        }
+
+        // Initialize
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+        
+        // Simulate loading then show content
+        setTimeout(() => {
+            document.getElementById('brief-loading').style.display = 'none';
+            document.getElementById('brief-fallback').style.display = 'block';
+        }, 800);
     </script>
 </body>
 </html>
