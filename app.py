@@ -4,6 +4,7 @@ from datetime import date, datetime
 import os
 import glob
 import json
+import markdown as md
 
 app = Flask(__name__)
 
@@ -92,7 +93,8 @@ def get_wine_db():
 # ============================================================
 @app.route('/')
 def portal():
-    return render_template('portal.html')
+    brief = get_latest_brief_html()
+    return render_template('portal.html', brief=brief)
 
 # ============================================================
 # JAPAN ROUTES
@@ -212,6 +214,34 @@ def get_latest_brief():
         return {
             'filename': os.path.basename(latest_file),
             'content': content,
+            'date': datetime.fromtimestamp(os.path.getmtime(latest_file)).isoformat()
+        }
+    except Exception as e:
+        print(f"Error loading brief: {e}")
+        return None
+
+def get_latest_brief_html():
+    """Find and return the latest daily brief as HTML."""
+    try:
+        # Look for brief files in memory directory
+        brief_files = glob.glob('/data/workspace/memory/*Brief*.md')
+        brief_files += glob.glob('/data/workspace/Prashant_*_Daily_Brief*.md')
+        
+        if not brief_files:
+            return None
+        
+        # Sort by modification time (newest first)
+        latest_file = max(brief_files, key=os.path.getmtime)
+        
+        with open(latest_file, 'r') as f:
+            content = f.read()
+        
+        # Convert markdown to HTML
+        html_content = md.markdown(content, extensions=['tables', 'fenced_code'])
+        
+        return {
+            'filename': os.path.basename(latest_file),
+            'content': html_content,
             'date': datetime.fromtimestamp(os.path.getmtime(latest_file)).isoformat()
         }
     except Exception as e:

@@ -532,10 +532,11 @@
         </div>
 
         <!-- Brief Content -->
-        <div id="brief-content" style="display: none;">
-            <!-- Content loaded dynamically -->
+        {% if brief %}
+        <div id="brief-content" class="brief-content">
+            {{ brief.content | safe }}
         </div>
-
+        {% else %}
         <!-- Static fallback content for when API is unavailable -->
         <div id="brief-fallback">
             <!-- World News -->
@@ -696,6 +697,7 @@
                 </div>
             </section>
         </div>
+        {% endif %}
     </main>
 
     <!-- Bottom Navigation -->
@@ -741,11 +743,8 @@
         updateDateTime();
         setInterval(updateDateTime, 60000);
         
-        // Simulate loading then show content
-        setTimeout(() => {
-            document.getElementById('brief-loading').style.display = 'none';
-            document.getElementById('brief-fallback').style.display = 'block';
-        }, 800);
+        // Hide loading spinner - content loaded server-side
+        document.getElementById('brief-loading').style.display = 'none';
     </script>
 </body>
 </html>
