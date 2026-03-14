@@ -207,8 +207,8 @@ def get_latest_brief():
         if not brief_files:
             return None
         
-        # Sort by modification time (newest first)
-        latest_file = max(brief_files, key=os.path.getmtime)
+        # Sort by filename (date in name) since Railway clones have same mtime
+        latest_file = max(brief_files, key=lambda x: os.path.basename(x))
         
         with open(latest_file, 'r') as f:
             content = f.read()
@@ -230,19 +230,19 @@ def get_latest_brief_html():
         # Look for brief files in memory directory (relative to app root)
         brief_files = glob.glob(os.path.join(app_dir, 'memory/*Brief*.md'))
         brief_files += glob.glob(os.path.join(app_dir, 'Prashant_*_Daily_Brief*.md'))
-        
+
         if not brief_files:
             return None
-        
-        # Sort by modification time (newest first)
-        latest_file = max(brief_files, key=os.path.getmtime)
-        
+
+        # Sort by filename (date in name) since Railway clones have same mtime
+        latest_file = max(brief_files, key=lambda x: os.path.basename(x))
+
         with open(latest_file, 'r') as f:
             content = f.read()
-        
+
         # Convert markdown to HTML
         html_content = md.markdown(content, extensions=['tables', 'fenced_code'])
-        
+
         return {
             'filename': os.path.basename(latest_file),
             'content': html_content,
