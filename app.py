@@ -198,9 +198,11 @@ def finance_dashboard():
 def get_latest_brief():
     """Find and return the latest daily brief from memory files."""
     try:
-        # Look for brief files in memory directory
-        brief_files = glob.glob('/data/workspace/memory/*Brief*.md')
-        brief_files += glob.glob('/data/workspace/Prashant_*_Daily_Brief*.md')
+        # Get the directory where this script is located
+        app_dir = os.path.dirname(os.path.abspath(__file__))
+        # Look for brief files in memory directory (relative to app root)
+        brief_files = glob.glob(os.path.join(app_dir, 'memory/*Brief*.md'))
+        brief_files += glob.glob(os.path.join(app_dir, 'Prashant_*_Daily_Brief*.md'))
         
         if not brief_files:
             return None
@@ -223,9 +225,11 @@ def get_latest_brief():
 def get_latest_brief_html():
     """Find and return the latest daily brief as HTML."""
     try:
-        # Look for brief files in memory directory
-        brief_files = glob.glob('/data/workspace/memory/*Brief*.md')
-        brief_files += glob.glob('/data/workspace/Prashant_*_Daily_Brief*.md')
+        # Get the directory where this script is located
+        app_dir = os.path.dirname(os.path.abspath(__file__))
+        # Look for brief files in memory directory (relative to app root)
+        brief_files = glob.glob(os.path.join(app_dir, 'memory/*Brief*.md'))
+        brief_files += glob.glob(os.path.join(app_dir, 'Prashant_*_Daily_Brief*.md'))
         
         if not brief_files:
             return None
