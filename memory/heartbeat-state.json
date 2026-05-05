@@ -1,6 +1,14 @@
 {
   "lastChecks": {
-    "wine_scout": 1742307112000,
-    "morning_protocol": 1742371440000
+    "wine_scout": 4102444800000,
+    "morning_protocol": 4102444800000,
+    "daily_brief": 4102444800000,
+    "morning_report": 4102444800000
+  },
+  "disabled": {
+    "wine_scout": true,
+    "morning_protocol": true,
+    "daily_brief": true,
+    "morning_report": true
   }
 }
